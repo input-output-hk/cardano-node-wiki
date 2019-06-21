@@ -1,1 +1,1 @@
-Welcome to the cardano-node wiki!
+Welcome to the Cardano Node Wiki! This is the location for all information relating to the Haskell Cardano Node 

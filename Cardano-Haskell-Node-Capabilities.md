@@ -1,3 +1,5 @@
+❗️ The node is made available for early integration, QA & DevOps activities. Further security, performance and general testing is required across all components for test and mainet ready ❗️ 
+
 # Independent Node Cluster Capabilities 📦 
 
 ## Iteration #1 Capabilities - Made available mid June 2019 ✔️ 

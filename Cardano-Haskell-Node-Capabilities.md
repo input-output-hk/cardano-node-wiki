@@ -1,4 +1,4 @@
-❗️ The node is made available for early integration, QA & DevOps activities. Further security, performance and general testing is required across all components for test and mainet ready ❗️ 
+❗️ The node is made available for early integration, QA & DevOps activities. Further security, performance and general testing is required across all components ahead of a test and mainet launch ❗️ 
 
 # Independent Node Cluster Capabilities 📦 
 

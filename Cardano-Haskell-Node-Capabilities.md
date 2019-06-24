@@ -8,10 +8,13 @@
 * Establish independent cluster using PBFT
     * Some limitations due to lack of connection management integration 
 * Full network stack (exclusions listed further down)
-    * Chain sync 
-    * Block fetch 
-    * Block fetch logic 
-    * Local transaction submission to mempool 
+    * Node to node:
+        * Chain sync
+        * Block fetch
+        * Block fetch logic
+    * Node to client:
+        * Chain sync
+        * Transaction submission to mempool
 * Create blocks and distribute using PBFT Consensus algorithm 
 * Validate blocks and transactions with blocks using final Byron compatible Ledger rules 
 * Submit transactions local to block producing nodes
@@ -36,7 +39,7 @@ There are a few limitations to keep in mind due to the fact that certain things 
 
 **Mainnet validation** We have previously demonstrated mainnet validation for the ledger rules, but have not yet demonstrated that for the PBFT consensus rules. While the PBFT rules are integrated, there are some remaining parts to complete to be able to validate mainnet. In particular the support for EBBs (epoch boundary blocks). Therefore it is not currently possible with the node at this stage to sync with mainnet. We anticipate that this will be completed in time for the next demo.
 
-**Local clients** The node to client protocol has not yet been fully integrated. This means the local IPC needed for wallets to talk to a local node is not yet available. This is a relatively minor variation on the full node to node protocol and so we expect it to be integrated for the next demo.
+**Local clients** The node to client protocol has been integrated but the chain sync part does not yet have a example client. This will be needed for wallet integration. This is a relatively small addition and so we expect to have a chain sync client template available for the next demo.
 
 **Transaction relay** The node to node transaction submission protocol has not yet been integrated. This means that while it is possible to submit transactions locally to a block producing node, it is not yet possible to submit them to one node and have them forwarded to other nodes. The code for this component is mostly complete, including tests, so we anticipate that this will be integrated in time for the next demo.
 

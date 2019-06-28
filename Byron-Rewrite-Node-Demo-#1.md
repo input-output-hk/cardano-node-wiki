@@ -25,6 +25,7 @@ The next steps across the various parts of the node include:
 - Completing the storage layer
 - Adding EBBs into the Ledger integration to enable syncing with mainnet
 - Adding remote transaction submission to the network layer
+- Starting integration with the Wallet Backend
 - Improving test coverage and infrastructure across the whole system
 
 # Running the demo yourself

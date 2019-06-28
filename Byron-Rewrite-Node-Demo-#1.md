@@ -42,14 +42,12 @@ This will leave you with four `tmux` panes, three for the nodes and one to submi
 
 Submit the transaction with too large value and watch it fail:
 
-./scripts/submit-tx.sh -n 0 --real-pbft --address a --amount 4000000000 --txin abababab --txix 0
+```./scripts/submit-tx.sh -n 0 --real-pbft --address a --amount 4000000000 --txin abababab --txix 0```
 
 Submit the transaction with good value and watch it pass:
 
-./scripts/submit-tx.sh -n 0 --real-pbft --address a --amount 4000 --txin abababab --txix 0
+```./scripts/submit-tx.sh -n 0 --real-pbft --address a --amount 4000 --txin abababab --txix 0```
 
 Submit the same transaction and it should fail:
 
-./scripts/submit-tx.sh -n 0 --real-pbft --address a --amount 4000 --txin abababab --txix 0
-
-Full instructions for running the demo can be found in [README.md](https://github.com/input-output-hk/cardano-node/blob/master/README.md).
+```./scripts/submit-tx.sh -n 0 --real-pbft --address a --amount 4000 --txin abababab --txix 0```

@@ -1,3 +1,5 @@
+[_Demo run internally 21st June 2019 and recorded for public 28th June 2019_]
+
 # Background
 This demo is the first demo of a cluster of independent Cardano nodes in the Shelley era, first release - Byron Re-write.
 
@@ -27,4 +29,27 @@ The next steps across the various parts of the node include:
 - Handing over to DevOps and QA for getting ready for testnet
 
 # Running the demo yourself
+
+In the root of the `cardano-node` repo, setup the demo using:
+
+```nix-shell```
+
+```tmux new-session -s Demo```
+
+```./scripts/demo.sh```
+
+This will leave you with four `tmux` panes, three for the nodes and one to submit transactions.
+
+Submit the transaction with too large value and watch it fail:
+
+./scripts/submit-tx.sh -n 0 --real-pbft --address a --amount 4000000000 --txin abababab --txix 0
+
+Submit the transaction with good value and watch it pass:
+
+./scripts/submit-tx.sh -n 0 --real-pbft --address a --amount 4000 --txin abababab --txix 0
+
+Submit the same transaction and it should fail:
+
+./scripts/submit-tx.sh -n 0 --real-pbft --address a --amount 4000 --txin abababab --txix 0
+
 Full instructions for running the demo can be found in [README.md](https://github.com/input-output-hk/cardano-node/blob/master/README.md).

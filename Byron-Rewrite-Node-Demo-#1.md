@@ -32,6 +32,8 @@ The next steps across the various parts of the node include:
 
 In the root of the `cardano-node` repo, setup the demo using:
 
+```stack build```
+
 ```nix-shell```
 
 ```tmux new-session -s Demo```

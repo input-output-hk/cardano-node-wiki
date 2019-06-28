@@ -26,7 +26,6 @@ The next steps across the various parts of the node include:
 - Adding EBBs into the Ledger integration to enable syncing with mainnet
 - Adding remote transaction submission to the network layer
 - Improving test coverage and infrastructure across the whole system
-- Handing over to DevOps and QA for getting ready for testnet
 
 # Running the demo yourself
 

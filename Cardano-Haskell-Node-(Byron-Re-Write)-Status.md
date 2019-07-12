@@ -69,6 +69,7 @@ The work below is that specifically required to make the node _**public test and
 * Managing full duplex connections 
 * Assign sensible byte limits for each of the mini-protocols
 
+***
 ****DevOps**** 🔧  Tasks - tooling activity 
 
 * CLI Tools 

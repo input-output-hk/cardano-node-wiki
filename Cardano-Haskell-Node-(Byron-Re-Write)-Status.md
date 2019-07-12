@@ -22,6 +22,10 @@ The work below is that specifically required to make the node _**public test and
     * Track block sizes
     * Pipelining
     * Disconnect from nodes with invalid blocks
+
+**Networking**
+- Old -> New Proxy updated to use the ChainDB and final node-to-node protocols
+- Node to node transaction relaying
 ***
 
 ****OS Platform Config**** 🌳  Tasks - remaining development team effort

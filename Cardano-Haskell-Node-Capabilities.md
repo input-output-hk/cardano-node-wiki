@@ -14,7 +14,7 @@ In addition to iteration #1:
   * All storage components integrated: immutable, volatile, ledger state
   * Chain state implemented on top of the storage components
   * Effecient APIs for use by the network protocol handlers (iterators for block fetch, readers for chain sync)
-* Improved mempool implementation.
+* Improved mempool implementation
   * API that matches what the tx submission protocol handler needs
   * Structure that enables trace points for tracking mempool size and TPS throughput
   * But not final integration of the node-to-node tx submission protocol

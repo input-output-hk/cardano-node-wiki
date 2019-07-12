@@ -65,7 +65,7 @@ The work below is that specifically required to make the node _**public test and
 * Test what happens when there is a shortage of file handles. Additionally, we should make sure we don't leak file handles and what happens when a handle fails to close.
 
 **Networking**
-* Time outs for typed protocols 
+* Timeouts for typed protocols 
 * Managing full duplex connections 
 * Assign sensible byte limits for each of the mini-protocols
 

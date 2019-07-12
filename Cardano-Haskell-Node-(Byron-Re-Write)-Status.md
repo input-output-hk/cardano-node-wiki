@@ -69,9 +69,11 @@ The work below is that specifically required to make the node _**public test and
 * Test what happens when there is a shortage of file handles. Additionally, we should make sure we don't leak file handles and what happens when a handle fails to close.
 
 **Networking**
-* Timeouts for typed protocols 
-* Managing full duplex connections 
+* Timeouts for mini-protocols 
+* Managing full duplex connections, termination / suspension of one side of the connection 
 * Assign sensible byte limits for each of the mini-protocols
+* Fix issues in subscription management
+* Extend subscription management to be able to track positive and negative reputation information (Delta-Q,detect mini-protocol failures and misbehaviours).
 
 **System level testing**
 * A small network of Shelley nodes

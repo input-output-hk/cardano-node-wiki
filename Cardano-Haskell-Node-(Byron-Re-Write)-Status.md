@@ -27,8 +27,8 @@ The work below is that specifically required to make the node _**public test and
 ****OS Platform Config**** 🌳  Tasks - remaining development team effort
 
 **Windows**
-* GHC deadlock on Windows
-* API similar to Unix sockets
+* Cannot interrupt blocking network I/O ops on Windows
+* Need to complete Windows named pipe library and use it for local connections (API similar to Unix domain sockets)
 * Windows bugs 🐞  
 
 ***

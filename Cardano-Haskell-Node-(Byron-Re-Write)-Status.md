@@ -27,7 +27,7 @@ The work below is that specifically required to make the node _**public test and
 ****OS Platform Config**** 🌳  Tasks - remaining development team effort
 
 **Windows**
-* Cannot interrupt blocking network I/O ops on Windows
+* Cannot interrupt blocking network I/O ops on Windows in the standard network package. We will likely need to bind the few socket operations we need directly, with "interruptable" FFI calls, and use them in our MuxBearer abstraction.
 * Need to complete Windows named pipe library and use it for local connections (API similar to Unix domain sockets)
 * Windows bugs 🐞  
 

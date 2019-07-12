@@ -22,6 +22,14 @@ The work below is that specifically required to make the node _**public test and
     * Track block sizes
     * Pipe lining
     * Disconnect from nodes with invalid blocks
+***
+
+****OS Platform Config**** 🌳  Tasks - remaining development team effort
+
+**Windows**
+* GHC deadlock on Windows
+* API similar to Unix sockets
+* Windows bugs 🐞  
 
 ***
 

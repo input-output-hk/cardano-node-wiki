@@ -1,6 +1,6 @@
 Hello all, this page will be used to keep a static status of the Byron Re-Write node. 
 
-This will support the capabilities page https://github.com/input-output-hk/cardano-node/wiki/Cardano-Haskell-Node-Capabilities
+This will support the capabilities page [Named Link](https://github.com/input-output-hk/cardano-node/wiki/Cardano-Haskell-Node-Capabilities "Byron Haskell Node Capabilities")
 
 The work below is that specifically required to make the node _**public test and main net ready**_
 

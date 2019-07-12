@@ -1,8 +1,8 @@
 Hello all, this page will be used to keep a static status of the Byron Re-Write node. 
 
-This will support the capabilities page in documenting the outstanding development, testing and production ready activities. 
+This will support the capabilities page https://github.com/input-output-hk/cardano-node/wiki/Cardano-Haskell-Node-Capabilities
 
-As the code base and work is split across multiple repositories this will give summary to the content there. 
+The work below is that specifically required to make the node _**public test and main net ready**_
 
 
 
@@ -25,7 +25,7 @@ As the code base and work is split across multiple repositories this will give s
 
 ***
 
-****Monitoring & Benchmarking**** 🔎📝  Tasks 
+****Monitoring & Benchmarking**** 🔎📝  Tasks remaining
 
 * Transaction generator to run system benchmarks
 * Benchmarking and monitoring of cardano-node ;”live-view”  
@@ -33,8 +33,14 @@ As the code base and work is split across multiple repositories this will give s
 * Support teams for implementing logging, benchmarking, monitoring - wallet BE, consensus, networking, ledger, devops
 
 ***
+****Test Infrastructure**** 🏗  Tasks remaining
 
-****Testing**** ⚡️ 🐛   Major test coverage remaining  
+* Valid Chain Generators
+* Invalid Chain Generators
+
+***
+
+**Testing** ⚡️ 🐛   Major test coverage remaining  
 
 **Consensus**
 * Protocol testing: do we reach consensus in the following cases (some are overlapping)

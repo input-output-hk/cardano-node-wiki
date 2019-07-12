@@ -69,6 +69,11 @@ The work below is that specifically required to make the node _**public test and
 * Managing full duplex connections 
 * Assign sensible byte limits for each of the mini-protocols
 
+**System level testing**
+* A small network of Shelley nodes
+* A small network of Shelley nodes on mixed architectures (RasberyPi, GNU/Linux, Windows, MacOs)
+* A small network of Shelley and Byron nodes deployed with a Byron-Proxy
+
 ***
 ****DevOps**** 🔧  Tasks - tooling activity 
 

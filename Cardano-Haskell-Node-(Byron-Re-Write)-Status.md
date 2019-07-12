@@ -73,3 +73,5 @@ The work below is that specifically required to make the node _**public test and
 ****DevOps**** 🔧  Tasks - tooling activity 
 
 * CLI Tools 
+** `genesis-tool` (a slight misnomer) -- generates genesis, migrates and pretty-prints secrets.
+** Update proposal and vote submission.

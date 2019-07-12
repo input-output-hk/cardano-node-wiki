@@ -20,7 +20,7 @@ The work below is that specifically required to make the node _**public test and
    * In addition to transactions, support delegation and update payloads
 * Chain Sync Client optimisations:
     * Track block sizes
-    * Pipe lining
+    * Pipelining
     * Disconnect from nodes with invalid blocks
 ***
 

@@ -83,4 +83,4 @@ and we now anticipate that this will be integrated in time for the next demo.
 **Consensus & Network**
 * Old -> New Proxy updated to use the ChainDB and final node-to-node protocols
 * Full mainnet syncing and validation
-
+* Node to node transaction relaying

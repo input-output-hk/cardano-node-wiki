@@ -8,7 +8,13 @@ The previous demo showed the full integration of all the major components. This 
 There are still some features of the node missing that will be included over the coming weeks. For a comprehensive overview of the current capabilities and limitations, see the [this page](https://github.com/input-output-hk/cardano-node/wiki/Cardano-Haskell-Node-Capabilities).
 
 # What are we looking at?
-- TODO: fill in
+
+* We will set up three core nodes, which will run the PBFT consensus algorithm and communicate with each other using the full network stack.
+* These nodes will then start producing blocks when they are elected leader (which is round-robin in PBFT).
+* We will see from the log output that the nodes agree on their latest chain tip hash (with short delays).
+* We will shut down and restart a node and see that it resumes from the point where it was shut down, and syncronises with the other nodes.
+* We will corrupt part of the storage of one node by deleting its "volatile chain sotrage". We will see that the node terminates. When it is restarted we see that it recovers from an earlier point (the tip of the "immutable chain storage") and then see that it syncronises with the other nodes.
+* We will then submit some transactions to these nodes to be included in the blockchain, and see that they get included into blocks and all nodes continue to agree on the latest chain tip.
 
 # What does this show?
 This shows that we are able to use the proper implementation of the Ouroboros chain validation and chain selection, with on-disk block storage. This is designed to be efficient and resistant to asymetric resource consumption and other denial of service attacks. It also demonstrates the integration of all the on-disk storage components, which are designed to be robust to hard shutdowns and filesystem corruption (silent or otherwise).

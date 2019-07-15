@@ -33,4 +33,26 @@ The next steps across the various parts of the node include:
 
 # Running the demo yourself
 
-TODO: fill this in after recording the demo session.
+Check out the `demo` branch in this repository:
+
+```git checkout demo```
+
+Build it using stack, cabal new-build, or nix (see the the README for specific instructions):
+
+```stack build```
+
+Open a terminal, navigate to the root of this repository, and start the demo script like so:
+
+```tmux new-session -s Demo```
+
+```./scripts/demo.sh```
+
+This will leave you with four `tmux` panes, three for the nodes and one to submit transactions.
+
+To submit a transaction, navigate to the fourth pane and press enter.
+
+To kill a node, navigate to the node's respective pane, and press <kbd>CTRL-C</kbd>. Restart it by using <kbd>Up</kbd> to navigate to the command that started the node.
+
+To remove the volatile storage of a node, e.g., node 0, execute:
+
+```rm -rf db-0```

@@ -35,25 +35,6 @@ The next steps across the various parts of the node include:
 
 # Running the demo yourself
 
-Check out the `dcoutts/thursday-demo` branch in this repository:
-
-```
-git fetch
-git checkout dcoutts/thursday-demo
-```
-
-Build the `cardano-node` using stack, cabal new-build, or nix (see the the README for specific instructions):
-
-```
-cd cardano-node
-cabal new-build
-```
-And in another terminal
-```
-cd cardano-byron-proxy
-cabal new-build
-```
-
 ## The proxy
 
 Get a checkout of the `cardano-byron-proxy` git repository:
@@ -62,12 +43,18 @@ git clone https://github.com/input-output-hk/cardano-byron-proxy.git
 cd cardano-byron-proxy
 git checkout avieth/chaindb
 ```
+Build it using cabal new-build, stack, or nix (see the the README for specific instructions):
+```
+cabal new-build
+```
+Create a `topology.yaml` file:
 ```
 wallet:
   relays: [[{ host: relays.cardano-mainnet.iohk.io }]]
+```
+Copy the `mainnet-genesis.json` from the `cardano-sl` repo into the local directory
 
-In the terminal for `cardano-byron-proxy`:
-
+Now run the proxy:
 ```
 cabal new-run -- cardano-byron-proxy \
   --database-path db-byron-proxy-demo-server \
@@ -78,9 +65,21 @@ cabal new-run -- cardano-byron-proxy \
   --server-port 7777 \
   --topology ./topology.yaml
 ```
+The proxy should connect to one of the mainnet relays and start to download blocks.
 
-Open a terminal, navigate to the root of this repository, and start the demo script like so:
+## The node
 
-```tmux new-session -s Demo```
-
-```./scripts/demo.sh```
+Check out the `dcoutts/thursday-demo` branch in this repository
+```
+git fetch
+git checkout dcoutts/thursday-demo
+```
+Build the `cardano-node` using stack, cabal new-build, or nix (see the the README for specific instructions):
+```
+cabal new-build
+```
+Now run the node, configured to point to the proxy:
+```
+scripts/mainnet-proxy-follower.sh
+```
+The node should connect to the local proxy and start to synchronise blocks.

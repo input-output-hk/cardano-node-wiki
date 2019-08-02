@@ -69,12 +69,14 @@ The proxy should connect to one of the mainnet relays and start to download bloc
 
 ## The node
 
-Check out the `dcoutts/thursday-demo` branch in this repository
+Check out the `master` branch if this (`cardano-node`) repository
 ```
-git fetch
-git checkout dcoutts/thursday-demo
+git checkout master
+git pull
 ```
-Build the `cardano-node` using stack, cabal new-build, or nix (see the the README for specific instructions):
+If necessary, the exact commit used for the demo was `14da4ddb6e5528c909b44c2ca7d48cfd18244bcb`.
+
+Build the `cardano-node` using cabal new-build,stack, or nix (see the the README for specific instructions):
 ```
 cabal new-build
 ```

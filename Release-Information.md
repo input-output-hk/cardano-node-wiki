@@ -1,1 +1,0 @@
-Provides details for each release 

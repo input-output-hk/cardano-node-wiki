@@ -46,11 +46,10 @@ CTRL+C
 Ensure that you have [Nix](https://nixos.org/) installed and the IOHK binary cache enabled
 ([instructions](https://github.com/input-output-hk/iohk-nix/blob/master/docs/nix.md)).
 ​
-Then run these commands from the `cardano-node` git repository:
+Then run this command from the `cardano-node` git repository:
 ​
 ```
-docker load -i $(nix-build -A dockerImages.submitApi --no-out-link)
-docker load -i $(nix-build -A dockerImages.explorerApi --no-out-link)
+docker load -i $(nix-build -A dockerImage --no-out-link)
 ```
 ​
 If you have no local changes, the build should be downloaded from

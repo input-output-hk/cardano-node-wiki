@@ -1,4 +1,4 @@
-## I have delegated some stake, but am not earning rewards
+## Delegated some stake is not earning rewards
 
 There are a number of reasons you may not be earning rewards.  Check for the following things to ensure the testnet is set up properly:
 

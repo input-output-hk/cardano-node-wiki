@@ -7,3 +7,6 @@ There are a number of reasons you may not be earning rewards.  Check for the fol
 * Pool meets pledge: This can be checked via `ledgerState.nesES.esLState._delegationState._pstate._pParams.<POOL_ID>._poolPledege` in the ledger dump. To get the owners' stake (to see if they meet the pledge, get the key hashes from `ledgerState.nesES.esLState._delegationState._pstate._pParams.<POOL_ID>._poolOwners`. Then maybe use the CLI to get the stake associated with each owner, and sum them.
 * Rho above zero: check protocol parameters
 * Reserves above zero (total supply > sum of all utxo).  Check for `ledgerState.nesES.esAccountState._reserves` in the ledger state.
+
+## Missing blocks
+There are some troubleshoot tips on how to diagnose and fix missing blocks [here](https://input-output.atlassian.net/wiki/spaces/QA/pages/2368897711/Debug+missing+block).

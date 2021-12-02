@@ -19,7 +19,7 @@ src/Cardano/Logging/Tracer/Standard.hs:73:26: error: [-Wdeprecations, -Werror=de
    |                          ^^^^^^^
 ```
 
-When this happens ensure the `cabal.projec.local` file exists and contains the following lines:
+When this happens ensure the `cabal.project.local` file exists and contains the following lines:
 
 ```
 package trace-dispatcher

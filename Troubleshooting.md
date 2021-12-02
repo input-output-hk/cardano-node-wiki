@@ -1,3 +1,31 @@
+## Unable to build on ARM64
+
+When building `cardano-node` on arm64, the following error may occur:
+
+```
+[ 9 of 14] Compiling Cardano.Logging.Tracer.Standard ( src/Cardano/Logging/Tracer/Standard.hs, /src/cardano-node/dist-newstyle/build/aarch64-linux/ghc-8.10.4/trace-dispatcher-1.29.0/build/Cardano/Logging/Tracer/Standard.o, /src/cardano-node/dist-newstyle/build/aarch64-linux/ghc-8.10.4/trace-dispatcher-1.29.0/build/Cardano/Logging/Tracer/Standard.dyn_o )
+src/Cardano/Logging/Tracer/Standard.hs:9:1: error: [-Wdeprecations, -Werror=deprecations]
+    Module `Control.Concurrent.Chan.Unagi.Bounded':
+      This library is unlikely to perform well on architectures without a fetch-and-add instruction
+  |
+9 | import           Control.Concurrent.Chan.Unagi.Bounded
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/Cardano/Logging/Tracer/Standard.hs:73:26: error: [-Wdeprecations, -Werror=deprecations]
+    In the use of `newChan'
+    (imported from Control.Concurrent.Chan.Unagi.Bounded):
+    "This library is unlikely to perform well on architectures without a fetch-and-add instruction"
+   |
+73 |     (inChan, outChan) <- newChan 2048
+   |                          ^^^^^^^
+```
+
+When this happens ensure the `cabal.projec.local` file exists and contains the following lines:
+
+```
+package trace-dispatcher
+  ghc-options: -Wwarn
+```
+
 ## Delegated stake is not earning rewards
 
 There are a number of reasons you may not be earning rewards.  Check for the following things to ensure the testnet is set up properly:

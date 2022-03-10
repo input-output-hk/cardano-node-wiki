@@ -34,3 +34,5 @@ There are important `screen`-windows we need:
 4. `workbench-1` - for running **analyzing** of benchmarks results.
 
 To move between `screen`-windows, use following key combinations: `(Ctrl+A)+P` (to the right) or `(Ctrl+A)+N` (to the left).
+
+**IMPORTANT**: do not use `exit` command in the `screen`-window! Instead, just close your terminal window, to keep `screen`-window working.

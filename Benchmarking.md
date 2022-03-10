@@ -10,6 +10,11 @@ $ ssh bench
 
 You will be logged in as `dev@bench-deployer`.
 
+## `cardano-ops` Repository
+
+Also, please make sure you have access to [cardano-ops](https://github.com/input-output-hk/cardano-ops) repository.
+
 ## Benchmarking Profiles
 
 Each benchmark has a **profile**. The profile is a set of parameters that specify its particular details.
+

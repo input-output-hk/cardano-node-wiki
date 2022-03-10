@@ -33,3 +33,4 @@ There are important `screen`-windows we need:
 3. `bench-2` - for running benchmarks on **small** clusters.
 4. `workbench-1` - for running **analyzing** of benchmarks results.
 
+To move between `screen`-windows, use following key combinations: `(Ctrl+A)+P` (to the right) or `(Ctrl+A)+N` (to the left).

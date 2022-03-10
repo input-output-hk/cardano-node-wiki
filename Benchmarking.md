@@ -12,7 +12,7 @@ You will be logged in as `dev@bench-deployer`.
 
 ## `cardano-ops` Repository
 
-Also, please make sure you have access to [cardano-ops](https://github.com/input-output-hk/cardano-ops) repository.
+Also, please make sure you have access to [cardano-ops](https://github.com/input-output-hk/cardano-ops) repository. You need it to be able to push in our branch `bench-master`.
 
 ## Benchmarking Profiles
 

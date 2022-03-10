@@ -130,7 +130,7 @@ Suppose you want to run a benchmark using a profile from our example, `k2-5ep-36
 $ git log
 ```
 
-Make sure you have the latest commit of `bench-master` and the branch has a clean status.
+Make sure you are on the commit of `bench-master` branch you want to use, and the branch has a clean status.
 
 After that, run the command:
 
@@ -148,7 +148,8 @@ Here you can see the following arguments:
 
 1. `p` means "profile", so we want to run a benchmark with particular profile.
 2. `training` is a batch name we use to describe this benchmark.
-3. `origin/master` is a commit spec for `cardano-node` repository, here we want to take the latest commit from the `master` branch.
+3. `origin/master` is a commit spec for `cardano-node` repository, here we want to take the latest commit from the `master` branch. It's possible to use a commit hash as well.
+4. `k2-5ep-360kTx-7000kU-1250kD-80kbs` is a profile name.
 
 
 

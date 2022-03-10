@@ -208,4 +208,17 @@ It means that benchmarking is finished and the cluster is stopped. The run direc
 
 ## Benchmark Analyze
 
-After the benchmark is finished, we have to analyze its results.
+After the benchmark is finished, you want to analyze its results. To do it, switch to `workbench-1` window and use the command `wb`. This is an example:
+
+```
+$ wb --cls a --filters size-full std 2022-03-07-04.05.160222.cc1e.k51-5ep-360kTx-4000kU-1000kD-64kbs
+```
+
+where:
+
+1. `--cls` means "clear screen",
+2. `a` means "analyse",
+3. `--filters size-full` means "filter full blocks",
+4. `2022-03-07-04.05.160222.cc1e.k51-5ep-360kTx-4000kU-1000kD-64kbs` is full id of benchmark: `TIMESTAMP.BATCH.COMMIT.PROFILENAME`.
+
+

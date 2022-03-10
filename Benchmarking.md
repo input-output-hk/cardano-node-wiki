@@ -24,4 +24,4 @@ Clone `cardano-ops` repository, go to it, switch to `bench-master` branch and fi
 
 Now log in to `bench-deployer` server using `ssh bench` command.
 
-**IMPORTANT**: Please remember that all actions on `bench-deployer` must be performed in `screen` emulation. So first of all, run `screen -x` command.
+**IMPORTANT**: Please remember that all actions on `bench-deployer` server must always be performed in `screen` emulation. So first of all, run `screen -x` command.

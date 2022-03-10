@@ -1,4 +1,4 @@
-This page describes the benchmarking procedure.
+This page describes the complete benchmarking procedure.
 
 ## Bench Deployer Access
 

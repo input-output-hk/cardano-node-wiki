@@ -26,9 +26,10 @@ Now log in to `bench-deployer` server using `ssh bench` command.
 
 **IMPORTANT**: Please remember that all actions on `bench-deployer` server must always be performed in `screen` emulation. So first of all, run `screen -x` command.
 
-There are a few important `screen`-windows:
+There are important `screen`-windows we need:
 
-1. `bench-0` - for running benchmarks on small clusters.
-2. `bench-1` - for running benchmarks on big (real-world) clusters.
-3. `bench-2` - for running benchmarks on small clusters.
-4. `workbench-1` - for running analyzing of benchmarks results.
+1. `bench-0` - for running benchmarks on **small** clusters.
+2. `bench-1` - for running benchmarks on **big** (real-world) clusters.
+3. `bench-2` - for running benchmarks on **small** clusters.
+4. `workbench-1` - for running **analyzing** of benchmarks results.
+

@@ -115,5 +115,5 @@ Other numbers in profile's name are default ones. For example, `5ep` means that 
 As you can see, there are 3 big groups of profiles:
 
 1. with word `regression` - default profiles,
-2. with word `Plutus` - profiles with smart contracts,
-3. with word `rtsflags` - like default profiles, but with specific RTS flags.
+2. with word `rtsflags` - like default profiles, but with specific RTS flags,
+3. with word `Plutus` - profiles with smart contracts.

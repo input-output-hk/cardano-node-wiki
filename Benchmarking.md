@@ -151,10 +151,23 @@ Here you can see the following arguments:
 3. `origin/master` is a commit spec for `cardano-node` repository, here we want to take the latest commit from the `master` branch. It's possible to use a commit hash as well.
 4. `k2-5ep-360kTx-7000kU-1250kD-80kbs` is a profile name.
 
+The benchmark will be launched. The following line shows the current profile:
 
+```
+--( benchmarking profile:  k2-5ep-360kTx-7000kU-1250kD-80kbs, batch training, node baa9b5e59c5d448d475f94cc88a31a5857c2bda5 (origin/master)
+```
 
+If the genesis for this profile does not exist yet, you will see this line:
 
+```
+--( generating genesis due to miss:  k2-d1-1250kD-7000kU-84cb500 @ ../geneses/k2-d1-1250kD-7000kU-84cb500
+```
 
+But if the corresponding genesis already exists, the line will differ:
+
+```
+--( genesis cache hit:  k2-d1-1250kD-7000kU-84cb500
+```
 
 
 

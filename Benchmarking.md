@@ -112,6 +112,6 @@ Here you can see the following numbers that are specific for this profile:
 
 Other numbers in profile's name are default ones:
 
-1. `k2` means that .
-2. `5ep` means that ,
-3. `360kTx` means that .
+1. `k2` means that there are `2` pools based on genesis,
+2. `5ep` means that tx generator will work during `5` epochs,
+3. `360kTx` means that tx generator will generate `360k` transactions.

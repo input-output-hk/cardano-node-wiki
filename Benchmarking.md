@@ -28,7 +28,7 @@ Now log in to `bench-deployer` server using `ssh bench` command.
 
 There are a few important `screen`-windows:
 
-1. `bench-0`
-2. `bench-1`
-3. `bench-2`
-4. `workbench-1`
+1. `bench-0` - for running benchmarks on small clusters.
+2. `bench-1` - for running benchmarks on big (real-world) clusters.
+3. `bench-2` - for running benchmarks on small clusters.
+4. `workbench-1` - for running analyzing of benchmarks results.

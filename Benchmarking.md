@@ -37,13 +37,15 @@ By default, when you switch to some `screen`-window, you are in `nix-shell`. If 
 
 Each benchmark has a **profile**. The profile is a set of parameters that specify its particular details.
 
-Switch to `screen`-window `bench-0` and run:
+Switch to `screen`-window `bench-0` and run the following command:
 
 ```
 $ b ps
 ```
 
-You'll see the list of long names, for example:
+The command `b` is from "benchmark", it's a basic command for benchmarking.
+
+You will see the list of long names, for example:
 
 ```
 --( 2022-03-10T10:29:41+00:00:  ps
@@ -119,4 +121,39 @@ As you can see, there are 3 big groups of profiles:
 1. with word `regression` - default profiles,
 2. with word `rtsflags` - like default profiles, but with specific RTS flags,
 3. with word `Plutus` - profiles with smart contracts.
+
+## Benchmark Run
+
+Suppose you want to run a benchmark using a profile from our example, `k2-5ep-360kTx-7000kU-1250kD-80kbs`. Go to `bench-deployer` server, switch to `bench-0` window and run the command:
+
+```
+$ git log
+```
+
+Make sure you have the latest commit of `bench-master` and the branch has a clean status.
+
+After that, run the command:
+
+```
+$ b reinit
+```
+
+And then, you are ready to run a benchmark:
+
+```
+$ b p training origin/master k2-5ep-360kTx-7000kU-1250kD-80kbs
+```
+
+Here you can see the following arguments:
+
+1. `p` means "profile", so we want to run a benchmark with particular profile.
+2. `training` is a batch name we use to describe this benchmark.
+3. `origin/master` is a commit spec for `cardano-node` repository, here we want to take the latest commit from the `master` branch.
+
+
+
+
+
+
+
 

@@ -18,3 +18,4 @@ Also, please make sure you have access to [cardano-ops](https://github.com/input
 
 Each benchmark has a **profile**. The profile is a set of parameters that specify its particular details.
 
+Open your `cardano-ops` repository, switch to `bench-master` branch and find `bench/profile-definitions.jq` file. This file describes existing profiles.

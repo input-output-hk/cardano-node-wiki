@@ -14,12 +14,6 @@ You will be logged in as `dev@bench-deployer`.
 
 Also, please make sure you have access to [cardano-ops](https://github.com/input-output-hk/cardano-ops) repository. You need it to be able to push in our branch `bench-master`.
 
-## Benchmarking Profiles: Intro
-
-Each benchmark has a **profile**. The profile is a set of parameters that specify its particular details.
-
-Clone `cardano-ops` repository, go to it, switch to `bench-master` branch and find `bench/profile-definitions.jq` file. This file describes existing profiles, we'll explore it later.
-
 ## Working on Bench Deployer: Main Rules
 
 Now log in to `bench-deployer` server using `ssh bench` command.
@@ -40,6 +34,8 @@ To move between `screen`-windows, use following key combinations: `(Ctrl+A)+P` (
 By default, when you switch to some `screen`-window, you are in `nix-shell`. If you exited from it, it's possible to go back inside `nix-shell` using `nsh` command.
 
 ## Benchmarking Profiles on Bench Deployer
+
+Each benchmark has a **profile**. The profile is a set of parameters that specify its particular details.
 
 Switch to `screen`-window `bench-0` and run:
 
@@ -78,7 +74,9 @@ You'll see the list of long names, for example:
                                   k2-5ep-360kTx-4000kU-1000kD-64kbs-RTS--C0-A32m-n1m-AL512M: rtsflags: suggestion from PR 3399
 ```
 
-These long names are the names of available profiles. For example, `k2-5ep-360kTx-7000kU-1250kD-80kbs` is the name of profile, and `regression, March 2022 data set sizes` is its description. Now you can open `bench/profile-definitions.jq` file in your `cardano-ops` repository and find `utxo_delegators_density_profiles` function with this `desc` inside:
+These long names are the names of available profiles. For example, `k2-5ep-360kTx-7000kU-1250kD-80kbs` is the name of profile, and `regression, March 2022 data set sizes` is its description.
+
+Now clone `cardano-ops` repository, go to it, switch to `bench-master` branch and find `bench/profile-definitions.jq` file. This file describes existing profiles. Find `utxo_delegators_density_profiles` function with this `desc` inside:
 
 ```
 { desc: "regression, March 2022 data set sizes"
@@ -91,4 +89,6 @@ These long names are the names of available profiles. For example, `k2-5ep-360kT
 
 As you can see, here we specify a profile that can be used on `bench-deployer` server.
 
-All the numbers will be described below.
+All the numbers are described below.
+
+## Benchmarking Profiles

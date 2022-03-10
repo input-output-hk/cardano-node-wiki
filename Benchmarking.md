@@ -78,4 +78,17 @@ You'll see the list of long names, for example:
                                   k2-5ep-360kTx-4000kU-1000kD-64kbs-RTS--C0-A32m-n1m-AL512M: rtsflags: suggestion from PR 3399
 ```
 
-These long names are the names of profiles. For example, `k2-5ep-360kTx-7000kU-1250kD-80kbs` is the name of profile, and `regression, March 2022 data set sizes` is its description.
+These long names are the names of available profiles. For example, `k2-5ep-360kTx-7000kU-1250kD-80kbs` is the name of profile, and `regression, March 2022 data set sizes` is its description. Now you can open `bench/profile-definitions.jq` file in your `cardano-ops` repository and find `utxo_delegators_density_profiles` function with this `desc` inside:
+
+```
+{ desc: "regression, March 2022 data set sizes"
+, genesis: { utxo:           7000000
+           , delegators:     1250000
+           , max_block_size: 80000
+           }
+}
+```
+
+As you can see, here we specify a profile that can be used on `bench-deployer` server.
+
+All the numbers will be described below.

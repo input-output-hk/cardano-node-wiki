@@ -186,3 +186,19 @@ Then, you will see the following lines:
 
 These lines describe deploying details. As you see, this small cluster has 4 hosts, including `explorer` node where tx generator is working.
 
+### Benchmark Finish
+
+After some time, you will see the following lines:
+
+```
+--( Mon 07 Mar 2022 07:14:44 PM UTC, termination condition satisfied, stopping cluster.
+--( run directory:  /home/dev/bench-0/runs/...
+...
+```
+
+It means that benchmarking is finished and the cluster is stopped. The run directory is the path with all the data relative to this run: cluster params, genesis, configs, nodes' logs, etc. 
+
+
+
+
+

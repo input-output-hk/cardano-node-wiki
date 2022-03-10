@@ -92,3 +92,22 @@ As you can see, here we specify a profile that can be used on `bench-deployer` s
 All the numbers are described below.
 
 ## Benchmarking Profiles
+
+The name of each profile is generated automatically and contains profile's main parameters. For example, compare the name `k2-5ep-360kTx-7000kU-1250kD-80kbs` with its description in `bench/profile-definitions.jq` file:
+
+```
+{ desc: "regression, March 2022 data set sizes"
+, genesis: { utxo:           7000000
+           , delegators:     1250000
+           , max_block_size: 80000
+           }
+}
+```
+
+Here you can see:
+
+1. `7000kU` means that `utxo` is `7000000`,
+2. `1250kD` means that `delegators` is `1250000`,
+3. `80kbs` means that `max_block_size` is `80000` bytes.
+
+

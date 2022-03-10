@@ -110,8 +110,5 @@ Here you can see the following numbers that are specific for this profile:
 2. `1250kD` means that `delegators` is `1250000`,
 3. `80kbs` means that `max_block_size` is `80000` bytes.
 
-Other numbers in profile's name are default ones:
+Other numbers in profile's name are default ones. For example, `5ep` means that tx generator will work during `5` epochs, and `360kTx` means that tx generator will generate `360k` transactions.
 
-1. `k2` means that there are `2` pools based on genesis,
-2. `5ep` means that tx generator will work during `5` epochs,
-3. `360kTx` means that tx generator will generate `360k` transactions.

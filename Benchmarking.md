@@ -207,3 +207,5 @@ After some time, you will see the following lines:
 It means that benchmarking is finished and the cluster is stopped. The run directory is the path with all the data relative to this run: cluster params, genesis, configs, nodes' logs, etc. 
 
 ## Benchmark Analyze
+
+After the benchmark is finished, we have to analyze its results.

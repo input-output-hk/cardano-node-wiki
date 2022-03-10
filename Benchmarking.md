@@ -33,6 +33,14 @@ To move between `screen`-windows, use following key combinations: `(Ctrl+A)+P` (
 
 By default, when you switch to some `screen`-window, you are in `nix-shell`. If you exited from it, it's possible to go back inside `nix-shell` using `nsh` command.
 
+## Benchmarking: 3 steps
+
+From the highest point of view, the benchmarking task includes 3 big steps:
+
+1. Preparing the profile for the benchmark.
+2. Running the benchmark on the cluster.
+3. Analyzing benchmark results.
+
 ## Benchmarking Profiles on Bench Deployer
 
 Each benchmark has a **profile**. The profile is a set of parameters that specify its particular details.

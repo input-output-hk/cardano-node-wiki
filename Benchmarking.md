@@ -14,7 +14,7 @@ You will be logged in as `dev@bench-deployer`.
 
 Also, please make sure you have access to [cardano-ops](https://github.com/input-output-hk/cardano-ops) repository. You need it to be able to push in our branch `bench-master`.
 
-## Benchmarking Profiles
+## Benchmarking Profiles: Intro
 
 Each benchmark has a **profile**. The profile is a set of parameters that specify its particular details.
 
@@ -38,3 +38,42 @@ To move between `screen`-windows, use following key combinations: `(Ctrl+A)+P` (
 **IMPORTANT**: do not use `exit` command in the `screen`-window! Instead, just close your terminal window, to keep `screen`-window working.
 
 By default, when you switch to some `screen`-window, you are in `nix-shell`. If you exited from it, it's possible to go back inside `nix-shell` using `nsh` command.
+
+## Benchmarking Profiles on Bench Deployer
+
+Switch to `screen`-window `bench-0` and run:
+
+```
+$ b ps
+```
+
+You'll see the list of long names, for example:
+
+```
+--( 2022-03-10T10:29:41+00:00:  ps
+--( NIXOPS_DEPLOYMENT:  bench-0 (inherited)
+                                                                                      smoke: 
+                                                                                smoke-epoch: 
+                                                                          smoke-dense-large: 
+                                                                           smoke-large-1000: 
+                                                                           smoke-large-5000: 
+ k2-5ep-360kTx-4000kU-1000kD-64kbs-10MUTx-10BStTx-50MUBk-40BStBk-always-succeeds-spending-0: Plutus return-success
+             k2-5ep-7.5kTx-4000kU-1000kD-64kbs-10MUTx-10BStTx-50MUBk-40BStBk-1i-1o-sum-3304: Plutus, 1e10-cpu
+            k2-5ep-0.08kTx-4000kU-1000kD-64kbs-10MUTx-10BStTx-50MUBk-40BStBk-1i-1o-sum-3304: Plutus, 1e10-cpu smoke
+             k2-5ep-7.5kTx-4000kU-1000kD-64kbs-10MUTx-10BStTx-50MUBk-40BStBk-1i-1o-sum-1144: Plutus, 1e7-mem
+                k2-5ep-0.1kTx-4000kU-1000kD-64kbs-10MUTx-10BStTx-50MUBk-40BStBk-1i-1o--null: Plutus, auto-mode-smoke-test
+                 k2-7ep-14kTx-4000kU-1000kD-64kbs-10MUTx-10BStTx-50MUBk-40BStBk-1i-1o--null: Plutus, baseline
+                 k2-7ep-14kTx-4000kU-1000kD-73kbs-11MUTx-10BStTx-50MUBk-40BStBk-1i-1o--null: Plutus, bump 1, Dec 2 2021
+                 k2-7ep-14kTx-4000kU-1000kD-73kbs-12MUTx-10BStTx-50MUBk-40BStBk-1i-1o--null: Plutus, bump 2, 2022
+                                                          k2-5ep-360kTx-7000kU-1250kD-80kbs: regression, March 2022 data set sizes
+                                                          k2-5ep-360kTx-4000kU-1000kD-64kbs: regression, October 2021 data set sizes
+                                      k2-5ep-360kTx-4000kU-1000kD-64kbs-RTS--H4G-M6553M-c70: rtsflags: batch1, best CPU/mem
+                                          k2-5ep-360kTx-4000kU-1000kD-64kbs-RTS--H4G-M6553M: rtsflags: batch1, better mem, costlier CPU
+                                                 k2-5ep-360kTx-4000kU-1000kD-64kbs-RTS--A4m: rtsflags: cache fitting
+                                              k2-5ep-360kTx-4000kU-1000kD-64kbs-RTS--A4m-N4: rtsflags: cache fitting + higher parallelism
+                                                 k2-5ep-360kTx-4000kU-1000kD-64kbs-RTS--A1m: rtsflags: cache fitting extreme
+                                              k2-5ep-360kTx-4000kU-1000kD-64kbs-RTS--A1m-N4: rtsflags: cache fitting extreme + parallelism
+                                                 k2-5ep-360kTx-4000kU-1000kD-64kbs-RTS--A2m: rtsflags: cache fitting hard
+                                              k2-5ep-360kTx-4000kU-1000kD-64kbs-RTS--A2m-N4: rtsflags: cache fitting hard + parallelism
+                                  k2-5ep-360kTx-4000kU-1000kD-64kbs-RTS--C0-A32m-n1m-AL512M: rtsflags: suggestion from PR 3399
+```

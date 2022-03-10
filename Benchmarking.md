@@ -20,7 +20,7 @@ Each benchmark has a **profile**. The profile is a set of parameters that specif
 
 Clone `cardano-ops` repository, go to it, switch to `bench-master` branch and find `bench/profile-definitions.jq` file. This file describes existing profiles, we'll explore it later.
 
-## Working on Bench Deployer
+## Working on Bench Deployer: Main Rules
 
 Now log in to `bench-deployer` server using `ssh bench` command.
 

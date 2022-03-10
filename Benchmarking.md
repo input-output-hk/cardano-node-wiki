@@ -169,5 +169,20 @@ But if the corresponding genesis already exists, the line will differ:
 --( genesis cache hit:  k2-d1-1250kD-7000kU-84cb500
 ```
 
+Then, you will see the following lines:
 
+```
+--( deploying profile k2-5ep-360kTx-7000kU-1250kD-80kbs
+--(   era:           alonzo
+--(   topology:      dense
+--(   node:          baa9b5e59c5d448d475f94cc88a31a5857c2bda5 / origin/master
+--(   ops:           9c42c56104742c591bb5f2867efaa6b61d03dc58 / bench-master  (modified)
+--(   generator:     {"add_tx_size":100,"init_cooldown":45,"inputs_per_tx":2,"outputs_per_tx":2,"tx_fee":1000000,"tps":9,"era":"alonzo","tx_count":360000}
+--(   genesis:       {.......}
+--(   node:          {"rts_flags_override":[]}
+--( hosts to deploy:  4 total:  explorer node-0 node-1 node-2
+--( that's deployable in one go -- blasting ahead
+``` 
+
+These lines describe deploying details. As you see, this small cluster has 4 hosts, including `explorer` node where tx generator is working.
 

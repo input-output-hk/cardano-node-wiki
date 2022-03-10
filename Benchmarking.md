@@ -206,7 +206,7 @@ After some time, you will see the following lines:
 
 It means that benchmarking is finished and the cluster is stopped. The run directory is the path with all the data relative to this run: cluster params, genesis, configs, nodes' logs, etc. 
 
-## Benchmark Analyze
+## Benchmark Analyze: Run
 
 After the benchmark is finished, you want to analyze its results. To do it, switch to `workbench-1` window and use the command `wb`. This is an example:
 
@@ -221,4 +221,13 @@ where:
 3. `--filters size-full` means "filter full blocks",
 4. `2022-03-07-04.05.160222.cc1e.k51-5ep-360kTx-4000kU-1000kD-64kbs` is full id of benchmark: `TIMESTAMP.BATCH.COMMIT.PROFILENAME`.
 
+## Benchmark Analyze: Results
 
+After `wb` is finished, you can find the `analysis` directory in `run directory`. For example, `~/bench-1/runs/2022-03-07-04.05.160222.cc1e.k51-5ep-360kTx-4000kU-1000kD-64kbs/analysis`.
+
+This directory contains txt files you need:
+
+1. `logs-node-1.timeline.txt`
+2. `block-propagation.txt`
+
+These files contains [CDF](https://en.wikipedia.org/wiki/Cumulative_distribution_function) data.

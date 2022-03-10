@@ -104,10 +104,14 @@ The name of each profile is generated automatically and contains profile's main 
 }
 ```
 
-Here you can see:
+Here you can see the following numbers that are specific for this profile:
 
 1. `7000kU` means that `utxo` is `7000000`,
 2. `1250kD` means that `delegators` is `1250000`,
 3. `80kbs` means that `max_block_size` is `80000` bytes.
 
+Other numbers in profile's name are default ones:
 
+1. `k2` means that .
+2. `5ep` means that ,
+3. `360kTx` means that .

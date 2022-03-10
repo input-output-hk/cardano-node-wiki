@@ -112,3 +112,8 @@ Here you can see the following numbers that are specific for this profile:
 
 Other numbers in profile's name are default ones. For example, `5ep` means that tx generator will work during `5` epochs, and `360kTx` means that tx generator will generate `360k` transactions.
 
+As you can see, there are 3 big groups of profiles:
+
+1. with word `regression` - default profiles,
+2. with word `Plutus` - profiles with smart contracts,
+3. with word `rtsflags` - like default profiles, but with specific RTS flags.

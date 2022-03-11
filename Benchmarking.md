@@ -333,6 +333,20 @@ There are real-life examples of benchmarking results.
   1.0   0.99   2.53   3.93   6.16   0.06   2.92   51.3 14.09  7.5  31.39  2.96 57.79 38.69 49.65 55.43  57.4 61.08  61.3 68.26 84.76     63419
 ```
 
+Let's explore how to extract some valuable data from it.
+
+```
+                --- Forger event Δt: ---                --- Peer event Δt: --- 
+ %tile  Checkd Leadin Forge  Adopt  Announ Sendin Notic Reque Fetch Adopt Annou Send    
+  0.0     0      0      0    0.02   -0.02    0    0.02   0     0     0   -7.46   0    
+  ... 
+  0.5     0      0    0.03   0.03     0    0.01   0.3    0    0.28  0.03   0    0.03 
+  ...
+0.9999  0.99   2.38   3.87   5.13   0.04   2.92  38.97 10.27  2.57 13.07  1.1  31.42
+```
+
+The percentile in the left column shows the distribution. Here you can see that 50% of blocks were sent to all peers in 30 ms, but in the worst cases it took 31.42 s.
+
 ### `logs-node-1.timeline.txt`
 
 ```
@@ -370,7 +384,7 @@ There are real-life examples of benchmarking results.
   avg  0.01 0.041 0.013 0.080 20.9 0.051 37. 22. 15. 0.0 13. 5016. 4983. 2087. 468.1 12.62 178.0
 ```
 
-Let's explore how we can extract some valuable data from it.
+Let's explore how to extract some valuable data from it.
 
 ```
         ...  CPU ...
@@ -382,4 +396,4 @@ Let's explore how we can extract some valuable data from it.
   ...   
 ```
 
-The percentile in the left column shows the distribution. For example, 60% of the time only 2% CPU was used.
+The percentile in the left column shows the distribution. Here you can see that 60% of the time only 2% CPU was used.

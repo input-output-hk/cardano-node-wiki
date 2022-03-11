@@ -295,7 +295,7 @@ lehins/ledger-bump-------------------------------------
 
 ## Benchmark Analyze: Examples
 
-`block-propagation.txt`
+### `block-propagation.txt`
 
 ```
                 --- Forger event Δt: ---                --- Peer event Δt: ---               Slot-rel. Δt to adoption centile:          Size   
@@ -331,7 +331,7 @@ lehins/ledger-bump-------------------------------------
   1.0   0.99   2.53   3.93   6.16   0.06   2.92   51.3 14.09  7.5  31.39  2.96 57.79 38.69 49.65 55.43  57.4 61.08  61.3 68.26 84.76     63419
 ```
 
-`logs-node-1.timeline.txt`
+### `logs-node-1.timeline.txt`
 
 ```
         Miss   ---- Δt ----   Block Dens  CPU GC  MUT GC flt  Memory usage, MB  AllocCPU85% spans

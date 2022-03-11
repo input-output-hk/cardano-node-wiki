@@ -336,13 +336,13 @@ There are real-life examples of benchmarking results.
 Let's explore how to extract some valuable data from it.
 
 ```
-                --- Forger event Δt: ---                --- Peer event Δt: --- 
- %tile  Checkd Leadin Forge  Adopt  Announ Sendin Notic Reque Fetch Adopt Annou Send    
-  0.0     0      0      0    0.02   -0.02    0    0.02   0     0     0   -7.46   0    
+            --- Peer event Δt: --- 
+ %tile  ... Reque Fetch Adopt Annou Send    
+  0.0         0    0     0    -7.46   0    
   ... 
-  0.5     0      0    0.03   0.03     0    0.01   0.3    0    0.28  0.03   0    0.03 
+  0.5   ...   0    0.28  0.03   0    0.03 
   ...
-0.9999  0.99   2.38   3.87   5.13   0.04   2.92  38.97 10.27  2.57 13.07  1.1  31.42
+0.9999  ... 10.27  2.57 13.07  1.1  31.42
 ```
 
 The percentile in the left column shows the distribution. Here you can see that 50% of blocks were sent to all peers in 30 ms, but in the worst cases it took 31.42 s.

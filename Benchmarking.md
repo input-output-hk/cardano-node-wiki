@@ -230,7 +230,7 @@ This directory contains txt files you need:
 1. `logs-node-1.timeline.txt`
 2. `block-propagation.txt`
 
-These files contains [CDF](https://en.wikipedia.org/wiki/Cumulative_distribution_function) data which can be used to form the results like these ones:
+These files contain [CDF](https://en.wikipedia.org/wiki/Cumulative_distribution_function) data which can be used to form the results like these ones:
 
 ```
 |                       | 1.34.0-rc3 | ledger-bump |    Δ |  Δ% |
@@ -292,3 +292,7 @@ lehins/ledger-bump-------------------------------------
   1.0   55.75 71.94 83.88 84.51 84.89 87.69 92.82 99.08
   avg   1.051 1.489 1.645 1.681 1.720 1.766 1.835 2.055
 ```
+
+## Benchmark Analyze: Examples
+
+

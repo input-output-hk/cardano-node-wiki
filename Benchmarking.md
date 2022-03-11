@@ -347,6 +347,18 @@ Let's explore how to extract some valuable data from it.
 
 The percentile in the left column shows the distribution. Here you can see that 50% of blocks were sent to all peers in 30 ms, but in the worst cases it took 31.42 s. And 50% of block adoption took 30 ms, but in the worst cases it took 13.07 s. 
 
+```
+                --- Forger event Δt: ---                   
+ %tile  Checkd Leadin Forge  Adopt  Announ Sendin    
+  0.0     0      0      0    0.02   -0.02    0        
+  ...   
+  0.5     0      0    0.03   0.03     0    0.01   
+  ... 
+0.9999  0.99   2.38   3.87   5.13   0.04   2.92   
+```
+
+Here you can see that 50% of block forging took 30 ms, but in the worst cases it took 3.83 s.
+
 ### `logs-node-1.timeline.txt`
 
 ```

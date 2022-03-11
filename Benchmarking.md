@@ -373,12 +373,12 @@ There are real-life examples of benchmarking results.
 Let's explore how we can extract some valuable data from it.
 
 ```
-        Miss   ---- Δt ----   Block Dens  CPU ...
- %tile ratio Check Lead  Forge gap   ity   %  
-  0.0   0.0   0     0    0.03    0 0.017   0   
+        ...  CPU ...
+ %tile  ...   %  
+  0.0   ...   0   
   ...   
-  0.6   0.0   0     0    0.04   19 0.051   2    
-  0.7   0.0   0     0    0.07   25 0.057 100
+  0.6   ...   2    
+  0.7   ... 100
   ...   
 ```
 

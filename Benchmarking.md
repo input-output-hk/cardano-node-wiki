@@ -345,7 +345,7 @@ Let's explore how to extract some valuable data from it.
 0.9999  ... 10.27  2.57 13.07  1.1  31.42
 ```
 
-The percentile in the left column shows the distribution. Here you can see that 50% of blocks were sent to all peers in 30 ms, but in the worst cases it took 31.42 s.
+The percentile in the left column shows the distribution. Here you can see that 50% of blocks were sent to all peers in 30 ms, but in the worst cases it took 31.42 s. And 50% of block adoption took 30 ms, but in the worst cases it took 13.07 s. 
 
 ### `logs-node-1.timeline.txt`
 

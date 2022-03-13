@@ -418,7 +418,8 @@ The percentile in the left column shows the distribution. Here you can see that 
   0.6   ...   0
   0.7   ...  38
   ...
-0.9999  ... 100
+ 0.999  ... 100
+  ...
 ```
 
-Here you can see that 60% of the time GC wasn't performed at all but in the worst cases, 100% of CPU time was spent for GC actions.
+Here you can see that 60% of the time GC wasn't performed at all but 0.1% of the time 100% of CPU time was spent for GC actions.

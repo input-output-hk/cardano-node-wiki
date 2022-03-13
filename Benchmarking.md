@@ -409,3 +409,16 @@ Let's explore how to extract some valuable data from it.
 ```
 
 The percentile in the left column shows the distribution. Here you can see that 60% of the time only 2% CPU was used.
+
+```
+        ...  GC ...
+ %tile  ...   %  
+  0.0   ...   0   
+  ...     
+  0.6   ...   0
+  0.7   ...  38
+  ...
+0.9999  ... 100
+```
+
+Here you can see that 60% of the time GC wasn't performed but in the worst cases, there were 100 GC acts per second.

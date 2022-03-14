@@ -41,11 +41,11 @@ From the most general point of view, the task of benchmarking task can be decomp
 2. Running the benchmark on the cluster.
 3. Analyzing benchmark results.
 
-## Benchmarking Profiles on Bench Deployer
+## Defining new benchmarking profiles
 
-Each benchmark has a **profile**. The profile is a set of parameters that specify its particular details.
+Each benchmark is completely specified by a **profile** -- which is a set of parameters that specify all of its particular details.
 
-Switch to `screen`-window `bench-0` and run the following command:
+To see a list of profiles available on the `bench-0` cluster, switch to `screen`-window `bench-0` and run the following command:
 
 ```
 $ b ps   ## Short-hand for `bench list-profiles`

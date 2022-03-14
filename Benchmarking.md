@@ -381,7 +381,8 @@ Here you can see that 50% of block forging took 30 ms, but in the worst cases it
   0.9   0.0  0.01   0    0.09   48 0.076 101  83  54   0  55  5391  5358  2676  1872    15   174
  0.925  0.0  0.13   0    0.09   54 0.081 102  87  62   1  61  5391  5358  2683  2170    15   174
  0.95   0.0  0.39   0    0.1    63 0.088 105  91  66   1  68  5391  5358  2702  2561    15   174
- 0.97   0.0  0.61  0.01  0.1    77 0.093 117  93  76   1  73  5391  5358  2718  2795    15   174
+ 0.97   0.0  0.61  0.01  0.1    77Here you can see that 60% of the time GC wasn't performed at all but 0.1% of the time 100% of CPU time was spent for GC actions.
+ 0.093 117  93  76   1  73  5391  5358  2718  2795    15   174
  0.98   0.0  0.73  0.01  0.1    88 0.097 125  94  85   1  78  5391  5358  2724  2973    16   174
  0.99   1.0  0.85  0.01  0.1   106 0.105 137  96  98   1  81  5391  5358  2747  3080    16   174
  0.995  1.0  0.91  1.81  0.1   124 0.112 150  98 111   1  84  5391  5358  2794  3139    18   174
@@ -423,3 +424,16 @@ The percentile in the left column shows the distribution. Here you can see that 
 ```
 
 Here you can see that 60% of the time GC wasn't performed at all but 0.1% of the time 100% of CPU time was spent for GC actions.
+
+```
+ %tile  ...  Block ...
+              gap     
+  0.0   ...    0   
+  ...     
+  0.5   ...   14
+  ...
+ 0.9999 ...  203
+  ...
+```
+
+Here you can see that 50% of the time block gap was 14 seconds or less, but in the worst cases, there were no blocks during 203 s.

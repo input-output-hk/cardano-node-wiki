@@ -2,7 +2,7 @@ This page describes the complete benchmarking procedure.
 
 ## Bench Deployer Access
 
-First of all, please make sure you have access to the `bench-deployer` server by typing this command on your computer:
+First of all, please make sure you have access to the `bench-deployer` host by typing this command on your computer:
 
 ```
 $ ssh bench
@@ -12,13 +12,13 @@ You will be logged in as `dev@bench-deployer`.
 
 ## `cardano-ops` Repository
 
-Also, please make sure you have access to [cardano-ops](https://github.com/input-output-hk/cardano-ops) repository. You need it to be able to push in our branch `bench-master`.
+Also, please make sure you have access to [cardano-ops](https://github.com/input-output-hk/cardano-ops) repository. You need it to be able to push into the `bench-master` branch, which is used for benchmarking deployments.
 
 ## Working on Bench Deployer: Main Rules
 
 Now log in to `bench-deployer` server using `ssh bench` command.
 
-**IMPORTANT**: Please remember that all actions on `bench-deployer` server must always be performed in `screen` emulation. So first of all, run `screen -x` command.
+**IMPORTANT**: Please remember that all actions on `bench-deployer` server must always be performed inside the dedicated `screen` session. So first of all, run `screen -x` command to join that session.
 
 There are important `screen`-windows we need:
 
@@ -35,7 +35,7 @@ By default, when you switch to some `screen`-window, you are in `nix-shell`. If 
 
 ## Benchmarking: 3 steps
 
-From the highest point of view, the benchmarking task includes 3 big steps:
+From the most general point of view, the task of benchmarking task can be decomposed into 3 big steps:
 
 1. Preparing the profile for the benchmark.
 2. Running the benchmark on the cluster.
@@ -48,10 +48,10 @@ Each benchmark has a **profile**. The profile is a set of parameters that specif
 Switch to `screen`-window `bench-0` and run the following command:
 
 ```
-$ b ps
+$ b ps   ## Short-hand for `bench list-profiles`
 ```
 
-The command `b` is from "benchmark", it's a basic command for benchmarking.
+The command `b` stands for "benchmark", it's the basic entry point for benchmarking orchestration.
 
 You will see the list of long names, for example:
 

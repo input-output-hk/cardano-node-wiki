@@ -428,11 +428,11 @@ Here you can see that 60% of the time GC wasn't performed at all but 0.1% of the
 ```
  %tile  ...  Block ...
               gap     
-  0.0   ...    0   
+  0.0   ...     0   
   ...     
-  0.5   ...   14
+  0.5   ...    14
   ...
- 0.9999 ...  203
+ 0.9999 ...   203
   ...
 ```
 

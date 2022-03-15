@@ -1,0 +1,1 @@
+This document provides a step-by-step example of how to work with `demo-acceptor`.

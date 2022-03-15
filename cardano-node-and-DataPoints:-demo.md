@@ -33,3 +33,23 @@ $ cabal build exe:demo-acceptor
 
 As a result, `demo-acceptor` will be built.
 
+## `demo-acceptor`: running
+
+Now you can run `demo-acceptor` (it is assumed that you are in the directory with `demo-acceptor` in it):
+
+```
+$ ./demo-acceptor /tmp/forwarder.sock Responder NodeInfo
+```
+
+where:
+
+1. `/tmp/forwarder.sock` is the path to the local socket. Please make sure it equals the path in `TraceOptionForwarder.address.filePath` from the node's configuration.
+2. `Responder` is a network mode for `demo-acceptor`. Currently, it's `Responder`, so `TraceOptionForwarder.mode` from the node's configuration must be `Initiator`.
+3. `NodeInfo` is the name of `DataPoint` we want to ask.
+
+
+
+
+
+
+

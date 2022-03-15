@@ -47,9 +47,26 @@ where:
 2. `Responder` is a network mode for `demo-acceptor`. Currently, it's `Responder`, so `TraceOptionForwarder.mode` from the node's configuration must be `Initiator`.
 3. `NodeInfo` is the name of `DataPoint` we want to ask.
 
+## Examples of `DataPoint`s
 
+After you ran `demo-acceptor` and `cardano-node`, you will see such output for `NodeInfo`:
 
+```
+DataPoint, name: NodeInfo, raw value: {"niName":"nixos","niCommit":"36bbbae36026dc8dc370b598b061f67ed97008b9","niStartTime":"2022-03-15T18:11:14.412855063Z","niVersion":"1.33.0","niSystemStartTime":"2017-09-23T21:44:51Z","niProtocol":"Byron; Shelley"}
+...
+``` 
 
+And this is an example of output for `NodeState`:
 
+```
+DataPoint, name: NodeState, raw value: {"contents":{"tag":"StartedOpeningImmutableDB"},"tag":"NodeOpeningDbs"}
+DataPoint, name: NodeState, raw value: {"contents":{"tag":"StartedOpeningVolatileDB"},"tag":"NodeOpeningDbs"}
+DataPoint, name: NodeState, raw value: {"contents":"InitChainStartedSelection","tag":"NodeInitChainSelection"}
+DataPoint, name: NodeState, raw value: {"contents":"InitChainSelected","tag":"NodeInitChainSelection"}
+DataPoint, name: NodeState, raw value: {"contents":"InitChainSelected","tag":"NodeInitChainSelection"}
+DataPoint, name: NodeState, raw value: {"contents":[26,20668,0],"tag":"NodeAddBlock"}
+DataPoint, name: NodeState, raw value: {"contents":[26,21014,0],"tag":"NodeAddBlock"}
+...
+```
 
-
+As you can see, `demo-acceptor` is displaying received `DataPoint` as a raw `ByteString`. This was made for simplicity: in this case, `demo-acceptor` shouldn't know an actual Haskell type of `DapaPoint`, so it can ask for any `DataPoint` provided by `cardano-node`.

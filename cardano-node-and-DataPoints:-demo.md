@@ -69,4 +69,4 @@ DataPoint, name: NodeState, raw value: {"contents":[26,21014,0],"tag":"NodeAddBl
 ...
 ```
 
-As you can see, `demo-acceptor` is displaying received `DataPoint` as a raw `ByteString`. This was made for simplicity: in this case, `demo-acceptor` shouldn't know an actual Haskell type of `DapaPoint`, so it can ask for any `DataPoint` provided by `cardano-node`.
+As you can see, `demo-acceptor` is displaying received `DataPoint` as a raw `ByteString`. This was made for simplicity: in this case, `demo-acceptor` shouldn't know an actual Haskell type of `DapaPoint`, so it can ask for _any_ `DataPoint` provided by `cardano-node`.

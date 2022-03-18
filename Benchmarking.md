@@ -233,11 +233,21 @@ processing ../bench-1/runs/2022-03-07-04.05.160222.cc1e.k51-5ep-360kTx-4000kU-10
 ...
 ```
 
+And finally:
+
+```
+...
+{ "pretty-timeline": "../bench-1/runs/2022-03-07-04.05.160222.cc1e.k51-5ep-360kTx-4000kU-1000kD-64kbs/analysis/block-propagation.txt" }
+...
+{ "pretty-timeline": "../bench-1/runs/2022-03-07-04.05.160222.cc1e.k51-5ep-360kTx-4000kU-1000kD-64kbs/analysis/logs-node-1.timeline.txt"  }
+...
+```
+
 ## Benchmark Analyze: Results
 
 After `wb` is finished, you can find the `analysis` directory in `run directory`. For example, `~/bench-1/runs/2022-03-07-04.05.160222.cc1e.k51-5ep-360kTx-4000kU-1000kD-64kbs/analysis`.
 
-This directory contains txt files you need:
+This directory contains two files you need:
 
 1. `logs-node-1.timeline.txt`
 2. `block-propagation.txt`

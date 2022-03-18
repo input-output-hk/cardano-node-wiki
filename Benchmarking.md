@@ -221,6 +221,18 @@ where:
 3. `--filters size-full` means "filter full blocks",
 4. `2022-03-07-04.05.160222.cc1e.k51-5ep-360kTx-4000kU-1000kD-64kbs` is full id of benchmark: `TIMESTAMP.BATCH.COMMIT.PROFILENAME`.
 
+You will see something like this:
+
+```
+...
+processing ../bench-1/runs/2022-03-07-04.05.160222.cc1e.k51-5ep-360kTx-4000kU-1000kD-64kbs/analysis/logs-node-0.flt.json
+processing ../bench-1/runs/2022-03-07-04.05.160222.cc1e.k51-5ep-360kTx-4000kU-1000kD-64kbs/analysis/logs-node-10.flt.json
+processing ../bench-1/runs/2022-03-07-04.05.160222.cc1e.k51-5ep-360kTx-4000kU-1000kD-64kbs/analysis/logs-node-11.flt.json
+processing ../bench-1/runs/2022-03-07-04.05.160222.cc1e.k51-5ep-360kTx-4000kU-1000kD-64kbs/analysis/logs-node-12.flt.json
+processing ../bench-1/runs/2022-03-07-04.05.160222.cc1e.k51-5ep-360kTx-4000kU-1000kD-64kbs/analysis/logs-node-13.flt.json
+...
+```
+
 ## Benchmark Analyze: Results
 
 After `wb` is finished, you can find the `analysis` directory in `run directory`. For example, `~/bench-1/runs/2022-03-07-04.05.160222.cc1e.k51-5ep-360kTx-4000kU-1000kD-64kbs/analysis`.

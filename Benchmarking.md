@@ -459,3 +459,74 @@ Here you can see that 60% of the time GC wasn't performed at all but 0.1% of the
 ```
 
 Here you can see that 50% of the time block gap was 14 seconds or less, but in the worst cases, there were no blocks during 203 s.
+
+## Benchmark Analyze: Release
+
+Usually, during the preparation of the node's release, we want to benchmark it. Final results should be placed in the following tables.
+
+### Resource Usage
+
+```
+|                       | 1.34.0-rc3 | 5f8d |    Δ |   Δ% | 
+|-----------------------+------------+------+------+------|
+| Avg process CPU usage |         39 |   44 |    5 |   12 |  
+| Avg RTS GC CPU usage  |         24 |   28 |    4 |   17 |   
+| Avg RTS Mut CPU usage |         16 |   16 |    0 |    0 |   
+| Avg RSS               |       5120 | 5135 |   15 |  0.3 | 
+| Avg RTS heap          |       5090 | 5060 |  -30 | -0.6 | 
+| Avg RTS GC live bytes |       2095 | 1688 | -407 |  -19 | 
+|-----------------------+------------+------+------+------|
+```
+
+### Forger (all times in milliseconds)
+
+```
+|                                   | 1.34.0-rc3 | 5f8d |   Δ |  Δ% | 
+|-----------------------------------+------------+------+-----+-----|
+| average leadership check Δt       |         41 |   54 |  13 |  32 |   
+| average leadership check duration |          5 |   22 |  17 | 340 |   
+| average forge time                |         68 |  137 |  69 | 101 |  
+| average adoption time             |         65 |   75 |  10 |  15 |   
+| average time to announce          |          1 |    2 |   1 |  50 |   
+| average time to start sending     |         27 |   36 |   9 |  33 |   
+|-----------------------------------+------------+------+-----+-----|
+|                                   |        207 |  326 | 119 |     | 
+```
+ 
+### Peers (all times in milliseconds)
+
+```
+|                               | 1.34.0-rc3 | 5f8d |   Δ |   Δ% |  
+|-------------------------------+------------+------+-----+------|
+| average first time to notice  |        496 |  671 | 175 |   35 | 
+|-------------------------------+------------+------+-----+------|
+| average time to request       |         12 |   25 |  13 |  108 |   
+| average time to fetch         |        370 |  360 | -10 |   -3 |   
+| average adoption time         |         63 |   85 |  22 |   35 |   
+| average time to announce      |          1 |    0 |  -1 | -100 |    
+| average time to start sending |        137 |  122 | -15 |  -11 | 
+|-------------------------------+------------+------+-----+------|
+|                               |        583 |  592 |   9 |      |
+```
+
+### Slot-rel. Δt to adoption centile
+
+```
+ %tile   0.50  0.80  0.90  0.92  0.94  0.96  0.98  1.00
+1.34.0-rc3---------------------------------------------
+  0.5    0.8   1.1   1.16  1.17  1.18  1.19  1.21  1.25
+  0.9    1.43  1.92  2.14  2.18  2.25  2.3   2.38  2.65
+  1.0   36.16 40.89 44.57 50.96 50.96 51.22 57.57 70.26
+  avg   0.965 1.380 1.491 1.529 1.574 1.618 1.698 1.965
+1.34.0-rc3---------------------------------------------
+  0.5    0.71  1.08  1.13  1.14  1.15  1.16  1.17  1.2
+  0.9    1.3   1.69  1.91  1.98  2.04  2.12  2.2   2.51
+  1.0   43.56 57.03 62.97 63.36 66.21 66.63 69.57 79.51
+  avg   0.935 1.356 1.455 1.484 1.511 1.547 1.587 1.770
+5f8d---------------------------------------------------
+  0.5    0.88  1.17  1.22  1.23  1.24  1.25  1.27  1.32   
+  0.9    1.74  2.19  2.39  2.46  2.52  2.6   2.68  2.95    
+  1.0   53.92 68.52  78.8 83.35 86.06  88.6 99.83 103.2
+  avg   1.132 1.579 1.705 1.746 1.795 1.840 1.920 2.161  
+```
+

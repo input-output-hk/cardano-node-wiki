@@ -531,3 +531,9 @@ Usually, during the preparation of the node's release, we want to benchmark it. 
 ```
 
 Here `1.34.0-rc3` is a (pre)release we want to compare with, and `5f8d` is the node's commit we want to benchmark. The essence of the release benchmarking is always a comparison: we want to compare some new node's code with some old node's code.
+
+So:
+
+1. Data for **Resource Usage** should be taken from `logs-node-1.timeline.txt`.
+2. Data for **Forger** should be taken from `block-propagation.txt`, from `Forger event Δt -> Checkd Leadin Forge Adopt Announ Sendin`.
+3. Data for **Peers** should be taken from `block-propagation.txt`, from `Peer event Δt -> Reque Fetch Adopt Annou Send`.

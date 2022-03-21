@@ -464,7 +464,7 @@ Here you can see that 50% of the time block gap was 14 seconds or less, but in t
 
 Usually, during the preparation of the node's release, we want to benchmark it. Final results should be placed in the following tables.
 
-### Resource Usage
+**Resource Usage**
 
 ```
 |                       | 1.34.0-rc3 | 5f8d |    Δ |   Δ% | 
@@ -478,7 +478,7 @@ Usually, during the preparation of the node's release, we want to benchmark it. 
 |-----------------------+------------+------+------+------|
 ```
 
-### Forger (all times in milliseconds)
+**Forger (all times in milliseconds)**
 
 ```
 |                                   | 1.34.0-rc3 | 5f8d |   Δ |  Δ% | 
@@ -493,7 +493,7 @@ Usually, during the preparation of the node's release, we want to benchmark it. 
 |                                   |        207 |  326 | 119 |     | 
 ```
  
-### Peers (all times in milliseconds)
+**Peers (all times in milliseconds)**
 
 ```
 |                               | 1.34.0-rc3 | 5f8d |   Δ |   Δ% |  
@@ -509,7 +509,7 @@ Usually, during the preparation of the node's release, we want to benchmark it. 
 |                               |        583 |  592 |   9 |      |
 ```
 
-### Slot-rel. Δt to adoption centile
+**Slot-rel. Δt to adoption centile**
 
 ```
  %tile   0.50  0.80  0.90  0.92  0.94  0.96  0.98  1.00
@@ -530,3 +530,4 @@ Usually, during the preparation of the node's release, we want to benchmark it. 
   avg   1.132 1.579 1.705 1.746 1.795 1.840 1.920 2.161  
 ```
 
+Here `1.34.0-rc3` is a (pre)release we want to compare with, and `5f8d` is the node's commit we want to benchmark. The essence of the release benchmarking is always a comparison: we want to compare some new node's code with some old node's code.

@@ -69,13 +69,13 @@ We're currently not using docker or OCI at all, we're using plain regular
 
 This services are used for running on three contexts: AWS, CI and local.
 
-* CI is intended to be exactly like local but wrapped into Nix derivations.
+\* CI is intended to be exactly like local but wrapped into Nix derivations.
 
 > if you look at the workbench, you can see how it does 1 (AWS) & 2 (local)
 
 ### Workbench
 
-Workbench (Links to master branch but there's a workbench-master branch):
+Workbench (Links are to master branch but there's a workbench-master branch):
 1. [Top-level wb script](https://github.com/input-output-hk/cardano-node/blob/master/nix/workbench/wb)
    1. First thought: Why this scripts starts with ```#!/usr/bin/env bash```,
       shouldn't it be a ```/nix/store/sdfsjdlhflsdhflsdkjh```?

@@ -56,50 +56,10 @@ $ ls result/bin/
 cardano-node-mainnet
 ```
 
-## Infrastructure and code hierarchy
+### Running a cluster
 
-We're currently not using docker or OCI at all, we're using plain regular
-***NixOS services*** for the benchmarking infrastructure:
-
-### Services
-
-- [nix/nixos/cardano-node.service](https://github.com/input-output-hk/cardano-node/blob/master/nix/nixos/cardano-node-service.nix)
-- [nix/nixos/cardano-tracer.service](https://github.com/input-output-hk/cardano-node/blob/master/nix/nixos/cardano-tracer-service.nix)
-- [nix/nixos/tx-generator.service](https://github.com/input-output-hk/cardano-node/blob/master/nix/nixos/tx-generator-service.nix)
-
-This services are used for running on three contexts: AWS, CI and local.
-
-\* CI is intended to be exactly like local but wrapped into Nix derivations.
-
-> if you look at the workbench, you can see how it does 1 (AWS) & 2 (local)
-
-### Workbench
-
-Workbench (Links are to master branch but there's a workbench-master branch):
-1. [Top-level wb script](https://github.com/input-output-hk/cardano-node/blob/master/nix/workbench/wb)
-   1. First thought: Why this scripts starts with ```#!/usr/bin/env bash```,
-      shouldn't it be a ```/nix/store/sdfsjdlhflsdhflsdkjh```?
-2. [Profile computation (profile.sh)](https://github.com/input-output-hk/cardano-node/blob/master/nix/workbench/profile.sh)
-3. [Run allocation & starting](https://github.com/input-output-hk/cardano-node/blob/master/nix/workbench/run.sh)
-4. [Run scenarios](https://github.com/input-output-hk/cardano-node/blob/bench-master/nix/workbench/scenario.sh)
-
-### About profile computation
-
-Profiles define everything benchmark runs:
-- topology
-- genesis (protocol parameters and data set sizes)
-- workload (tx generation)
-- scenario
-
-> From those fundamentals, follow the service configs (```cardano-node```,
-> ```cardano-tracer```, ```tx-generator```)
-> All of that is an output of profile computation
-
-## Building
-
-Be prepared to load GBs of data and for this to take 1 or 2 hours:
-
-***```nix-shell``` not ```nix shell```***
+Inside the same folder, enter a ```nix-shell```. If it's the first time, be
+prepared to load GBs of data and maybe for this to take 1 or 2 hours:
 
 ```console
 $ nix-shell
@@ -138,10 +98,59 @@ workbench:  cabal-inside-nix-shell mode enabled, calling cardano-* via cabal run
     * stop-cluster - stop a local development cluster
     * restart-cluster - restart the last cluster run (in 'run/current')
                         (WARNING: logs & node DB will be wiped clean)
-
-
-[nix-shell:~/Workspace/GitHub/input-output-hk/cardano-node]$
 ```
+
+Inside the nix-shell with GNU make the requirements for the selected benchmark are created:
+
+```console
+$ make make ci-test
+...
+...
+$ start-cluster
+...
+...
+```
+
+You can use tab autocompletion to look for make targets.
+
+## Infrastructure and code hierarchy
+
+We're currently not using docker or OCI at all, we're using plain regular
+***NixOS services*** for the benchmarking infrastructure:
+
+### Services
+
+- [nix/nixos/cardano-node.service](https://github.com/input-output-hk/cardano-node/blob/master/nix/nixos/cardano-node-service.nix)
+- [nix/nixos/cardano-tracer.service](https://github.com/input-output-hk/cardano-node/blob/master/nix/nixos/cardano-tracer-service.nix)
+- [nix/nixos/tx-generator.service](https://github.com/input-output-hk/cardano-node/blob/master/nix/nixos/tx-generator-service.nix)
+
+This services are used for running on three contexts: AWS, CI and local.
+
+\* CI is intended to be exactly like local but wrapped into Nix derivations.
+
+> if you look at the workbench, you can see how it does 1 (AWS) & 2 (local)
+
+### Workbench
+
+Workbench (Links are to master branch but there's a workbench-master branch):
+1. [Top-level wb script](https://github.com/input-output-hk/cardano-node/blob/master/nix/workbench/wb)
+   1. First thought: Why this scripts starts with ```#!/usr/bin/env bash```,
+      shouldn't it be a ```/nix/store/sdfsjdlhflsdhflsdkjh```?
+2. [Profile computation (profile.sh)](https://github.com/input-output-hk/cardano-node/blob/master/nix/workbench/profile.sh)
+3. [Run allocation & starting](https://github.com/input-output-hk/cardano-node/blob/master/nix/workbench/run.sh)
+4. [Run scenarios](https://github.com/input-output-hk/cardano-node/blob/bench-master/nix/workbench/scenario.sh)
+
+### About profile computation
+
+Profiles define everything benchmark runs:
+- topology
+- genesis (protocol parameters and data set sizes)
+- workload (tx generation)
+- scenario
+
+> From those fundamentals, follow the service configs (```cardano-node```,
+> ```cardano-tracer```, ```tx-generator```)
+> All of that is an output of profile computation
 
 ## Others
 

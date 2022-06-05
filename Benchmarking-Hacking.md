@@ -152,6 +152,8 @@ Profiles define everything benchmark runs:
 > ```cardano-tracer```, ```tx-generator```)
 > All of that is an output of profile computation
 
+Configuration generation does heavy use of [jq](https://stedolan.github.io/jq/)
+
 ## Others
 
 ### Building docker stuff

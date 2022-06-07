@@ -154,6 +154,12 @@ Profiles define everything benchmark runs:
 
 Configuration generation does heavy use of [jq](https://stedolan.github.io/jq/)
 
+### Modes
+
+There are two modes
+- workbenchDevMode = true: ```./nix/workbench/shell.nix``` defines the ```wb``` script.
+- workbenchDevMode = false: Here ```wb``` comes from the nix store.
+
 ## Others
 
 ### Building docker stuff

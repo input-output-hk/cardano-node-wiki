@@ -124,11 +124,14 @@ We're currently not using docker or OCI at all, we're using plain regular
 - [nix/nixos/cardano-tracer.service](https://github.com/input-output-hk/cardano-node/blob/master/nix/nixos/cardano-tracer-service.nix)
 - [nix/nixos/tx-generator.service](https://github.com/input-output-hk/cardano-node/blob/master/nix/nixos/tx-generator-service.nix)
 
-This services are used for running on three contexts: AWS, CI and local.
+This services are used for running on three contexts:
+1. AWS
+2. local
+3. CI
 
 \* CI is intended to be exactly like local but wrapped into Nix derivations.
 
-> if you look at the workbench, you can see how it does 1 (AWS) & 2 (local)
+Looking at the code you can see how it does 1 (AWS) and 2 (local).
 
 ### Workbench
 
@@ -152,7 +155,36 @@ Profiles define everything benchmark runs:
 > ```cardano-tracer```, ```tx-generator```)
 > All of that is an output of profile computation
 
-Configuration generation does heavy use of [jq](https://stedolan.github.io/jq/)
+Configuration generation does heavy use of [jq](https://stedolan.github.io/jq/) and [yq](https://mikefarah.gitbook.io/yq/).
+
+#### ```profiles.json```
+
+[```workbench/default.nix```](https://github.com/input-output-hk/cardano-node/blob/master/nix/workbench/default.nix) has the Nix derivation that calls the profile builder:
+```
+...
+## materialise-profile :: ProfileNix -> BackendProfile -> Profile
+materialise-profile      = import ./profile.nix  { inherit pkgs lib; };
+...
+profile = materialise-profile
+  { inherit profileNix workbench;
+    backendProfile = backend.materialise-profile { inherit profileNix; };
+  };
+```
+and [```workbench/profile.nix```](https://github.com/input-output-hk/cardano-node/blob/master/nix/workbench/profile.nix) does at the end:
+```
+''
+mkdir $out
+cp ${profileNix.JSON}    $out/profile.json
+cp ${backendProfile}/*   $out
+cp $nodeServicesPath     $out/node-services.json
+cp $generatorServicePath $out/generator-service.json
+cp $tracerServicePath    $out/tracer-service.json
+wb profile node-specs $out/profile.json > $out/node-specs.json
+''
+```
+after importing [```workbench/profiles/default.nix```](https://github.com/input-output-hk/cardano-node/blob/master/nix/workbench/profiles/default.nix).
+
+The only thing ```wb``` needs is the profile outputs as they are created by [```workbench/profiles/default.nix```](https://github.com/input-output-hk/cardano-node/blob/master/nix/workbench/profiles/default.nix).
 
 ### Modes
 

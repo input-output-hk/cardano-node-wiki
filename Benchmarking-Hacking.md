@@ -103,7 +103,7 @@ workbench:  cabal-inside-nix-shell mode enabled, calling cardano-* via cabal run
 Inside the nix-shell with GNU make the requirements for the selected benchmark are created:
 
 ```console
-$ make make ci-test
+$ make ci-test
 ...
 ...
 $ start-cluster
@@ -160,13 +160,24 @@ There are two modes
 - workbenchDevMode = true: ```./nix/workbench/shell.nix``` defines the ```wb``` script.
 - workbenchDevMode = false: Here ```wb``` comes from the nix store.
 
+### Membench
+
+Membench is currently disabled. It was used to run a single benchmark that did:
+1. Take a prepared ImmutableDB
+2. Take a prepared snapshot, near but not exactly at the end of that ImmutableDB
+3. Sart the node with this -- so it loads the snapshot, and then replays the portion of ImmutableDB after the point of snapshot
+4. Exit after reaching the end of ImmutableDB
+5. ..and record all process stats for the entire node run
+
+Membench runs with not workbench involvement at all.
+
 ## Others
 
 ### Building docker stuff
 
 ```console
 $ nix build .#dockerImage/node
-$ ls -la result 
+$ ls -la result
 lrwxrwxrwx 1 fmaste fmaste 76 Jun  3 13:16 result -> /nix/store/mlm3sca8knf7hkl424rp22j8qj61m3hz-docker-image-cardano-node.tar.gz
 ```
 
@@ -207,7 +218,7 @@ protocol-parameters.json
 ``
 
 ```console
-$ cat result/share/x86_64-linux-ghc-8.10.7/tx-generator-2.2/data/protocol-parameters.json 
+$ cat result/share/x86_64-linux-ghc-8.10.7/tx-generator-2.2/data/protocol-parameters.json
 {
     "txFeePerByte": 44,
     "minUTxOValue": null,

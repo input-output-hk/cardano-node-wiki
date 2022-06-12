@@ -56,7 +56,7 @@ $ ls result/bin/
 cardano-node-mainnet
 ```
 
-### Running a cluster
+### Start a cluster for benchmarking
 
 Inside the same folder, enter a ```nix-shell```. If it's the first time, be
 prepared to load GBs of data and maybe for this to take 1 or 2 hours:
@@ -112,6 +112,16 @@ $ start-cluster
 ```
 
 You can use tab autocompletion to look for make targets.
+
+`start-cluster` does:
+```console
+wb-wrapped start --batch-name plain --profile-name default-bage --profile /nix/store/f4f1cmvri35x0ynzh9zih4d6v32mcc5y-workbench-profile-output-default-bage --cache-dir /home/fmaste/.cache/cardano-workbench --base-port 30000 --cabal
+```
+
+And starts multiple cardano nodes as:
+```console
+/home/fmaste/Workspace/GitHub/input-output-hk/cardano-node/dist-newstyle/build/x86_64-linux/ghc-8.10.7/cardano-node-1.33.0/x/cardano-node/build/cardano-node/cardano-node +RTS -sghc-rts-report.txt -RTS run --config config.json --database-path run/current/node-5/db-testnet --topology topology.json --host-addr 127.0.0.1 --port 30005 --socket-path node.socket --tracer-socket-path-connect ../tracer/tracer.socket --shelley-vrf-key ../genesis/node-keys/node-vrf5.skey --shelley-kes-key ../genesis/node-keys/node-kes5.skey --shelley-operational-certificate ../genesis/node-keys/node5.opcert --shutdown-on-slot-synced 300 +RTS -N2 -I0 -A16m -qg -qb --disable-delayed-os-memory-return -RTS
+```
 
 ## Infrastructure and code hierarchy
 

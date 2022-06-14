@@ -1,0 +1,81 @@
+digraph {
+
+        // WHERE IS workbench/shell.nix IMPORTING workbench/default.nix ????
+
+        // Commands
+        //----------------------------------------------------------------------
+
+        // The flake build command.
+        cNixBuildFlake [shape=ellipse label="$ nix build .#"]
+
+        // The nix-shell command.
+        cNixShell [shape=ellipse label="$ nix-shell"]
+
+        // Files
+        //----------------------------------------------------------------------
+
+        // Top level .nix files
+        fFlakeNix [shape=note label="./flake.nix"]
+        fDefaultNix [shape=note label="./default.nix"]
+        fShellNix [shape=note label="./shell.nix"]
+        // ./nix files
+        fCustomConfigNix [shape=note label="./nix/custom-config.nix"]
+        fPkgsNix [shape=note label="./nix/pkgs.nix"]
+        fFlakeCompatNix [shape=note label="./nix/flake-compat.nix"]
+
+        // Top level nix folder
+        fNixDefaultNix [shape=note label="./nix/default.nix"]
+
+        // Workbench .nix files
+        fWorkbenchDefaultNix [shape=note label="./nix/workbench/default.nix"]
+        fWorkbenchShellNix [shape=note label="./nix/workbench/shell.nix"]
+        fWorkbenchSupervisorNix [shape=note label="./nix/workbench/supervisor.nix"]
+        //supervisord-workbench-for-profile
+        // Workbench overlays.
+        fWorkbenchOverlayNix [shape=note label="./nix/workbench/membench-overlay.nix"]
+        fWorkbenchOverlayBatch [shape=note label="./nix/workbench/membench-batch.nix"]
+        fWorkbenchOverlayBatchProcess [shape=note label="./nix/workbench/membench-batch-process.nix"]
+        fWorkbenchOverlayBatchReport [shape=note label="./nix/workbench/membench-batch-report.nix"]
+        fWorkbenchOverlayRun [shape=note label="./nix/workbench/membench-run.nix"]
+
+        // Relations
+        //----------------------------------------------------------------------
+
+        // When building mainnet node you are using the flake.
+        cNixBuildFlake -> fFlakeNix [label=""]
+        // The flake imports ./nix/pkgs.nix inside the overlays list.
+        fFlakeNix -> fPkgsNix [label="overlays"]
+        // The flake imports ./nix/workbench/membench-overlay.nix inside the overlays list.
+        fFlakeNix -> fWorkbenchOverlayNix [label="overlays"]
+
+        // pkgs.nix imports
+        fPkgsNix -> fWorkbenchDefaultNix
+        fPkgsNix -> fWorkbenchSupervisorNix [label="supervisord-workbench-for-profile"]
+
+        // Workbench overlays.
+        fWorkbenchOverlayNix -> fWorkbenchOverlayBatch [label="overlays"]
+        fWorkbenchOverlayNix -> fWorkbenchOverlayBatchProcess [label="overlays"]
+        fWorkbenchOverlayNix -> fWorkbenchOverlayBatchReport [label="overlays"]
+        fWorkbenchOverlayNix -> fWorkbenchOverlayRun [label="overlays"]
+
+        // default.nix loads its parameters from ./nix/custom-config.nix
+        fDefaultNix -> fCustomConfigNix [label="parameters"]
+        // shell.nix loads its parameters from ./nix/custom-config.nix
+        fShellNix -> fCustomConfigNix [label="parameters"]
+
+        // flake compat hack
+        fFlakeCompatNix -> fFlakeNix
+        // default.nix uses the flake-compat.nix hack to load the flake
+        fDefaultNix -> fFlakeCompatNix [label="pkgs hack"]
+        // nix/default.nix uses the flake-compat.nix hack to load the flake
+        fNixDefaultNix -> fFlakeCompatNix [label="pkgs hack"]
+
+        // default.nix imports ./nix/default.nix
+        fShellNix -> fNixDefaultNix [label=""]
+
+        // nix-shell loads shell.nix in the top directory.
+        cNixShell -> fShellNix
+        // shell.nix uses workbench shell.nix as default shell.
+        fShellNix -> fWorkbenchShellNix [label="shellHook"]
+
+}

@@ -56,7 +56,7 @@ $ ls result/bin/
 cardano-node-mainnet
 ```
 
-### Start a cluster for benchmarking
+### Start a cluster for local benchmarking
 
 Inside the same folder, enter a ```nix-shell```. If it's the first time, be
 prepared to load GBs of data and maybe for this to take 1 or 2 hours:
@@ -124,6 +124,8 @@ And starts multiple cardano nodes as:
 ```
 
 ## Infrastructure and code hierarchy
+
+[[/images/workbench-dependencies.png|Workbench Nix dependency graph]]
 
 We're currently not using docker or OCI at all, we're using plain regular
 ***NixOS services*** for the benchmarking infrastructure:

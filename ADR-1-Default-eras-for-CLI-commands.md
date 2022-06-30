@@ -31,6 +31,7 @@ The decision should as much as possible take into account the following consider
 * CLI behaviour should not suddenly change after a hard fork in a way that can break third party tools and user expectations.
 * Historical precedent so as to avoid surprising SPOs and in a new release.
 * Simplicity and consistency.
+* Behaviour that just works where it makes sense.
 
 # Decision
 

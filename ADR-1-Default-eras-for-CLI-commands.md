@@ -38,9 +38,11 @@ A given release should use the current era up until the latest era supported by 
 
 For example, given the hard fork from Alonzo to Babbage:
 
-* The CLI commands in release immediately before the hard fork should use the current era up to the Alonzo era only and only use the Babbage era if it were explicitly specified.
+* All era-sensitive CLI commands should have a default era.
 
-* The CLI commands in release immediately after the hard fork should use the current era up until Babbage era.
+* All era-sensitive CLI commands in release immediately before the hard fork should use the current era up to the Alonzo era only and only use the Babbage era if it were explicitly specified.
+
+* All era-sensitive CLI commands in release immediately after the hard fork should use the current era up until Babbage era.
 
 # Consequences
 

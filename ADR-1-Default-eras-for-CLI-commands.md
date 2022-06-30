@@ -20,7 +20,7 @@ Would it make sense for "magical" commands like the `transaction build` command 
 
 Historically we changed the default transactions era in the first release after the hard fork in order to give the tool/dapp developers the possibility to update the default transaction era in their code after the hard fork - otherwise their tools would stop working after the hard fork.
 
-We don't want to make a CLI release that does not work by default by defaulting to using an era that is not yet active. So that's why we do it the release after the Hard Fork, not the release before.
+Care needs to be taken to avoid making a CLI release that does not work by default by defaulting to using an era that is not yet active. So that's why we have historically only updated the default era in the release after the Hard Fork, not the release before.
 
 Third party tools that use the CLI would not stop working after the HF, they would continue to create and submit transactions in the older format, for the older era. Historically we always made that backwards compatibility work. It just meant that CLI users would not get the new features for the new era without explicitly using the right era flag - until the following release changed the default.
 

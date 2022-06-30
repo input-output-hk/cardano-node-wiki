@@ -44,7 +44,7 @@ We will use a format with just a few parts, so each document is easy to digest:
 
 **Title** These documents have names that are short noun phrases. For example, "ADR-1 Deployment on Ruby on Rails 3.0.10" or "ADR-9 LDAP for Multitenant Integration"
 
-**Status** A decision may be "proposed" if the project stakeholders haven't agreed with it yet, or "accepted" once it is agreed. If a later ADR changes or reverses a decision, it may be marked as "deprecated" or "superseded" with a reference to its replacement.
+**Status** A decision may be "proposed" 📜 if the project stakeholders haven't agreed with it yet, "accepted" ✅ once it is agreed or "rejected" ❌ if not. If a later ADR changes or reverses a decision, it may be marked as "deprecated" 🗑️ or "superseded" ⬆️ with a reference to its replacement.
 
 **Context** This section describes the forces at play, including technological, political, social, and project local. These forces are probably in tension, and should be called out as such. The language in this section is value-neutral. It is simply describing facts.
 

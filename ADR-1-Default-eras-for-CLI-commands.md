@@ -20,15 +20,15 @@ Would it make sense for "magical" commands like the `transaction build` command 
 
 Historically we changed the default transactions era in the first release after the hard fork in order to give the tool/dapp developers the possibility to update the default transaction era in their code after the hard fork - otherwise their tools would stop working after the hard fork.
 
-Care needs to be taken to avoid making a CLI release that does not work by default by defaulting to using an era that is not yet active. So that's why we have historically only updated the default era in the release after the Hard Fork, not the release before.
+Care needs to be taken to avoid making a CLI release that does not work by default by defaulting to using an era that is not yet active. So that's why we have historically only updated the default era in the release after the hard fork, not the release before.
 
-Third party tools that use the CLI would not stop working after the HF, they would continue to create and submit transactions in the older format, for the older era. Historically we always made that backwards compatibility work. It just meant that CLI users would not get the new features for the new era without explicitly using the right era flag - until the following release changed the default.
+This way, third party tools that use the CLI would not stop working after the hard fork, they would continue to create and submit transactions in the older format, for the older era. Historically we always made that backwards compatibility work. It just meant that CLI users would not get the new features for the new era without explicitly using the right era flag - until the following release changed the default.
 
-Moreover, it is often the case that CLI commands in the release that crossed the hard fork may not yet be updated to work in the new era.  If we adopted policy of using the current era for our CLI commands, even "magical" commands that try to infer as much as possible, by using the current era we open ourselves to the possibility of the command breaking after the hard fork.
+Moreover, it is often the case that CLI commands in the release that crossed the hard fork may not yet be updated to work in the new era.  If we adopted policy of using the current era for our CLI commands, even "magical" commands that try to infer as much as possible, we risk possibility of the command breaking after the hard fork.
 
 The decision should as much as possible take into account the following considerations:
 
-* CLI behaviour should not suddenly change after a hard fork in a way that can break third party tools.
+* CLI behaviour should not suddenly change after a hard fork in a way that can break third party tools and user expectations.
 * Historical precedent so as to avoid surprising SPOs and in a new release.
 * Simplicity and consistency.
 
@@ -46,7 +46,10 @@ For example, given the hard fork from Alonzo to Babbage:
 
 # Consequences
 
-* CLI commands that for a given release that worked prior to a hard fork would continue to work after a hard fork.
-* Users will not be surprised by changes in behaviour and third party tools will continue to work after the hard fork.
+* CLI commands that for a given release had worked prior to a hard fork would continue to work after a hard fork.
+* Users will not be surprised by changes in behaviour after the hard fork.
+* Third party tools will continue to work after the hard fork.
 * Users will not be surprised by difference in behaviour between different commands.
-* Users will a reasonably recent era by default, if not always the current era.
+* Users will not necessarily be using the current era by default.
+* Users will be using a reasonably recent era by default.
+* Users will need to explicitly specify the current era after a hard fork and before the release immediately following the hard for if that's what they really want at their own risk.

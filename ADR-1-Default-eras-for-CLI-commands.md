@@ -6,7 +6,7 @@ Proposed.
 
 The Cardano block chain can be hard forked through multiple eras throughout its existence.  CLI commands may behave differently between eras depending on what the current era is and what era the user runs the command in.
 
-The era to be used for a CLI command can be optional in which case it connect to the node to find out what the current era is and choose an era appropriately.
+The era to be used for a CLI command can be optional in which case the command may connect to the node to find out what the current era is and choose an era appropriately.
 
 For these cases, the question arises what the default era should be for the CLI command.
 

@@ -52,5 +52,5 @@ For example, given the hard fork from Alonzo to Babbage:
 * Third party tools will continue to work after the hard fork.
 * Users will not be surprised by difference in behaviour between different commands.
 * Users will not necessarily be using the current era by default.
-* Users will be using a reasonably recent era by default.
+* Users will be using a most practical current era by default on Mainnet and other networks that may not be on the same era as Mainnet.
 * Users will need to explicitly specify the current era after a hard fork and before the release immediately following the hard for if that's what they really want and at their own risk.

@@ -10,7 +10,7 @@ The era to be used for a CLI command can be optional in which case the command m
 
 For these cases, the question arises what the default era should be for the CLI command.
 
-Moreover there is the question of how the default era should change over time, particularly in relation to a hard fork: whether the default era should change in the release before and after the hard fork happens.
+Moreover there is the question of how the default era should change over time, particularly in relation to a hard fork: whether the default era should change in the release before or after the hard fork happens.
 
 There is even scope to adopt a different strategy between query and transaction commands or even between different transaction commands.
 

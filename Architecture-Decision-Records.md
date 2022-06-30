@@ -1,2 +1,2 @@
 
-* [[ADR-0-Documenting-Architecture-Decisions]]
+* [[ADR-0 Documenting Architecture Decisions]]

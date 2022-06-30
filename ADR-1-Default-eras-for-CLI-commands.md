@@ -14,7 +14,7 @@ Moreover there is the question of how the default era should change over time, p
 
 There is even scope to adopt a different strategy between query and transaction commands or even between different transaction commands.
 
-For example we can create a transaction in two different ways using the CLI - using `transaction build` and `transaction build-raw` commands.  The `transaction build` command is "magical" it tries to be user friendly by inferring transaction parameters wherever it can so the user doesn't have to, while the `transaction build-raw` is for more experienced users because it provides no inference and leaves it up to the user to supply all the necessary transaction parameters.
+For example we can create a transaction in two different ways using the CLI - using `transaction build` and `transaction build-raw` commands.  The `transaction build` command is "magical" in that it tries to be user friendly by inferring transaction parameters wherever it can so the user doesn't have to, while the `transaction build-raw` is for more experienced users because it provides no inference and leaves it up to the user to supply all the necessary transaction parameters.
 
 Would it make sense for "magical" commands like the `transaction build` command to try to be more helpful and use the current era as the default?
 

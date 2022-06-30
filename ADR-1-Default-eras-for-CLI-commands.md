@@ -4,7 +4,7 @@ Proposed.
 
 # Context
 
-The Cardano block chain can be upgraded through multiple eras throughout its existence.  CLI commands may behave differently between eras depending on what the current era is and what era the user runs the command in.
+The Cardano block chain can be hard forked through multiple eras throughout its existence.  CLI commands may behave differently between eras depending on what the current era is and what era the user runs the command in.
 
 CLI commands that connect to the node will be able to find out what the current era is and the era to be used for the command can be optional.
 

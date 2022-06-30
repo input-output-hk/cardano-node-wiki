@@ -16,7 +16,7 @@ There is even scope to adopt a different strategy between query and transaction 
 
 For example we can create a transaction in two different ways using the CLI - using `transaction build` and `transaction build-raw` commands.  The `transaction build` command is "magical" in that it tries to be user friendly by inferring transaction parameters wherever it can so the user doesn't have to, while the `transaction build-raw` is for more experienced users because it provides no inference and leaves it up to the user to supply all the necessary transaction parameters.
 
-Would it make sense for "magical" commands like the `transaction build` command to try to be more helpful and use the current era as the default?
+Would it make sense for "magical" commands like the `transaction build` command to try to be more helpful and use the current era as the default?  That would _seem_ to be in the spirit of the command.
 
 Historically we changed the default transactions era in the first release after the hard fork in order to give the tool/dapp developers the possibility to update the default transaction era in their code after the hard fork - otherwise their tools would stop working after the hard fork.
 

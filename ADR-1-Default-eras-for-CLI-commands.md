@@ -34,15 +34,15 @@ The decision should as much as possible take into account the following consider
 
 # Decision
 
-A given release should use the current era up until the latest era supported by the Mainnet blockchain as at the point of release.
+All era-sensitive CLI commands should have a default era.
+
+A given release should use the current era up until the latest era supported by the Mainnet blockchain as at the point of release as the default era.
 
 For example, given the hard fork from Alonzo to Babbage:
 
-* All era-sensitive CLI commands should have a default era.
+* The release immediately before the hard fork will set the default era to be the current era up to the Alonzo era only.  The Babbage era will not be used unless it is explicitly specified.
 
-* All era-sensitive CLI commands in release immediately before the hard fork should use the current era up to the Alonzo era only and only use the Babbage era if it were explicitly specified.
-
-* All era-sensitive CLI commands in release immediately after the hard fork should use the current era up until Babbage era.
+* The release after the hard fork will use the current era up until Babbage era.
 
 # Consequences
 

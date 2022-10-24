@@ -26,6 +26,31 @@ package trace-dispatcher
   ghc-options: -Wwarn
 ```
 
+## `cabal` is unable to find `libsodium` via `pkg-config` on MacOS
+
+When the following error occurs:
+
+```
+Warning: Requested index-state 2022-10-19T00:00:00Z is newer than
+'cardano-haskell-packages'! Falling back to older state
+(2022-10-17T00:00:00Z).
+Resolving dependencies...
+Error: cabal: Could not resolve dependencies:
+[__0] trying: cardano-api-1.36.0 (user goal)
+[__1] next goal: cardano-crypto-class (dependency of cardano-api)
+[__1] rejecting: cardano-crypto-class-2.0.0.1 (constraint from project config
+/Users/jky/wrk/iohk/cardano-node/cabal.project requires <2.0.0.1)
+[__1] rejecting: cardano-crypto-class-2.0.0 (conflict: pkg-config package
+libsodium-any, not found in the pkg-config database)
+[__1] fail (backjumping, conflict set: cardano-api, cardano-crypto-class)
+After searching the rest of the dependency tree exhaustively, these were the
+goals I've had most trouble fulfilling: cardano-api, cardano-crypto-class
+```
+
+It is possible that `libsodium` is installed correctly, but some other unrelated brew installed package has a corrupt `pc` file.
+
+See https://github.com/haskell/cabal/issues/8494#issuecomment-1273802608 for details.  The offending `pc` file will need to be patched or its package uninstalled.
+
 ## Delegated stake is not earning rewards
 
 There are a number of reasons you may not be earning rewards.  Check for the following things to ensure the testnet is set up properly:

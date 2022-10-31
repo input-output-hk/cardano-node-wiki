@@ -62,4 +62,130 @@ There are a number of reasons you may not be earning rewards.  Check for the fol
 * Reserves above zero (total supply > sum of all utxo).  Check for `ledgerState.nesES.esAccountState._reserves` in the ledger state.
 
 ## Missing blocks
-There are some troubleshoot tips on how to diagnose and fix missing blocks [here](https://input-output.atlassian.net/wiki/spaces/QA/pages/2368897711/Debug+missing+block).
+
+### How do you know that your pool did not produce a block when it was selected as a Slot Leader? [^1]
+
+* `cardano_node_metrics_Forge_forge_about_to_lead_int - cardano_node_metrics_Forge_node_not_leader_int  != 0`
+
+* `cardano_node_metrics_Forge_could_not_forge_int!= 0`
+
+* you see a block scheduled for your pool (using a leader scheduler based on your vrf key - like cncli tool) but the pool does not create it and none of the above metrics are updated (like the pool did not know that it had a block assigned)
+
+  * check the submitted vrf keys in the pool registration certificate
+
+  * check the cold.counter was correctly increased based on the previous one 
+
+    * in this case, you can increase/generate the counter multiple times in order to make sure the current counter is higher than the previous one that created the last block
+
+    * if the submitted cold.counter is lower than the previous one that created a block, you should see the below error in logs:
+
+```
+Invalid block aa98999f126e90cdcf441db2ac818fe14c196efbf3e74b2fd07f0f91ddb281ba at slot 21351198: ExtValidationErrorHeader (HeaderProtocol
+Error (HardForkValidationErrFromEra S (S (S (Z (WrapValidationErr {unwrapValidationErr = ChainTransitionError [OverlayFailure (OcertFailure (CounterTooSmallOCERT 12 0))]}))))))
+
+fromList [("val",Object (fromList [("kind",String "TraceForgedInvalidBlock"),("reason",Object (fromList [("error",Object (fromList [("err
+or",Object (fromList [("failures",Array [Object (fromList [("currentKESCounter",String "0"),("error",String "The operational certificate's last KES counter is greater than the current
+ KES counter."),("kind",String "CounterTooSmallOCert"),("lastKESCounter",String "12")])]),("kind",String "ChainTransitionError")])),("kind",String "HeaderProtocolError")])),("kind",St
+ring "ValidationError")])),("slot",Number 2.1351198e7)])),("credentials",String "Cardano")]
+```
+
+### What to look for: [^1]
+
+* check the Producer logs - here we should see if the node tried to create any block
+
+* check the Relay’s logs - here we should see if the relays propagated the block
+
+* the Pledge is respected (you can check it in adapools.org)
+
+  * if the pledge is not respected, the pool will create blocks but it will not receive rewards
+
+* the KES keys are still valid 
+
+* the actual cold.counter value is higher than the last counter number that created the last block
+
+* the CPU and RAM levels
+
+* the producer being in sync with the relays around the time of the slot/block
+
+* check that a block was created by any other pool in the expected slot_number (on https://adapools.org/blocks) → if a block was adopted by the blockchain in the expected slot_number, but it was created by a different pool, that means that there was a slot battle (more pools selected as leaders for that slot) and other pool owned
+
+* check the logs of the 3 nodes around the time of the expected slot_no
+
+  * check if there are any mentions of CannotForge 
+
+### Useful debug commands [^1]
+
+* check that you are using the correct `cold.vkey` file → this should return the pool ID 
+
+```
+cardano-cli stake-pool id  \
+    --cold-verification-key-file cold.vkey
+```
+
+* check the Kes and Cold vkeys used inside the `pool_operational.cert`
+
+  * top bytes is `kes.vkey`
+
+  * bottom bytes is `cold.vkey`
+
+  * the first int is counter, the second int is kes period
+
+```
+cardano-cli text-view decode-cbor \
+    --in-file pool_operational.cert
+```
+
+* check the VRF keys
+
+```
+cardano-cli node key-hash-VRF \
+    --verification-key-file vrf.vkey
+```
+
+```
+cardano-cli key verification-key \
+    --signing-key-file vrf.skey \
+    --verification-key-file vrf.vkey
+```
+
+* check the KES keys
+
+```
+cardano-cli key verification-key \
+    --signing-key-file kes.skey \
+    --verification-key-file /dev/stdout
+```
+
+* check the on-chain version number of the cold.counter 
+
+```
+cardano-cli query protocol-state --mainnet|jq ".csProtocol[0].\"$(cardano-cli stake-pool id --cold-verification-key-file node1-cold.vkey --output-format hex)\""
+```
+
+```
+cardano-cli query protocol-state --mainnet | \
+  jq ”.csProtocol[0].\”$(cat stakepoolid.txt)\””
+```
+
+## Open questions: [^1]
+
+### how to find, at the node level, the slots the node was elected to lead and what the node did during those slots?
+
+leadership schedule per epoch will be added to the node CLI
+
+### how to find the keys used in the pool registration certificate?
+
+* the above commands might provide some help
+* we requested to have the key details printed on logs when starting the node
+
+### how to find the actual cold.counter value (and make sure you increment it correctly when renewing the KES)
+
+check the above example 
+
+### what is the value of the node performance - get this value directly from the node (CLI or logs)?
+
+a node should in theory be able to calculate its actual performance based on slots it was assigned to be able to compare that to the performance reported by the ledger for the ranking
+
+## References
+
+[^1]: There are some troubleshoot tips on how to diagnose and fix missing blocks [here](https://input-output.atlassian.net/wiki/spaces/QA/pages/2368897711/Debug+missing+block).

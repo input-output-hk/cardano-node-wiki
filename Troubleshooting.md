@@ -63,7 +63,7 @@ There are a number of reasons you may not be earning rewards.  Check for the fol
 
 ## Missing blocks
 
-This section was taken from the private IOG wiki [^1].
+This section was taken from the [private IOG wiki](https://input-output.atlassian.net/wiki/spaces/QA/pages/2368897711/Debug+missing+blocks).
 
 ### How do you know that your pool did not produce a block when it was selected as a Slot Leader?
 
@@ -188,6 +188,3 @@ check the above example
 
 a node should in theory be able to calculate its actual performance based on slots it was assigned to be able to compare that to the performance reported by the ledger for the ranking
 
-## References
-
-[^1]: There are some troubleshoot tips on how to diagnose and fix missing blocks [here](https://input-output.atlassian.net/wiki/spaces/QA/pages/2368897711/Debug+missing+block).

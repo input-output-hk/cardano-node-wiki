@@ -63,7 +63,9 @@ There are a number of reasons you may not be earning rewards.  Check for the fol
 
 ## Missing blocks
 
-### How do you know that your pool did not produce a block when it was selected as a Slot Leader? [^1]
+This section was taken from the private IOG wiki [^1].
+
+### How do you know that your pool did not produce a block when it was selected as a Slot Leader?
 
 * `cardano_node_metrics_Forge_forge_about_to_lead_int - cardano_node_metrics_Forge_node_not_leader_int  != 0`
 
@@ -89,7 +91,7 @@ or",Object (fromList [("failures",Array [Object (fromList [("currentKESCounter",
 ring "ValidationError")])),("slot",Number 2.1351198e7)])),("credentials",String "Cardano")]
 ```
 
-### What to look for: [^1]
+### What to look for:
 
 * check the Producer logs - here we should see if the node tried to create any block
 
@@ -113,7 +115,7 @@ ring "ValidationError")])),("slot",Number 2.1351198e7)])),("credentials",String 
 
   * check if there are any mentions of CannotForge 
 
-### Useful debug commands [^1]
+### Useful debug commands
 
 * check that you are using the correct `cold.vkey` file → this should return the pool ID 
 
@@ -167,22 +169,22 @@ cardano-cli query protocol-state --mainnet | \
   jq ”.csProtocol[0].\”$(cat stakepoolid.txt)\””
 ```
 
-## Open questions: [^1]
+### Open questions:
 
-### how to find, at the node level, the slots the node was elected to lead and what the node did during those slots?
+#### how to find, at the node level, the slots the node was elected to lead and what the node did during those slots?
 
 leadership schedule per epoch will be added to the node CLI
 
-### how to find the keys used in the pool registration certificate?
+#### how to find the keys used in the pool registration certificate?
 
 * the above commands might provide some help
 * we requested to have the key details printed on logs when starting the node
 
-### how to find the actual cold.counter value (and make sure you increment it correctly when renewing the KES)
+#### how to find the actual cold.counter value (and make sure you increment it correctly when renewing the KES)
 
 check the above example 
 
-### what is the value of the node performance - get this value directly from the node (CLI or logs)?
+#### what is the value of the node performance - get this value directly from the node (CLI or logs)?
 
 a node should in theory be able to calculate its actual performance based on slots it was assigned to be able to compare that to the performance reported by the ledger for the ranking
 

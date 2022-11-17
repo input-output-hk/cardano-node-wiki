@@ -28,6 +28,8 @@ It's better to avoid either blind acceptance or blind reversal.
 
 # Decision
 
+**This section is a placeholder for the teams actual decision pending team discussion.**
+
 We will keep a collection of records for "architecturally significant" decisions: those that affect the structure, non-functional characteristics, dependencies, interfaces, or construction techniques.
 
 An architecture decision record is a short text file in a format similar to an Alexandrian pattern. (Though the decisions themselves are not necessarily patterns, they share the characteristic balancing of forces.) Each record describes a set of forces and a single decision in response to those forces. Note that the decision is the central piece here, so specific forces may appear in multiple ADRs.

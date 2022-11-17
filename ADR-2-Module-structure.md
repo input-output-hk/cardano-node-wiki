@@ -97,7 +97,15 @@ The status quo can lead the developer to confusion in the following ways:
 
 ## Original motivation for `cardano-node` convention
 
-`cardano-node` currently uses the `Gen.[Path]` convention to identify modules that are exported from a library and `Test.[Path].Gen` for modules that are local to a non-production component.  This allows for non-library components to define additional generators for itself that are not meant to be in a library without introducing a name conflict.  It also makes it clear which modules are exported from a library and which are not.  To distinguish between production and non-production code the convention uses between `Cardano.[Path]` for production code and `[Prefix].Cardano.Path` for non-production code for example `Test.Cardano.[Path]` and `Gen.Cardano.[Path]`.  The `Test` prefix was avoided for generators exported from a library because that gives the impression that may be false at some point in the future.  This is because generators may be used by a tool as well and not just tests.  For example a tool to generate random transactions.
+`cardano-node` currently uses the `Gen.[Path]` convention to identify modules that are exported from a library and `Test.[Path].Gen` for modules that are local to a non-production component.
+
+This allows for non-library components to define additional generators for itself that are not meant to be in a library without introducing a name conflict.
+
+It also makes it clear which modules are exported from a library and which are not.
+
+To distinguish between production and non-production code the convention uses between `Cardano.[Path]` for production code and `[Prefix].Cardano.Path` for non-production code for example `Test.Cardano.[Path]` and `Gen.Cardano.[Path]`.  The distinction also prevents name collision between local and non-local modules.
+
+The `Test` prefix was avoided for generators exported from a library because that gives the impression that may be false at some point in the future.  This is because generators may be used by a tool as well and not just tests.  For example a tool to generate random transactions.
 
 # Decision
 

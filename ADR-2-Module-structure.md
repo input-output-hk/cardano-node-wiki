@@ -22,9 +22,6 @@ For other IOG projects, we have the following:
 * `cardano-crypto-wrapper`
   * `test-suite test`
     * `Test.Cardano.Crypto.Gen`
-* `cardano-crypto-wrapper`
-  * `test-suite test`
-    * `Test.Cardano.Crypto.Gen`
 * `cardano-crypto-test`
   * `library`
     * `Test.Cardano.Crypto.Gen`

@@ -1,23 +1,18 @@
+# Status
+
+📜 Proposed.
+
 # Context
 
 In a project, it is desirable to have a standard module structure so that a developer can easily navigate the code base and know when they write new code they know where to put the code so that other people can find it.
 
 At IOG, we do not yet have an organisation-level standard for organising modules.  Short of having an organisation-level standard, it is worthwhile for `cardano-node` code to formally define the module structure for its code.
 
+## Status quo
+
 Different people have different ideas for how modules should be structured.
 
-For example doing a search for modules that export generators in `cardano-node`, we have the following:
-
-* `cardano-api`
-  * `library gen`
-    * `Gen.Cardano.Api`
-    * `Gen.Cardano.Api.Metadata`
-    * `Gen.Hedgehog.Roundtrip.Bech32`
-* `cardano-node`
-  * `test-suite cardano-node-test`
-    * `Test.Cardano.Node.Gen`
-
-For other IOG projects, we have the following:
+Across IOG projects excluding `cardano-node`, we have the following:
 
 * `cardano-crypto-wrapper`
   * `test-suite test`
@@ -64,31 +59,59 @@ For other IOG projects, we have the following:
     * `Control.State.Transition.Generator`
     * `Control.State.Transition.Trace.Generator.QuickCheck`
 
+Within `cardano-node`, we have the following:
+
+* `cardano-api`
+  * `library gen`
+    * `Gen.Cardano.Api`
+    * `Gen.Cardano.Api.Metadata`
+    * `Gen.Hedgehog.Roundtrip.Bech32`
+* `cardano-node`
+  * `test-suite cardano-node-test`
+    * `Test.Cardano.Node.Gen`
+
 These can be summarised into the following conventions:
 
-** `Generators`
-** `Gen.[Path]`
-** `Gen.Hedgehog.[Path]`
-** `Hedgehog.Gen.[Path]`
+* `Generators`
+* `Gen.[Path]`
+* `Gen.Hedgehog.[Path]`
+* `Hedgehog.Gen.[Path]`
 * `[Path].Generator`
-** `[Path].Generators.[SubPath]`
-** `[Path].Generators`
-** `[Path].Generator.[Concern]`
-** `[Path].Gen`
+* `[Path].Generators.[SubPath]`
+* `[Path].Generators`
+* `[Path].Generator.[Concern]`
+* `[Path].Gen`
 * `Test.[Path].Gen`
 * `Test.[Path].Generators`
 * `Test.[Path].Generator.[SubPath]`
 
 In the above `Path` and `SubPath` refer to some qualified module names or some prefix/suffix that the generator is associated with.  `Concern` is something like `QuickCheck`.
 
-An interested datapoint is that sometimes the same module name has been used multiple times in different places.  For example `Test.Cardano.Chain.Block.Gen` and `Test.Cardano.Crypto.Gen`, which can potentially lead to confusion.
+The status quo can lead the developer to confusion in the following ways:
 
-At the time when deciding where how to structure modules, I chose the following structure Gen.Cardano.*and the decision was deliberate, although it wasn’t advertised.
+1. Sometimes the same module name has been used multiple times in different places.  For example `Test.Cardano.Chain.Block.Gen` and `Test.Cardano.Crypto.Gen` are examples of modules declared multiple times in different packages.
+2. `Gen`, `Generators`, `Generator` are all variations of the same thing, so it is not clear which word should be used in a new module or which should be imported.
+3. It's what the components of the module name should be and in what order.  For example sometimes `Test`, `Hedgehog`, `Gen` or `[Path]` is the root.  Sometimes `Gen`, `Generator`, `Generators` have been found in prefix, infix and suffix positions.
+4. It is unclear given the module name whether the module is local to a test-suite, executable or benchmark component or if it is in a shared library.
+5. It is unclear whether a module is production code or non-production code (for example test)
 
-The Gen.Cardano.* I wanted to convey the following information:
+## Original motivation for `cardano-node` convention
 
-Everything that has the structure Cardano.* with Cardano as the top-level is production code, so by inference anything where Cardano is not top-level is not production code.
+`cardano-node` currently uses the `Gen.[Path]` convention to identify modules that are exported from a library and `Test.[Path].Gen` for modules that are local to a non-production component.  This allows for non-library components to define additional generators for itself that are not meant to be in a library without introducing a name conflict.  It also makes it clear which modules are exported from a library and which are not.  To distinguish between production and non-production code the convention uses between `Cardano.[Path]` for production code and `[Prefix].Cardano.Path` for non-production code for example `Test.Cardano.[Path]` and `Gen.Cardano.[Path]`.  The `Test` prefix was avoided for generators exported from a library because that gives the impression that may be false at some point in the future.  This is because generators may be used by a tool as well and not just tests.  For example a tool to generate random transactions.
 
+# Decision
 
-These modules aren’t just for generators, but also they in a package library component that make available for import into multiple test suites.  I wanted to make it different from modules export generators but aren’t available for sharing.  This is to prevent people from getting confused when writing generators and/or tests.  For example.  I’m in a module that defines generators.  I want to import that other module that containers generators so I can use them to build my own generator, but compiler says it can’t fine the module, and only after some head scratching to I realise the modules are in different packages.
-The modules are not part
+Use the following convention which is in keeping with the current conventions:
+
+* `Gen.[Path]`: modules that are exported from a library
+* `Test.[Path].Gen`: modules that are local to a non-production component
+* `[Path].Gen`: modules that are local to production component
+
+Wait for a standardisation effort across projects before engaging in refactoring.
+
+# Consequences
+
+* This ADR serves as documentation for the current `cardano-node` convention to ensure continued consistency within the project eliminating any confusion within the project.  `node` and external developers alike can easily familiarise themselves with this convention.
+* Motivations for this convention are clear.
+* There remains no standardisation across the IOG organisation which can continue to lead to cross project confusions.
+* Whilst standardisation remains a worthwhile cause, we don't second guess what an organisation level standard might look like and avoiding having to refactor yet again.

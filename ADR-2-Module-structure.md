@@ -1,3 +1,73 @@
+# Context
+
+In a project, it is desirable to have a standard module structure so that a developer can easily navigate the code base and know when they write new code they know where to put the code so that other people can find it.
+
+At IOG, we do not yet have an organisation-level standard for organising modules.  Short of having an organisation-level standard, it is worthwhile for `cardano-node` code to formally define the module structure for its code.
+
+Different people have different ideas for how modules should be structured.
+
+For example doing a search for modules that export generators in `cardano-node`, we have the following:
+
+* `cardano-api`
+  * `library gen`
+    * `Gen.Cardano.Api`
+    * `Gen.Cardano.Api.Metadata`
+    * `Gen.Hedgehog.Roundtrip.Bech32`
+* `cardano-node`
+  * `test-suite cardano-node-test`
+    * `Test.Cardano.Node.Gen`
+
+For other IOG projects, we have the following:
+
+* `cardano-crypto-wrapper`
+  * `test-suite test`
+    * `Test.Cardano.Crypto.Gen`
+* `cardano-crypto-wrapper`
+  * `test-suite test`
+    * `Test.Cardano.Crypto.Gen`
+* `cardano-crypto-test`
+  * `library`
+    * `Test.Cardano.Crypto.Gen`
+* `byron-spec-ledger`
+  * `library`
+    * `Hedgehog.Gen.Double`
+    * `Byron.Spec.Ledger.Core.Generators`
+* `cardano-ledger-byron`
+  * `test-suite cardano-ledger-byron-test`
+    * `Test.Cardano.Chain.Block.Gen`
+* `cardano-ledger-byron-test`
+  * `library`
+    * `Test.Cardano.Chain.Block.Gen`
+* `cardano-ledger-shelley-test`
+  * `library`
+    * `Test.Cardano.Ledger.Shelley.Generator.Block`
+    * `Test.Cardano.Ledger.Shelley.Serialisation.Generators`
+  * `benchmark mainbench`
+    * `Cardano.Ledger.Shelley.Bench.Gen`
+* `cardano-prelude-test`
+  * `library`
+    * `Test.Cardano.Prelude.Gen`
+* `ouroboros-consensus-byron-test`
+  * `library`
+    * `Test.Consensus.Byron.Generators`
+* `plutus-chain-index-core`
+  * `test-suite plutus-chain-index-test`
+    * `Generators`
+* `plutus-example`
+  * `test-suite plutus-example-test`
+    * `Test.PlutusExample.Gen`
+* `plutus-core`
+  * `library plutus-core-testlib`
+    * `PlutusCore.Generators`
+    * `PlutusCore.Generators.AST`
+  * `benchmark cost-model-budgeting-bench`
+    * `Generators`
+* `small-steps-test`
+  * library`
+    * `Control.State.Transition.Generator`
+    * `Control.State.Transition.Trace.Generator.QuickCheck`
+
+
 I think standardisation is worthwhile, but I think we ought to have. a process to establish that standard rather than just create one more standard among many.
 
 I had quick look at what we currently do with regards to generators and it is highly varied.

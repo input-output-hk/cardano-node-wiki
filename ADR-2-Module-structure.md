@@ -109,6 +109,8 @@ The `Test` prefix was avoided for generators exported from a library because tha
 
 # Decision
 
+**This section is a placeholder for the teams actual decision pending team discussion.**
+
 Use the following convention which is in keeping with the status quo:
 
 * `Gen.[Path]`: modules that are exported from a library

@@ -64,12 +64,24 @@ For other IOG projects, we have the following:
     * `Control.State.Transition.Generator`
     * `Control.State.Transition.Trace.Generator.QuickCheck`
 
+These can be summarised into the following conventions:
 
-I think standardisation is worthwhile, but I think we ought to have. a process to establish that standard rather than just create one more standard among many.
+** `Generators`
+** `Gen.[Path]`
+** `Gen.Hedgehog.[Path]`
+** `Hedgehog.Gen.[Path]`
+* `[Path].Generator`
+** `[Path].Generators.[SubPath]`
+** `[Path].Generators`
+** `[Path].Generator.[Concern]`
+** `[Path].Gen`
+* `Test.[Path].Gen`
+* `Test.[Path].Generators`
+* `Test.[Path].Generator.[SubPath]`
 
-I had quick look at what we currently do with regards to generators and it is highly varied.
+In the above `Path` and `SubPath` refer to some qualified module names or some prefix/suffix that the generator is associated with.  `Concern` is something like `QuickCheck`.
 
-For example we have Control.State.Transition.Generator, Generators, PlutusIR.Generators.AST, Test.Cardano.Prelude.Gen, Hedgehog.Gen.Double, etc.
+An interested datapoint is that sometimes the same module name has been used multiple times in different places.  For example `Test.Cardano.Chain.Block.Gen` and `Test.Cardano.Crypto.Gen`, which can potentially lead to confusion.
 
 At the time when deciding where how to structure modules, I chose the following structure Gen.Cardano.*and the decision was deliberate, although it wasn’t advertised.
 

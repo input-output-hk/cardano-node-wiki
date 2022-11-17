@@ -109,10 +109,11 @@ The `Test` prefix was avoided for generators exported from a library because tha
 
 # Decision
 
-Use the following convention which is in keeping with the current conventions:
+Use the following convention which is in keeping with the status quo:
 
 * `Gen.[Path]`: modules that are exported from a library
-* `Test.[Path].Gen`: modules that are local to a non-production component
+* `Test.[Path].Gen`: modules that are local to a test component
+* `Bench.[Path].Gen`: modules that are local to a benchmark component
 * `[Path].Gen`: modules that are local to production component
 
 Wait for a standardisation effort across projects before engaging in refactoring.

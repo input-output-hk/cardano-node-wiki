@@ -125,7 +125,7 @@ Moreover we will often want to take shortcuts both for resource constraint reaso
 
 On the other hand its worthwhile to signal that our generators can be improved and that we accept organisation-level and community contributions since accepting such contributions would improve the quality of our testing.
 
-## Generator types
+### Generator types
 
 We currently only write `hedgehog` generators.
 

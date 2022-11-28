@@ -107,6 +107,35 @@ To distinguish between production and non-production code the convention uses be
 
 The `Test` prefix was avoided for generators exported from a library because that gives the impression that may be false at some point in the future.  This is because generators may be used by a tool as well and not just tests.  For example a tool to generate random transactions.
 
+## Additional considerations
+
+### Generators as a library & production readiness
+
+Our generator code is already a library being exported as a library-component with the name `cardano-api:gen`.
+
+It is being used within the project as a library by `cardano-api` and `cardano-cli` test-suites.
+
+It is also being within the organisation as a library by `plutus-apps`, also for testing only.
+
+Not adding the `Test` prefix might imply that the code is for production purposes.  As a team we may want to consider whether we even want to support generators as production ready.
+
+We definitely are not ready commit more resources to making generators production ready and as such we need to somehow signal that our generators are provided as-is.
+
+On the other hand its worthwhile to signal that our generators can be improved and that we accept organisation-level and community contributions since accepting such contributions would improve the quality of our testing.
+
+## Reasons to exclude
+
+* `Generators` - invites conflict between projects
+* `Gen.[Path]` - might imply production readiness
+* `Gen.Hedgehog.[Path]`
+* `Hedgehog.Gen.[Path]`
+* `Hedgehog.[Path].Gen`
+* `[Path].Generator` -- too verbose
+* `[Path].Generators` -- too verbose
+* `[Path].Gen` - might imply production readiness
+* `Test.[Path].Gen` - might imply the generator is test-only; could conflict with when we want to define test-specific generators.
+* `Test.[Path].Generators` - too verbose; might imply the generator is test-only; could conflict with when we want to define test-specific generators.
+
 # Decision
 
 **This section is a placeholder for the teams actual decision pending team discussion.**

@@ -150,9 +150,9 @@ Perhaps it is worth being clear our generators are in-fact `hedgehog` generators
 
 **This section is a placeholder for the teams actual decision pending team discussion.**
 
-Use the following convention which is in keeping with the status quo:
+Use the following convention:
 
-* `Gen.[Path]`: modules that are exported from a library
+* `Hedgehog.[Path].Gen`: modules that are exported from a library
 * `Test.[Path].Gen`: modules that are local to a test component
 * `Bench.[Path].Gen`: modules that are local to a benchmark component
 * `[Path].Gen`: modules that are local to production component

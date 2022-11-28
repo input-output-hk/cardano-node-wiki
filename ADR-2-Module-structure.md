@@ -121,6 +121,8 @@ Not adding the `Test` prefix might imply that the code is for production purpose
 
 We definitely are not ready commit more resources to making generators production ready and as such we need to somehow signal that our generators are provided as-is.
 
+Moreover we will often want to take shortcuts both for resource constraint reasons and because the generator may be written with particular kinds of testing in mind.  As a result the generators may be intentionally or unintentionally non-representative.
+
 On the other hand its worthwhile to signal that our generators can be improved and that we accept organisation-level and community contributions since accepting such contributions would improve the quality of our testing.
 
 ## Reasons to exclude

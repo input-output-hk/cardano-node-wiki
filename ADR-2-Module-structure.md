@@ -125,6 +125,14 @@ Moreover we will often want to take shortcuts both for resource constraint reaso
 
 On the other hand its worthwhile to signal that our generators can be improved and that we accept organisation-level and community contributions since accepting such contributions would improve the quality of our testing.
 
+## Generator types
+
+We currently only write `hedgehog` generators.
+
+Other kinds of generators exist as well, for example [QuickCheck](https://hackage.haskell.org/package/QuickCheck-2.14.2/docs/Test-QuickCheck-Gen.html).
+
+Perhaps it is worth being clear our generators are in-fact `hedgehog` generators.
+
 ## Reasons to exclude
 
 * `Generators` - invites conflict between projects

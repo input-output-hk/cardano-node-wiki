@@ -107,7 +107,7 @@ To distinguish between production and non-production code the convention uses be
 
 The `Test` prefix was avoided for generators exported from a library because that gives the impression that may be false at some point in the future.  This is because generators may be used by a tool as well and not just tests.  For example a tool to generate random transactions.
 
-## Additional considerations
+## Considerations
 
 ### Generators as a library & production readiness
 

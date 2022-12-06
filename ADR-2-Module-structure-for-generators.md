@@ -157,8 +157,6 @@ Use the following convention:
 * `Bench.[Path].Gen`: modules that are local to a benchmark component
 * `[Path].Gen`: modules that are local to production component
 
-Wait for a standardisation effort across projects before engaging in refactoring.
-
 # Consequences
 
 * This ADR serves as documentation for the current `cardano-node` convention to ensure continued consistency within the project eliminating any confusion within the project.  `node` and external developers alike can easily familiarise themselves with this convention.

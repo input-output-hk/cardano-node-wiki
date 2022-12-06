@@ -137,9 +137,9 @@ Perhaps it is worth being clear our generators are in-fact `hedgehog` generators
 
 * `Generators` - invites conflict between projects
 * `Gen.[Path]` - might imply production readiness
-* `Gen.Hedgehog.[Path]`
-* `Hedgehog.Gen.[Path]`
-* `Hedgehog.[Path].Gen`
+* `Gen.Hedgehog.[Path]` - might wrongly imply they belong to the hedgehog project
+* `Hedgehog.Gen.[Path]` - might wrongly imply they belong to the hedgehog project
+* `Hedgehog.[Path].Gen` - might wrongly imply they belong to the hedgehog project
 * `[Path].Generator` -- too verbose
 * `[Path].Generators` -- too verbose
 * `[Path].Gen` - might imply production readiness
@@ -152,7 +152,7 @@ Perhaps it is worth being clear our generators are in-fact `hedgehog` generators
 
 Use the following convention:
 
-* `Hedgehog.[Path].Gen`: modules that are exported from a library
+* `Test.Gen.[Path]`: modules that are exported from a library
 * `Test.[Path].Gen`: modules that are local to a test component
 * `Bench.[Path].Gen`: modules that are local to a benchmark component
 * `[Path].Gen`: modules that are local to production component

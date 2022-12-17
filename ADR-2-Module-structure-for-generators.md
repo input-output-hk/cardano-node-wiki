@@ -1,6 +1,6 @@
 # Status
 
-✅ Adopted.
+✅ Adopted 2022-12-17
 
 # Context
 

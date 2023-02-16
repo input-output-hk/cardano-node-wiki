@@ -402,6 +402,46 @@ data Point = Point
 Misc
 ----
 
+### Multi-line string literals ###
+
+Multi-line string literals like this should be avoided because it can interact badly with some language extensions like `CPP`:
+
+```haskell
+foo = "The quick brown fox jumps \
+  \over the lazy dog"
+```
+
+Instead do one of the following:
+
+Use `mconcat`:
+
+```haskell
+foo = mconcat
+  [ "The quick brown fox jumps "
+  , "over the lazy dog"
+  ]
+```
+
+The above is preferred because it makes it easy to maintain the two-space indent and allows the use of `$` where other options do not.
+
+For example:
+
+```haskell
+foo = mconcat
+  [ "The quick brown fox jumps "
+  , Text.pack $ reverse "over the lazy dog"
+  ]
+```
+
+Use `(<>)`, keeping argument and operator aligned to two-spaces:
+
+```haskell
+foo = Text.pack
+  (   "The quick brown fox jumps "
+  <>  "over the lazy dog"
+  )
+```
+
 ### Point-free style ###
 
 Avoid over-using point-free style. Again, use your discretion.

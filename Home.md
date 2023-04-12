@@ -5,6 +5,7 @@ Click to
 
 # Useful links:
 
+* [[Running tests]]
 * [[Style guide]]
 
 Useful links:

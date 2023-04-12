@@ -4,6 +4,10 @@ Assuming you can already build `cardano-node`, running all the tests is as simpl
 cabal test all --enable-tests
 ```
 
+Many of tests are automatically run in CI in PRs.  For an exact list of which tests are run,
+please see the "Run tests" step in [haskell.yml](../../.github/workflows/haskell.yml) Github
+Actions workflow file.
+
 # Types of tests
 
 The `cardano-node` repository hosts multiple packages, each with their respective tests.  The tests fall into the following categories:

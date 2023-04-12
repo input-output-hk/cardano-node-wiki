@@ -54,7 +54,7 @@ These tests typically are defined in functions starting with the prefix `prop_` 
 
 We use [`hedgehog`](https://github.com/hedgehogqa/haskell-hedgehog) and [`hedgehog-extras`](https://github.com/input-output-hk/hedgehog-extras) for integration tests.
 
-The advantage of using `hedgehog` for this purpose is that `hedgehog` provides reports that annotate source code with additional information about the running of the test up to and including the failure.  This includes but is not limited to:
+The advantage of using `hedgehog` for this purpose is that `hedgehog` provides reports that annotate source code with additional information about the running of the test up to and including the failure.  The annotations can be for things like:
 
 * Values used during the test
 * Command line arguments used to run processes

@@ -3,3 +3,47 @@ Assuming you can already build `cardano-node`, running all the tests is as simpl
 ```bash
 cabal test all --enable-tests
 ```
+
+# Types of tests
+
+The `cardano-node` repository hosts multiple packages, each with their respective tests.  The tests fall into the following categories:
+
+* Golden tests
+* Property tests
+* Integration tests
+
+## Golden tests
+These are tests which perform some action that produces a file and tests if those files contain the expected contents.
+
+To be a golden test, a copy of the expected output must be checked into `git` as a file.  Such a file is called the golden file.  Tests that do not do a golden file are not golden tests.
+
+It is recommended that the `diffVsGoldenFile` function be used to perform the comparison:
+
+```haskell
+diffVsGoldenFile
+  :: HasCallStack
+  => (MonadIO m, MonadTest m)
+  => String   -- ^ Actual content
+  -> FilePath -- ^ Reference file
+  -> m ()
+diffVsGoldenFile actualContent referenceFile = ...
+```
+
+This function will compare the `actualContent` with the contents of the `referenceFile`.  If the file does not exist or the contents differ, then the test fails.
+
+There are two circumstances where is convenient to have the golden files created automatically.
+
+* When writing tests for the first time
+* When an intended breaking change occurs
+
+To do this defined the `CREATE_GOLDEN_FILES=1` environment variable before running the test.  For example:
+
+```bash
+CREATE_GOLDEN_FILES=1 cabal test ...
+```
+
+This will only create the golden file if it doesn't already exist.  For the case where you are intentionally introducing a breaking change, delete the existing golden file so that it can be regenerated.
+
+## Property tests
+
+## Integration tests

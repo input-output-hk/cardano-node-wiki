@@ -5,7 +5,7 @@ cabal test all --enable-tests
 ```
 
 Many of tests are automatically run in CI in PRs.  For an exact list of which tests are run,
-please see the "Run tests" step in [haskell.yml](../tree/master/.github/workflows/haskell.yml) Github
+please see the "Run tests" step in [haskell.yml](../blob/master/.github/workflows/haskell.yml) Github
 Actions workflow file.
 
 # Types of tests

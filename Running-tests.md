@@ -60,4 +60,4 @@ The advantage of using `hedgehog` for this purpose is that `hedgehog` provides r
 * Command line arguments used to run processes
 * `stdout` and `stderr` of processes that have been run
 
-
+A walkthrough of the leadership-schedule integration test can be found in this PR: https://github.com/input-output-hk/cardano-node/pull/5082

@@ -46,4 +46,18 @@ This will only create the golden file if it doesn't already exist.  For the case
 
 ## Property tests
 
+We use [`hedgehog`](https://github.com/hedgehogqa/haskell-hedgehog) for property tests.
+
+These tests typically are defined in functions starting with the prefix `prop_` and have the type `Property`.
+
 ## Integration tests
+
+We use [`hedgehog`](https://github.com/hedgehogqa/haskell-hedgehog) and [`hedgehog-extras`](https://github.com/input-output-hk/hedgehog-extras) for integration tests.
+
+The advantage of using `hedgehog` for this purpose is that `hedgehog` provides reports that annotate source code with additional information about the running of the test up to and including the failure.  This includes but is not limited to:
+
+* Values used during the test
+* Command line arguments used to run processes
+* `stdout` and `stderr` of processes that have been run
+
+

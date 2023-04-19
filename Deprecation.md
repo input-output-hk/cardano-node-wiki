@@ -2,7 +2,7 @@
 
 When deprecating a function, class, type, or data constructor in the cardano-node repo, follow the procedure outlined below:
 
-1. Use the [DEPRECATED](https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/pragmas.html#warning-and-deprecated-pragmas) pragma.
+1. Use the [`DEPRECATED`](https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/pragmas.html#warning-and-deprecated-pragmas) pragma.
 
 2. In the deprecation message, indicate what should be used in its place.
 

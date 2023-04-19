@@ -5,7 +5,7 @@ Click to
 
 # Useful links:
 
-* [[Deprecating]]
+* [[Deprecation]]
 * [[Running tests]]
 * [[Style guide]]
 

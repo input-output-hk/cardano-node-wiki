@@ -1,7 +1,7 @@
 name: Wiki Sync
 
 on:
-  push:
+  workflow_dispatch:
 
 jobs:
   job-sync-docs-to-wiki:
@@ -15,7 +15,12 @@ jobs:
       
       - name: Rebase on Wiki
         run: |
-          git remote add wiki "https://$WIKI_SYNC_GITHUB_TOKENgithub.com/input-output-hk/cardano-node.wiki.git"
-          git fetch wiki
-          git rebase wiki/main
-          git push origin/main
+          echo "GITHUB_BASE_REF=$GITHUB_BASE_REF"
+          # mkdir $TMPDIR
+          # cd $TMPDIR
+          # git clone 
+          # git remote add wiki "https://$WIKI_SYNC_GITHUB_TOKENgithub.com/input-output-hk/cardano-node.wiki.git"
+          # git fetch wiki
+          # git rebase wiki/main
+          # git push origin/main
+          # )

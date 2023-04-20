@@ -1,0 +1,28 @@
+name: Wiki Sync
+
+on:
+  workflow_dispatch:
+
+jobs:
+  job-sync-docs-to-wiki:
+    runs-on: ubuntu-latest
+
+    if: github.event_name != 'gollum'
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      
+      - name: Rebase on Wiki
+        env:
+          GITHUB_TOKEN: ${{ secrets.WIKI_SYNC_GITHUB_TOKEN }}}
+        run: |
+          git config --global user.email "cadano-node-wiki@iog.io"
+          git config --global user.name "cardano-node-wiki"
+
+          git branch --show-current
+          git remote add wiki "https://$GITHUB_TOKEN@github.com/input-output-hk/cardano-node.wiki.git"
+          git fetch wiki
+          git rebase wiki/master
+          git log
+          git push wiki HEAD:master

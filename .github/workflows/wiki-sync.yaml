@@ -1,0 +1,21 @@
+name: Wiki Sync
+
+on:
+  push:
+
+jobs:
+  job-sync-docs-to-wiki:
+    runs-on: ubuntu-latest
+
+    if: github.event_name != 'gollum'
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      
+      - name: Rebase on Wiki
+        run: |
+          git remote add wiki "https://$WIKI_SYNC_GITHUB_TOKENgithub.com/input-output-hk/cardano-node.wiki.git"
+          git fetch wiki
+          git rebase wiki/main
+          git push origin/main

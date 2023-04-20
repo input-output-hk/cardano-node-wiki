@@ -4,6 +4,11 @@ When deprecating a function, class, type, or data constructor in the cardano-nod
 
 1. Use the [`DEPRECATED`](https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/pragmas.html#warning-and-deprecated-pragmas) pragma.
 
+1. Add a comment stating deprecation date, for example:
+```haskell
+-- DEPRECATED SINCE 2023-05-01
+```
+
 2. In the deprecation message, indicate what should be used in its place.
 
 3. Include the deprecation in the release notes.

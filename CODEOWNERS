@@ -1,0 +1,9 @@
+# Technical writers
+README.*                                                      @Jimbo4350 @newhoggy @olgahryniuk
+cardano-cli/README.md                                         @Jimbo4350 @newhoggy @olgahryniuk
+
+# General reviewers per PR
+#                                                             Jordan     John      Mateusz     Olga         Carlos
+*                                                             @Jimbo4350 @newhoggy @carbolymer @olgahryniuk @CarlosLopezDeLara
+
+doc/                                                          @input-output-hk/docs-access @input-output-hk/devops @input-output-hk/cardano-sl

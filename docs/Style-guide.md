@@ -15,6 +15,12 @@ Principles
 
 General guide lines
 -------------------
+### Code linting and formatting tools
+`stylish-haskell` is used for automatic code formatting and `hlint` for linting.
+Those are configured using `.stylish-haskell.yml` and `.hlint.yml` files in the repository root.
+If you would like to check your changes before committing them, you can use the following [`.git/hooks/pre-commit` hook](https://github.com/input-output-hk/cardano-node/blob/master/scripts/githooks/haskell-style-lint).
+It requires `stylish-haskell` and `hlint` to be available in `$PATH` and runs against the staged files.
+
 ### Line Length
 
 Maximum line length is *80 characters* or *100 characters* if necessary.

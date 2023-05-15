@@ -254,7 +254,8 @@ Imports should be grouped in the following order:
 1. External modules.
 2. External IOHK modules.
 3. Local library modules.
-4. Local test modules
+4. Local test modules.
+5. External testing library modules.
 
 * Put a blank line between each group of imports.
 

@@ -248,18 +248,6 @@ Some clarifications:
 
 ### Imports
 
-Imports should be grouped in the following order:
-
-0. Import of custom prelude (for example [`cardano-prelude`](https://github.com/input-output-hk/cardano-prelude)) if used.
-1. External modules.
-2. External IOHK modules.
-3. Local library modules.
-4. Local test modules
-
-* Put a blank line between each group of imports.
-
-* The imports in each group should be sorted alphabetically, by module name.
-
 * For external modules, use explicit or `qualified` imports.
 * For local modules, use implicit imports.
 * Always use explicit import lists or `qualified` imports.

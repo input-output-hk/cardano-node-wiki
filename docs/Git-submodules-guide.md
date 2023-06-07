@@ -4,54 +4,50 @@ The official way to integrate multiple components in Cardano software is to
 maintain the code in `git` as separate repositories and publish releases to
 [Cardano Haskell Packages (CHaP)](https://github.com/input-output-hk/cardano-haskell-packages).
 
-All published components must operator in this manner.
+All published components must operate in this manner.
 
-In other to streamline development within teams however, teams may opt-in to
-use submodules to integrate some subset of components that they deal with
-frequently.
+To streamline development within teams, teams have the option to use submodules for integrating a subset of components they frequently work with.
 
-Some ground rules are in place however to ensure that all components remain
-CHaP compatible.
+However, certain ground rules are in place to ensure the compatibility of all components with CHaP:
 
 * Any repository that uses `git submodule` must:
-  * Not contain any component code directly.  Component code must only be
-    referenced via submodules.  In this sense, repositories that use
-    `git submodule` are not projects of themselves.  They are "meta-projects"
-    that are merely collections of other projects.
-  * Be owned by a particular team.  There is no shared ownership of such
+  * Not contain any component code directly. Component code must only be
+    referenced via submodules. This means that repositories using
+    `git submodule` are not standalone projects but rather 'meta-projects'
+    that serve as collections of other projects.
+  * Be owned by a particular team. There is no shared ownership of such
     repositories.
-  * Not be used to make released artifacts directly or indirectly.  This is to
-    reduce accidental inclusion of anything `git submodule` related into the
-    release project.  `git submodule` are not a first class method to
-    build software within IOG.
+  * Not be used to release artifacts directly or indirectly. This precaution
+    is taken to minimize the inadvertent inclusion of any `git submodule` related elements
+    into the release project. Note that `git submodule` is not considered a primary method for
+    building software in IOG.
   * Not have a name that makes it sound like official software or tie itself
     to one.  For example `node-and-cli-team` is not an acceptable name because
-    it suggests it is related to `cardano-node` or `cardano-cli`.  This is to
-    prevent users from accidently believing the meta-project is in anyway
+    it suggests it is related to `cardano-node` or `cardano-cli`. This precaution
+    prevents users from accidently believing the meta-project is in anyway
     official and ask for support.
 
 ## Projects using `git submodule`
 
-Presently the following meta-projects use `git submodule`:
+Currently, the following meta-projects use `git submodule`:
 
 * [fusion-flamingo](https://github.com/input-output-hk/fusion-flamingo)
 
 ## Cloning a repository that uses `git submodule`
 
-Clone the meta-project like this to also initialise the submodules within the
-meta-project:
+To clone the meta-project and initialize the submodules within it, use the following command:
 
 ```bash
 $ git clone --recurse-submodules git@github.com:input-output-hk/<project-name>.git
 ```
 
-If you accidentally cloned the meta-project using regular clone:
+If you accidentally cloned the meta-project using regular clone, run:
 
 ```bash
 $ git clone git@github.com:input-output-hk/<project-name>.git
 ```
 
-you can initialise the submodules afterwards:
+You can initialize the submodules afterwards:
 
 ```bash
 <project-name> $ git submodule update --init --recursive
@@ -59,19 +55,13 @@ you can initialise the submodules afterwards:
 
 ## Branches and `git submodule`
 
-`git submodule` does not have support for tracking branches.  The feature
-deals directly with commits and when changes for a meta-project are pushed
-the changes will refer to specific commits for each submodule.
+`git submodule` does not have support for tracking branches. Instead, it deals directly with commits. When changes are pushed for a meta-project, these changes will reference specific commits for each submodule.
 
-You may nevertheless use tracking branches by switching to them in each
-submodule manually.
+Nevertheless, it is possible to use tracking branches by manually switching to them in each submodule.
 
-One problem you may experience however is that whenever you switch branches
-or commits at the meta-project level, the submodules will revert to reference
-specific commits rather than tracking branches.
+However, one challenge you may encounter is that when switching branches or commits at the meta-project level, the submodules will revert to referencing specific commits instead of tracking branches.
 
-All is not lost however.  Even though `git submodule` doesn't support tracking
-branches directly, they may be configured to have a branch:
+There is a solution to this. Although `git submodule` doesn't directly support tracking branches, you can configure submodules to have a branch:
 
 ```bash
 $ git submodule set-branch --branch <branch-name> <submodule-name>
@@ -79,13 +69,11 @@ $ git submodule set-branch --branch <branch-name> <submodule-name>
 
 This will configure the specified submodule to use the specified branch.
 
-This branch configuration is fairly crude however.  When you switch git references
-at the meta-project level, you will continue have your submodule switch to
-reference commits instead of branches.
+Please note that this branch configuration is relatively basic. When you switch `git` references at the meta-project level, your submodules will continue to reference specific commits rather than branches.
 
-A script is available in [cardano-dev](https://github.com/input-output-hk/cardano-dev)
-to deal with this.  Whilst it cannot keep your submodules pointing at the relevant
-branch it can restore your submodules to their configured branches with a simple
+You can find the script in [cardano-dev](https://github.com/input-output-hk/cardano-dev)
+to work with. Note that while it cannot keep your submodules pointing at the relevant
+branch, it can restore your submodules to their configured branches with a simple
 invocation.
 
 Here is an end-to-end example:
@@ -106,7 +94,7 @@ $ cat .gitmodules
 	branch = main
 ```
 
-But the submodules are on specific commits:
+Note that the submodules are on specific commits:
 
 ```bash
 $ (cd cardano-api; git status)

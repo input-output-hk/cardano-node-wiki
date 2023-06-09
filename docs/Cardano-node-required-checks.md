@@ -5,13 +5,13 @@ These are the agreed-upon required checks for the [`cardano-node` repository](ht
 Whenever there is a variation to this document, the required checks for the `cardano-node`
 repository should be updated accordingly.
 
-If the required checks for the `cardano-node` repository are found to differ from those
+If the required checks for the `cardano-node` repository differ from those
 described here, then those should be updated to match this page.
 
-Sometimes, due to an urgent situation, a required-check may need to be disabled
-to merge an important PR.  Those incidents should be documented in the incidents
-section of the page.  Keeping a list of such incidents will help us understand
-which require-checks are problematic.
+Sometimes, due to an urgent situation, a required check may need to be disabled
+to merge an important PR. Those incidents should be documented in the incidents
+section of the page. Keeping a list of such incidents will help us understand
+which required checks are problematic.
 
 ### Legend
 * ✅ Required check.

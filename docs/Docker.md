@@ -44,7 +44,7 @@ CTRL+C
 ### Building the Docker image locally
 ​
 Ensure that you have [Nix](https://nixos.org/) installed and the IOHK binary cache enabled
-([instructions](https://github.com/input-output-hk/iohk-nix/blob/master/docs/nix.md)).
+([instructions](https://github.com/input-output-hk/cardano-node/blob/master/doc/getting-started/building-the-node-using-nix.md)).
 ​
 Then run this command from the `cardano-node` git repository:
 ​
@@ -53,5 +53,5 @@ docker load -i $(nix-build -A dockerImage --no-out-link)
 ```
 ​
 If you have no local changes, the build should be downloaded from
-the [IOHK binary cache](https://hydra.iohk.io/jobset/Cardano/cardano-node)
+the [IOHK binary cache](https://ci.iog.io/project/input-output-hk-cardano-node)
 then loaded into the local Docker registry.

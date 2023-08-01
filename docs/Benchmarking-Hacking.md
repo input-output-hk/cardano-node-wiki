@@ -151,9 +151,9 @@ Workbench (Links are to master branch but there's a workbench-master branch):
 1. [Top-level wb script](https://github.com/input-output-hk/cardano-node/blob/master/nix/workbench/wb)
    1. First thought: Why this scripts starts with ```#!/usr/bin/env bash```,
       shouldn't it be a ```/nix/store/sdfsjdlhflsdhflsdkjh```?
-2. [Profile computation (profile.sh)](https://github.com/input-output-hk/cardano-node/blob/master/nix/workbench/profile.sh)
+2. [Profile computation (profile.sh)](https://github.com/input-output-hk/cardano-node/blob/master/nix/workbench/profile/profile.sh)
 3. [Run allocation & starting](https://github.com/input-output-hk/cardano-node/blob/master/nix/workbench/run.sh)
-4. [Run scenarios](https://github.com/input-output-hk/cardano-node/blob/bench-master/nix/workbench/scenario.sh)
+4. [Run scenarios](https://github.com/input-output-hk/cardano-node/blob/master/nix/workbench/scenario.sh)
 
 ### About profile computation
 
@@ -182,7 +182,7 @@ profile = materialise-profile
     backendProfile = backend.materialise-profile { inherit profileNix; };
   };
 ```
-and [```workbench/profile.nix```](https://github.com/input-output-hk/cardano-node/blob/master/nix/workbench/profile.nix) does at the end:
+and [```workbench/profile.nix```](https://github.com/input-output-hk/cardano-node/blob/master/nix/workbench/profile/profile.nix) does at the end:
 ```
 ''
 mkdir $out
@@ -194,9 +194,9 @@ cp $tracerServicePath    $out/tracer-service.json
 wb profile node-specs $out/profile.json > $out/node-specs.json
 ''
 ```
-after importing [```workbench/profiles/default.nix```](https://github.com/input-output-hk/cardano-node/blob/master/nix/workbench/profiles/default.nix).
+after importing [```workbench/default.nix```](https://github.com/input-output-hk/cardano-node/blob/master/nix/workbench/default.nix).
 
-The only thing ```wb``` needs is the profile outputs as they are created by [```workbench/profiles/default.nix```](https://github.com/input-output-hk/cardano-node/blob/master/nix/workbench/profiles/default.nix).
+The only thing ```wb``` needs is the profile outputs as they are created by [```workbench/profiles/default.nix```](https://github.com/input-output-hk/cardano-node/blob/master/nix/workbench/default.nix).
 
 ### Modes
 

@@ -78,4 +78,4 @@ Build a new transaction with a invalid-hereafter higher than Current Slot. As a 
 7f1d95ce599c84064c61903c0b1334c826b55c48a1.... 1      1000000000000
 ```
 
-We encourage you to share your ideas and suggestions on our [dedicated support page](https://iohk.zendesk.com/hc/en-us/categories/900000102203-Shelley-Testnet) so that we can create a library of solutions and support for the tasks that you need to perform.
+We encourage you to share your ideas and suggestions on our [dedicated support page](https://iohk.zendesk.com/hc/en-us/categories/900000102203-Cardano-Testnets) so that we can create a library of solutions and support for the tasks that you need to perform.

@@ -148,7 +148,7 @@ examples in cardano-node under Cardano.Node.Tracing.Tracers.
 This is a document which is regenerated periodically and documents all trace-messages,  metrics and data-points in cardano-node. It as well displays the handling of these
 messages with the current default configuration:
 
-[Cardano Trace Documentation](https://github.com/input-output-hk/cardano-node/blob/master/doc/new-tracing/tracers_doc_generated.md)
+[Cardano Trace Documentation](https://github.com/input-output-hk/cardano-node-wiki/blob/main/docs/new-tracing/tracers_doc_generated.md)
 
 This document describes the underlying library trace-dispatcher:
 

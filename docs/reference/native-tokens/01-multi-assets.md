@@ -16,4 +16,4 @@ Tokens that have the same asset ID have the property of being fungible with each
 Further reading:
 
 - [Native token explainers](https://cardano-ledger.readthedocs.io/en/latest/)
-- [Getting started with native tokens](../../../doc/reference/native-tokens/02-getting-started.md). Includes script examples for minting, transferring, and burning tokens.
+- [Getting started with native tokens](https://github.com/input-output-hk/cardano-node-wiki/tree/main/docs/reference/native-tokens/02-getting-started.md). Includes script examples for minting, transferring, and burning tokens.

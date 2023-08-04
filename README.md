@@ -6,5 +6,3 @@ to the wiki.
 
 > [!NOTE]
 > This wiki is automatically bi-directionally synced with [`docs/`](https://github.com/input-output-hk/cardano-node-wiki/tree/main/doc) directory.
->
-> GitHub wiki will only show pages directly in `docs/` directory - [subdirectories are not supported](https://github.com/orgs/community/discussions/23914).

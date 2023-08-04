@@ -34,7 +34,7 @@ This will output `anyone-can-mint.plutus` in the `generated-plutus-scripts` dir.
 
 #### Setting up a local Alonzo node cluster
 
-First follow the [install doc](../../../doc/getting-started/install.md) if you haven't. This convenient script will set up an Alonzo cluster immediately on your local machine:
+First follow the [install doc](https://github.com/input-output-hk/cardano-node-wiki/blob/main/docs/getting-started/install.md) if you haven't. This convenient script will set up an Alonzo cluster immediately on your local machine:
 
 ```bash
 ./scripts/byron-to-alonzo/mkfiles.sh alonzo
@@ -75,6 +75,6 @@ cardano-cli transaction sign \
   --out-file "plutusmint.tx"
 ```
 
-You can use the [simple-minting-policy.sh](../../../scripts/plutus/simple-minting-policy.sh) in conjunction with the [mkfiles.sh alonzo](../../../scripts/byron-to-alonzo/mkfiles.sh) script to automagically run the `AlwaysSucceeds` minting script.
+You can use the [simple-minting-policy.sh](https://github.com/input-output-hk/cardano-node/blob/master/scripts/plutus/simple-minting-policy.sh) in conjunction with the [mkfiles.sh alonzo](https://github.com/input-output-hk/cardano-node/blob/master/scripts/byron-to-alonzo/mkfiles.sh) script to automagically run the `AlwaysSucceeds` minting script.
 
 

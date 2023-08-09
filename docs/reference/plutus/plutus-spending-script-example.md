@@ -115,5 +115,5 @@ cardano-cli transaction sign \
 
 If there is ADA at `$dummyaddress` then the Plutus script was successfully executed.
 
-You can use the [example-txin-locking-plutus-script.sh](https://github.com/input-output-hk/cardano-node/blob/master/scripts/plutus/example-txin-locking-plutus-script.sh) in conjunction with [mkfiles.sh alonzo](https://github.com/input-output-hk/cardano-node/blob/master/scripts/scripts/byron-to-alonzo/mkfiles.sh) script to automagically run the `AlwaysSucceeds` script.
+You can use the [example-txin-locking-plutus-script.sh](https://github.com/input-output-hk/cardano-node/blob/master/scripts/plutus/example-txin-locking-plutus-script.sh) in conjunction with [mkfiles.sh alonzo](https://github.com/input-output-hk/cardano-node/blob/master/scripts/byron-to-alonzo/mkfiles.sh) script to automagically run the `AlwaysSucceeds` script.
 

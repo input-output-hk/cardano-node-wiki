@@ -9,7 +9,7 @@ To set up your platform, you will need:
 
 | Network | CPU Cores | Free RAM | Free storage | OS for Pasive Node | OS for Stake pool |
 | :---: | :---: | :---: | :---: | :---: | :---: |
-| Mainnet | 2 | 16GB | 75GB of free storage (100GB recommended for future growth | Linux / Windows** / MacOS | Linux |
+| Mainnet | 2 | 24GB | 150GB of free storage (250GB recommended for future growth) | Linux / Windows** / MacOS | Linux |
 | Testnet | 2 | 4GB | 20GB | Linux / Windows** / MacOS | Linux |
 
 ****Note** If you are building on Windows, we recommend using WSL2 under Windows 10 as this provides a development and execution environment that is very similar to Ubuntu.
@@ -76,13 +76,13 @@ Once GHCup is installed, open a new terminal (to get an updated environment) and
 
 ```bash
 ghcup install ghc 8.10.7
-ghcup install cabal 3.6.2.0
+ghcup install cabal 3.8.1.0
 ghcup set ghc 8.10.7
-ghcup set cabal 3.6.2.0
+ghcup set cabal 3.8.1.0
 ```
 
 Alternatively, with `ghcup tui` you can pick the specific versions of the tools that you want to install, in particular you should have installed and set:
-- `cabal >= 3.6.2.0`
+- `cabal >= 3.8.1.0`
 - `GHC >= 8.10.7`
 
 To check that you will use the GHCup tools (and not any other installation on the system), you can execute

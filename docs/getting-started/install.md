@@ -182,7 +182,7 @@ sudo make install
 
 Download and install BLST so that cardano-base can pick it up (assuming that pkg-config is installed):
 
-```
+```bash
 git clone https://github.com/supranational/blst
 cd blst
 git checkout v0.3.10

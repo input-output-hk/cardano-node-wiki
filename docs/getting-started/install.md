@@ -189,16 +189,16 @@ git checkout v0.3.10
 ./build.sh
 cat > libblst.pc << EOF
 prefix=/usr/local
-exec_prefix=${prefix}
-libdir=${exec_prefix}/lib
-includedir=${prefix}/include
+exec_prefix=\${prefix}
+libdir=\${exec_prefix}/lib
+includedir=\${prefix}/include
 
 Name: libblst
 Description: Multilingual BLS12-381 signature library
 URL: https://github.com/supranational/blst
 Version: 0.3.10
-Cflags: -I${includedir}
-Libs: -L${libdir} -lblst
+Cflags: -I\${includedir}
+Libs: -L\${libdir} -lblst
 EOF
 sudo cp libblst.pc /usr/local/lib/pkgconfig/
 sudo cp bindings/blst_aux.h bindings/blst.h bindings/blst.hpp  /usr/local/include/

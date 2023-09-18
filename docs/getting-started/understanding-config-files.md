@@ -460,14 +460,11 @@ leave a node vulnerable to eclipse attacks.
 
 The main method for configuring Peer Sharing involves setting the following option:
 
-- `PeerSharing` (default value: `NoPeerSharing`) - This option can take 3 possible values:
-    * `NoPeerSharing`: Peer Sharing is disabled, which means the node won't request peer
+- `PeerSharing` (default value: `PeerSharingDisabled`) - This option can take 2 possible values:
+    * `PeerSharingDisabled`: Peer Sharing is disabled, which means the node won't request peer
       information from any other node, and will not respond to such requests from others
       (the mini-protocol won't even start);
-    * `PeerSharingPrivate`: Peer Sharing is enabled, meaning the node will query other
-      nodes for peers. However, during the handshake process, it will inform other nodes
-      not to share its address.
-    * `PeerSharingPublic`: Peer Sharing is enabled and the node will notify other nodes
+    * `PeerSharingEnabled`: Peer Sharing is enabled and the node will notify other nodes
       that it is permissible to share its address.
 
 The `PeerSharing` flag interacts with `PeerAdvertise` (`advertise` flag in the topology
@@ -476,7 +473,7 @@ file) values as follows:
 `AdvertisePeer` (`advertise: true`) is local to the configuration of a specific node. A
 node might be willing to share those peers it has set as `PeerAdvertise`. Conversely,
 `PeerSharing` is about whether the peer (itself) is willing to participate in
-`PeerSharing` or allows others to share its address.
+`PeerSharing`.
 
 `PeerSharing` takes precedence over `AdvertisePeer`. Consider the following example:
 
@@ -487,26 +484,9 @@ BP and the Relay occurs, the Relay will see that the BP doesn't want to particip
 Peer Sharing. As a result, it won't engage in peer sharing with it or share its details
 with others.
 
-The `combinePeerInformation` function determines the sharing interaction semantics between
-the two flags. Please take a look to better understand how the two values combine.
-
-```haskell
--- Combine a 'PeerSharing' value and a 'PeerAdvertise' value into a
--- resulting 'PeerSharing' that can be used to decide if we should
--- share or not the given Peer. According to the following rules:
---
--- - If no PeerSharing value is known then there's nothing we can assess
--- - If a peer is not participating in Peer Sharing ignore all other information
--- - If a peer said it wasn't okay to share its address, respect that no matter what.
--- - If a peer was privately configured with DoNotAdvertisePeer respect that no matter
--- what.
---
-combinePeerInformation :: PeerSharing -> PeerAdvertise -> PeerSharing
-combinePeerInformation NoPeerSharing      _                  = NoPeerSharing
-combinePeerInformation PeerSharingPrivate _                  = PeerSharingPrivate
-combinePeerInformation PeerSharingPublic  DoNotAdvertisePeer = PeerSharingPrivate
-combinePeerInformation _                         _           = PeerSharingPublic
-```
+In the handshake if any party has `PeerSharingDisabled` then that is the value that is
+going to be negotiated, meaning, the 2 parties won't be engaging in any peer sharing
+protocol. Only if the two parties have `PeerSharingEnabled` that is going to be the case.
 
 #### Inbound Governor
 

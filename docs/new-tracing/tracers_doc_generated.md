@@ -117,14 +117,14 @@
 		1. [NoValidLastLocation](#chaindbimmdbeventnovalidlastlocation)
 		1. [ValidatedLastLocation](#chaindbimmdbeventvalidatedlastlocation)
 	1. __InitChainSelEvent__
-		1. __InitChainSelValidation__
-			1. [CandidateContainsFutureBlocks](#chaindbinitchainseleventinitchainselvalidationcandidatecontainsfutureblocks)
-			1. [CandidateContainsFutureBlocksExceedingClockSkew](#chaindbinitchainseleventinitchainselvalidationcandidatecontainsfutureblocksexceedingclockskew)
-			1. [InvalidBlock](#chaindbinitchainseleventinitchainselvalidationinvalidblock)
-			1. [UpdateLedgerDb](#chaindbinitchainseleventinitchainselvalidationupdateledgerdb)
-			1. [ValidCandidate](#chaindbinitchainseleventinitchainselvalidationvalidcandidate)
 		1. [InitalChainSelected](#chaindbinitchainseleventinitalchainselected)
 		1. [StartedInitChainSelection](#chaindbinitchainseleventstartedinitchainselection)
+		1. __Validation__
+			1. [CandidateContainsFutureBlocks](#chaindbinitchainseleventvalidationcandidatecontainsfutureblocks)
+			1. [CandidateContainsFutureBlocksExceedingClockSkew](#chaindbinitchainseleventvalidationcandidatecontainsfutureblocksexceedingclockskew)
+			1. [InvalidBlock](#chaindbinitchainseleventvalidationinvalidblock)
+			1. [UpdateLedgerDb](#chaindbinitchainseleventvalidationupdateledgerdb)
+			1. [ValidCandidate](#chaindbinitchainseleventvalidationvalidcandidate)
 	1. __IteratorEvent__
 		1. [BlockGCedFromVolatileDB](#chaindbiteratoreventblockgcedfromvolatiledb)
 		1. [BlockMissingFromVolatileDB](#chaindbiteratoreventblockmissingfromvolatiledb)
@@ -232,6 +232,7 @@
 1. __Forge__
 	1. __Loopⓣⓜ__
 		1. [AdoptedBlock](#forgeloopadoptedblock)
+		1. [AdoptionThreadDied](#forgeloopadoptionthreaddied)
 		1. [BlockContext](#forgeloopblockcontext)
 		1. [BlockFromFuture](#forgeloopblockfromfuture)
 		1. [DidntAdoptBlock](#forgeloopdidntadoptblock)
@@ -283,7 +284,7 @@
 			1. [TerminatingConnection](#netconnectionmanagerlocalterminatingconnection)
 			1. [UnexpectedlyFalseAssertion](#netconnectionmanagerlocalunexpectedlyfalseassertion)
 			1. [UnregisterConnection](#netconnectionmanagerlocalunregisterconnection)
-		1. __Remoteⓣⓢ__
+		1. __Remoteⓣⓜ__
 			1. [Connect](#netconnectionmanagerremoteconnect)
 			1. [ConnectError](#netconnectionmanagerremoteconnecterror)
 			1. [ConnectionCleanup](#netconnectionmanagerremoteconnectioncleanup)
@@ -303,9 +304,10 @@
 			1. [State](#netconnectionmanagerremotestate)
 			1. [TerminatedConnection](#netconnectionmanagerremoteterminatedconnection)
 			1. [TerminatingConnection](#netconnectionmanagerremoteterminatingconnection)
-			1. [Transition](#netconnectionmanagerremotetransition)
 			1. [UnexpectedlyFalseAssertion](#netconnectionmanagerremoteunexpectedlyfalseassertion)
 			1. [UnregisterConnection](#netconnectionmanagerremoteunregisterconnection)
+		1. __Transitionⓣⓢ__
+			1. [Transition](#netconnectionmanagertransitiontransition)
 	1. __DNSResolverⓣ__
 		1. [LookupAAAAError](#netdnsresolverlookupaaaaerror)
 		1. [LookupAAAAResult](#netdnsresolverlookupaaaaresult)
@@ -341,22 +343,26 @@
 		1. __Localⓣⓢ__
 			1. __Receive__
 				1. [AcceptVersion](#nethandshakelocalreceiveacceptversion)
+				1. [MsgQueryReply](#nethandshakelocalreceivemsgqueryreply)
 				1. [ProposeVersions](#nethandshakelocalreceiveproposeversions)
 				1. [Refuse](#nethandshakelocalreceiverefuse)
 				1. [ReplyVersions](#nethandshakelocalreceivereplyversions)
 			1. __Send__
 				1. [AcceptVersion](#nethandshakelocalsendacceptversion)
+				1. [MsgQueryReply](#nethandshakelocalsendmsgqueryreply)
 				1. [ProposeVersions](#nethandshakelocalsendproposeversions)
 				1. [Refuse](#nethandshakelocalsendrefuse)
 				1. [ReplyVersions](#nethandshakelocalsendreplyversions)
 		1. __Remoteⓣⓢ__
 			1. __Receive__
 				1. [AcceptVersion](#nethandshakeremotereceiveacceptversion)
+				1. [MsgQueryReply](#nethandshakeremotereceivemsgqueryreply)
 				1. [ProposeVersions](#nethandshakeremotereceiveproposeversions)
 				1. [Refuse](#nethandshakeremotereceiverefuse)
 				1. [ReplyVersions](#nethandshakeremotereceivereplyversions)
 			1. __Send__
 				1. [AcceptVersion](#nethandshakeremotesendacceptversion)
+				1. [MsgQueryReply](#nethandshakeremotesendmsgqueryreply)
 				1. [ProposeVersions](#nethandshakeremotesendproposeversions)
 				1. [Refuse](#nethandshakeremotesendrefuse)
 				1. [ReplyVersions](#nethandshakeremotesendreplyversions)
@@ -395,10 +401,10 @@
 			1. [ResponderStartFailure](#netinboundgovernorremoteresponderstartfailure)
 			1. [ResponderStarted](#netinboundgovernorremoteresponderstarted)
 			1. [ResponderTerminated](#netinboundgovernorremoteresponderterminated)
-			1. __Transitionⓣ__
-				1. [Transition](#netinboundgovernorremotetransitiontransition)
 			1. [UnexpectedlyFalseAssertion](#netinboundgovernorremoteunexpectedlyfalseassertion)
 			1. [WaitIdleRemote](#netinboundgovernorremotewaitidleremote)
+		1. __Transitionⓣ__
+			1. [Transition](#netinboundgovernortransitiontransition)
 	1. [KeepAliveClient](#netkeepaliveclient)
 	1. __Mux__
 		1. __Localⓣ__
@@ -428,6 +434,8 @@
 			1. [StartOnDemand](#netmuxlocalstartondemand)
 			1. [StartedOnDemand](#netmuxlocalstartedondemand)
 			1. [State](#netmuxlocalstate)
+			1. [Stopped](#netmuxlocalstopped)
+			1. [Stopping](#netmuxlocalstopping)
 			1. [TCPInfo](#netmuxlocaltcpinfo)
 			1. [Terminating](#netmuxlocalterminating)
 		1. __Remoteⓣ__
@@ -457,6 +465,8 @@
 			1. [StartOnDemand](#netmuxremotestartondemand)
 			1. [StartedOnDemand](#netmuxremotestartedondemand)
 			1. [State](#netmuxremotestate)
+			1. [Stopped](#netmuxremotestopped)
+			1. [Stopping](#netmuxremotestopping)
 			1. [TCPInfo](#netmuxremotetcpinfo)
 			1. [Terminating](#netmuxremoteterminating)
 	1. __PeerSelection__
@@ -487,6 +497,7 @@
 			1. [GossipRequests](#netpeerselectionselectiongossiprequests)
 			1. [GossipResults](#netpeerselectionselectiongossipresults)
 			1. [GovernorWakeup](#netpeerselectionselectiongovernorwakeup)
+			1. [KnownInboundConnection](#netpeerselectionselectionknowninboundconnection)
 			1. [LocalRootPeersChanged](#netpeerselectionselectionlocalrootpeerschanged)
 			1. [PromoteColdDone](#netpeerselectionselectionpromotecolddone)
 			1. [PromoteColdFailed](#netpeerselectionselectionpromotecoldfailed)
@@ -504,7 +515,7 @@
 	1. __Peers__
 		1. __Ledgerⓣⓢ__
 			1. [DisabledLedgerPeers](#netpeersledgerdisabledledgerpeers)
-			1. [FallingBackToBootstrapPeers](#netpeersledgerfallingbacktobootstrappeers)
+			1. [FallingBackToPublicRootPeers](#netpeersledgerfallingbacktopublicrootpeers)
 			1. [FetchingNewLedgerState](#netpeersledgerfetchingnewledgerstate)
 			1. [PickedPeer](#netpeersledgerpickedpeer)
 			1. [PickedPeers](#netpeersledgerpickedpeers)
@@ -515,10 +526,12 @@
 		1. __Listⓣⓢ__
 			1. [PeersFromNodeKernel](#netpeerslistpeersfromnodekernel)
 		1. __LocalRootⓣ__
+			1. [LocalRootDNSMap](#netpeerslocalrootlocalrootdnsmap)
 			1. [LocalRootDomains](#netpeerslocalrootlocalrootdomains)
 			1. [LocalRootError](#netpeerslocalrootlocalrooterror)
 			1. [LocalRootFailure](#netpeerslocalrootlocalrootfailure)
 			1. [LocalRootGroups](#netpeerslocalrootlocalrootgroups)
+			1. [LocalRootReconfigured](#netpeerslocalrootlocalrootreconfigured)
 			1. [LocalRootResult](#netpeerslocalrootlocalrootresult)
 			1. [LocalRootWaiting](#netpeerslocalrootlocalrootwaiting)
 		1. __PublicRootⓣ__
@@ -597,6 +610,8 @@
 	1. [Requesting](#shutdownrequesting)
 	1. [UnexpectedInput](#shutdownunexpectedinput)
 1. __Startupⓣ__
+	1. [BlockForgingBlockTypeMismatch](#startupblockforgingblocktypemismatch)
+	1. [BlockForgingUpdate](#startupblockforgingupdate)
 	1. [Byron](#startupbyron)
 	1. [Common](#startupcommon)
 	1. [DBValidation](#startupdbvalidation)
@@ -627,11 +642,11 @@
 	1. [NetworkMagic](#startupnetworkmagic)
 	1. [P2PInfo](#startupp2pinfo)
 	1. [P2PWarning](#startupp2pwarning)
-	1. [P2PWarningDevelopementNetworkProtocols](#startupp2pwarningdevelopementnetworkprotocols)
 	1. [ShelleyBased](#startupshelleybased)
 	1. [SocketConfigError](#startupsocketconfigerror)
 	1. [Time](#startuptime)
-	1. [WarningDevelopmentNetworkProtocols](#startupwarningdevelopmentnetworkprotocols)
+	1. [WarningDevelopmentNodeToClientVersions](#startupwarningdevelopmentnodetoclientversions)
+	1. [WarningDevelopmentNodeToNodeVersions](#startupwarningdevelopmentnodetonodeversions)
 1. __StateQueryServerⓣ__
 	1. __Receive__
 		1. [Acquire](#statequeryserverreceiveacquire)
@@ -727,7 +742,7 @@
 	1. [Density](#chaindbdensity)
 	1. [Epoch](#chaindbepoch)
 	1. [SlotInEpoch](#chaindbslotinepoch)
-	1. [Slots](#chaindbslots)
+	1. [SlotNum](#chaindbslotnum)
 1. __ChainSync__
 	1. [HeadersServed](#chainsyncheadersserved)
 	1. [HeadersServed](#chainsyncheadersserved)
@@ -737,6 +752,7 @@
 1. __Forge__
 	1. [AboutToLeadSlotLast](#forgeabouttoleadslotlast)
 	1. [AdoptedOwnBlockSlotLast](#forgeadoptedownblockslotlast)
+	1. [AdoptionThreadDied](#forgeadoptionthreaddied)
 	1. [BlockContext](#forgeblockcontext)
 	1. [BlockFromFuture](#forgeblockfromfuture)
 	1. [CouldNotForgeSlotLast](#forgecouldnotforgeslotlast)
@@ -782,8 +798,12 @@
 		1. [Warm](#netinboundgovernorwarm)
 	1. __PeerSelection__
 		1. [Cold](#netpeerselectioncold)
+		1. [ColdBigLedgerPeers](#netpeerselectioncoldbigledgerpeers)
 		1. [Hot](#netpeerselectionhot)
+		1. [HotBigLedgerPeers](#netpeerselectionhotbigledgerpeers)
+		1. [LocalRoots](#netpeerselectionlocalroots)
 		1. [Warm](#netpeerselectionwarm)
+		1. [WarmBigLedgerPeers](#netpeerselectionwarmbigledgerpeers)
 	1. [PeersFromNodeKernel](#netpeersfromnodekernel)
 1. __Resources__
 	1. __Mem__
@@ -2539,100 +2559,6 @@ Backends:
       `Forwarder`
 Filtered `Visible` by config value: `Info`
 
-### ChainDB.InitChainSelEvent.InitChainSelValidation.CandidateContainsFutureBlocks
-
-
-> An event traced during validating performed while adding a block. Candidate contains headers from the future which do no exceed the clock skew.
-
-
-Severity:  `Debug`
-Privacy:   `Public`
-Details:   `DNormal`
-
-
-From current configuration:
-
-Backends:
-      `EKGBackend`,
-      `Stdout MachineFormat`,
-      `Forwarder`
-Filtered `Invisible` by config value: `Info`
-
-### ChainDB.InitChainSelEvent.InitChainSelValidation.CandidateContainsFutureBlocksExceedingClockSkew
-
-
-> An event traced during validating performed while adding a block. Candidate contains headers from the future which exceed the clock skew.
-
-
-Severity:  `Error`
-Privacy:   `Public`
-Details:   `DNormal`
-
-
-From current configuration:
-
-Backends:
-      `EKGBackend`,
-      `Stdout MachineFormat`,
-      `Forwarder`
-Filtered `Visible` by config value: `Info`
-
-### ChainDB.InitChainSelEvent.InitChainSelValidation.InvalidBlock
-
-
-> An event traced during validating performed while adding a block. A point was found to be invalid.
-
-
-Severity:  `Error`
-Privacy:   `Public`
-Details:   `DNormal`
-
-
-From current configuration:
-
-Backends:
-      `EKGBackend`,
-      `Stdout MachineFormat`,
-      `Forwarder`
-Filtered `Visible` by config value: `Info`
-
-### ChainDB.InitChainSelEvent.InitChainSelValidation.UpdateLedgerDb
-
-
-
-
-Severity:  `Debug`
-Privacy:   `Public`
-Details:   `DNormal`
-
-
-From current configuration:
-
-Backends:
-      `EKGBackend`,
-      `Stdout MachineFormat`,
-      `Forwarder`
-Filtered `Invisible` by config value: `Info`
-
-### ChainDB.InitChainSelEvent.InitChainSelValidation.ValidCandidate
-
-
-> An event traced during validating performed while adding a block. A candidate chain was valid.
-
-
-Severity:  `Info`
-Privacy:   `Public`
-Details:   `DNormal`
-
-
-From current configuration:
-
-Backends:
-      `EKGBackend`,
-      `Stdout MachineFormat`,
-      `Forwarder`
-Filtered `Visible` by config value: `Info`
-
 ### ChainDB.InitChainSelEvent.InitalChainSelected
 
 
@@ -2656,6 +2582,100 @@ Filtered `Visible` by config value: `Info`
 
 
 > A garbage collection for the given 'SlotNo' was scheduled to happen at the given time.
+
+
+Severity:  `Info`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Visible` by config value: `Info`
+
+### ChainDB.InitChainSelEvent.Validation.CandidateContainsFutureBlocks
+
+
+> An event traced during validating performed while adding a block. Candidate contains headers from the future which do no exceed the clock skew.
+
+
+Severity:  `Debug`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Invisible` by config value: `Info`
+
+### ChainDB.InitChainSelEvent.Validation.CandidateContainsFutureBlocksExceedingClockSkew
+
+
+> An event traced during validating performed while adding a block. Candidate contains headers from the future which exceed the clock skew.
+
+
+Severity:  `Error`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Visible` by config value: `Info`
+
+### ChainDB.InitChainSelEvent.Validation.InvalidBlock
+
+
+> An event traced during validating performed while adding a block. A point was found to be invalid.
+
+
+Severity:  `Error`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Visible` by config value: `Info`
+
+### ChainDB.InitChainSelEvent.Validation.UpdateLedgerDb
+
+
+
+
+Severity:  `Debug`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Invisible` by config value: `Info`
+
+### ChainDB.InitChainSelEvent.Validation.ValidCandidate
+
+
+> An event traced during validating performed while adding a block. A candidate chain was valid.
 
 
 Severity:  `Info`
@@ -4312,6 +4332,25 @@ Backends:
       `Forwarder`
 Filtered `Visible` by config value: `Info`
 
+### Forge.Loop.AdoptionThreadDied
+
+
+> Block adoption thread died
+
+
+Severity:  `Error`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Visible` by config value: `Info`
+
 ### Forge.Loop.BlockContext
 
 
@@ -5510,24 +5549,6 @@ Backends:
       `Forwarder`
 Filtered `Invisible` by config value: `Info`
 
-### Net.ConnectionManager.Remote.Transition
-
-
-
-
-Severity:  `Debug`
-Privacy:   `Public`
-Details:   `DNormal`
-
-
-From current configuration:
-
-Backends:
-      `EKGBackend`,
-      `Stdout MachineFormat`,
-      `Forwarder`
-Filtered `Invisible` by config value: `Info`
-
 ### Net.ConnectionManager.Remote.UnexpectedlyFalseAssertion
 
 
@@ -5563,6 +5584,24 @@ Backends:
       `Stdout MachineFormat`,
       `Forwarder`
 Filtered `Invisible` by config value: `Info`
+
+### Net.ConnectionManager.Transition.Transition
+
+
+
+
+Severity:  `Debug`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Invisible` by config value: `Notice`
 
 ### Net.DNSResolver.LookupAAAAError
 
@@ -5714,7 +5753,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Visible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Net.ErrorPolicy.Local.KeepSuspended
 
@@ -5733,7 +5772,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Invisible` by config value: `Notice`
+Filtered `Invisible` by config value: `Info`
 
 ### Net.ErrorPolicy.Local.LocalNodeError
 
@@ -5752,7 +5791,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Visible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Net.ErrorPolicy.Local.ResumeConsumer
 
@@ -5771,7 +5810,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Invisible` by config value: `Notice`
+Filtered `Invisible` by config value: `Info`
 
 ### Net.ErrorPolicy.Local.ResumePeer
 
@@ -5790,7 +5829,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Invisible` by config value: `Notice`
+Filtered `Invisible` by config value: `Info`
 
 ### Net.ErrorPolicy.Local.ResumeProducer
 
@@ -5809,7 +5848,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Invisible` by config value: `Notice`
+Filtered `Invisible` by config value: `Info`
 
 ### Net.ErrorPolicy.Local.SuspendConsumer
 
@@ -5828,7 +5867,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Visible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Net.ErrorPolicy.Local.SuspendPeer
 
@@ -5847,7 +5886,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Visible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Net.ErrorPolicy.Local.UnhandledApplicationException
 
@@ -5866,7 +5905,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Visible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Net.ErrorPolicy.Local.UnhandledConnectionException
 
@@ -5884,7 +5923,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Visible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Net.ErrorPolicy.Remote.AcceptException
 
@@ -5903,7 +5942,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Visible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Net.ErrorPolicy.Remote.KeepSuspended
 
@@ -5922,7 +5961,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Invisible` by config value: `Notice`
+Filtered `Invisible` by config value: `Info`
 
 ### Net.ErrorPolicy.Remote.LocalNodeError
 
@@ -5941,7 +5980,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Visible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Net.ErrorPolicy.Remote.ResumeConsumer
 
@@ -5960,7 +5999,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Invisible` by config value: `Notice`
+Filtered `Invisible` by config value: `Info`
 
 ### Net.ErrorPolicy.Remote.ResumePeer
 
@@ -5979,7 +6018,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Invisible` by config value: `Notice`
+Filtered `Invisible` by config value: `Info`
 
 ### Net.ErrorPolicy.Remote.ResumeProducer
 
@@ -5998,7 +6037,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Invisible` by config value: `Notice`
+Filtered `Invisible` by config value: `Info`
 
 ### Net.ErrorPolicy.Remote.SuspendConsumer
 
@@ -6017,7 +6056,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Visible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Net.ErrorPolicy.Remote.SuspendPeer
 
@@ -6036,7 +6075,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Visible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Net.ErrorPolicy.Remote.UnhandledApplicationException
 
@@ -6055,7 +6094,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Visible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Net.ErrorPolicy.Remote.UnhandledConnectionException
 
@@ -6073,12 +6112,31 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Visible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Net.Handshake.Local.Receive.AcceptVersion
 
 
 > The remote end decides which version to use and sends chosen version.The server is allowed to modify version parameters.
+
+
+Severity:  `Info`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Invisible` by config value: `Notice`
+
+### Net.Handshake.Local.Receive.MsgQueryReply
+
+
+> `MsgQueryReply` received as a response to a handshake query in  'MsgProposeVersions' and lists the supported versions.
 
 
 Severity:  `Info`
@@ -6170,6 +6228,25 @@ Backends:
       `Forwarder`
 Filtered `Invisible` by config value: `Notice`
 
+### Net.Handshake.Local.Send.MsgQueryReply
+
+
+> `MsgQueryReply` received as a response to a handshake query in  'MsgProposeVersions' and lists the supported versions.
+
+
+Severity:  `Info`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Invisible` by config value: `Notice`
+
 ### Net.Handshake.Local.Send.ProposeVersions
 
 
@@ -6246,6 +6323,25 @@ Backends:
       `Forwarder`
 Filtered `Invisible` by config value: `Notice`
 
+### Net.Handshake.Remote.Receive.MsgQueryReply
+
+
+> `MsgQueryReply` received as a response to a handshake query in  'MsgProposeVersions' and lists the supported versions.
+
+
+Severity:  `Info`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Invisible` by config value: `Notice`
+
 ### Net.Handshake.Remote.Receive.ProposeVersions
 
 
@@ -6307,6 +6403,25 @@ Filtered `Invisible` by config value: `Notice`
 
 
 > The remote end decides which version to use and sends chosen version.The server is allowed to modify version parameters.
+
+
+Severity:  `Info`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Invisible` by config value: `Notice`
+
+### Net.Handshake.Remote.Send.MsgQueryReply
+
+
+> `MsgQueryReply` received as a response to a handshake query in  'MsgProposeVersions' and lists the supported versions.
 
 
 Severity:  `Info`
@@ -6959,24 +7074,6 @@ Backends:
       `Forwarder`
 Filtered `Invisible` by config value: `Info`
 
-### Net.InboundGovernor.Remote.Transition.Transition
-
-
-
-
-Severity:  `Debug`
-Privacy:   `Public`
-Details:   `DNormal`
-
-
-From current configuration:
-
-Backends:
-      `EKGBackend`,
-      `Stdout MachineFormat`,
-      `Forwarder`
-Filtered `Invisible` by config value: `Info`
-
 ### Net.InboundGovernor.Remote.UnexpectedlyFalseAssertion
 
 
@@ -7012,6 +7109,24 @@ Backends:
       `Stdout MachineFormat`,
       `Forwarder`
 Filtered `Invisible` by config value: `Info`
+
+### Net.InboundGovernor.Transition.Transition
+
+
+
+
+Severity:  `Debug`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Invisible` by config value: `Notice`
 
 ### Net.KeepAliveClient
 
@@ -7514,6 +7629,44 @@ Filtered `Invisible` by config value: `Notice`
 
 
 Severity:  `Info`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Invisible` by config value: `Notice`
+
+### Net.Mux.Local.Stopped
+
+
+> Mux shutdown.
+
+
+Severity:  `Debug`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Invisible` by config value: `Notice`
+
+### Net.Mux.Local.Stopping
+
+
+> Mux shutdown.
+
+
+Severity:  `Debug`
 Privacy:   `Public`
 Details:   `DNormal`
 
@@ -8058,6 +8211,44 @@ Backends:
       `Forwarder`
 Filtered `Visible` by config value: `Info`
 
+### Net.Mux.Remote.Stopped
+
+
+> Mux shutdown.
+
+
+Severity:  `Debug`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Invisible` by config value: `Info`
+
+### Net.Mux.Remote.Stopping
+
+
+> Mux shutdown.
+
+
+Severity:  `Debug`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Invisible` by config value: `Info`
+
 ### Net.Mux.Remote.TCPInfo
 
 
@@ -8502,6 +8693,25 @@ Backends:
       `Forwarder`
 Filtered `Visible` by config value: `Info`
 
+### Net.PeerSelection.Selection.KnownInboundConnection
+
+
+> An inbound connection was added to known set of outbound governor
+
+
+Severity:  `Info`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Visible` by config value: `Info`
+
 ### Net.PeerSelection.Selection.LocalRootPeersChanged
 
 
@@ -8781,7 +8991,7 @@ Backends:
       `Forwarder`
 Filtered `Invisible` by config value: `Notice`
 
-### Net.Peers.Ledger.FallingBackToBootstrapPeers
+### Net.Peers.Ledger.FallingBackToPublicRootPeers
 
 
 
@@ -8948,6 +9158,24 @@ Backends:
       `Forwarder`
 Filtered `Invisible` by config value: `Notice`
 
+### Net.Peers.LocalRoot.LocalRootDNSMap
+
+
+
+
+Severity:  `Info`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Invisible` by config value: `Notice`
+
 ### Net.Peers.LocalRoot.LocalRootDomains
 
 
@@ -9003,6 +9231,24 @@ Backends:
 Filtered `Invisible` by config value: `Notice`
 
 ### Net.Peers.LocalRoot.LocalRootGroups
+
+
+
+
+Severity:  `Info`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Invisible` by config value: `Notice`
+
+### Net.Peers.LocalRoot.LocalRootReconfigured
 
 
 
@@ -9361,7 +9607,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Invisible` by config value: `Notice`
+Filtered `Invisible` by config value: `Info`
 
 ### Net.Subscription.DNS.ApplicationException
 
@@ -9380,7 +9626,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Visible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Net.Subscription.DNS.CloseSocket
 
@@ -9399,7 +9645,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Invisible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Net.Subscription.DNS.ConnectEnd
 
@@ -9418,7 +9664,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Invisible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Net.Subscription.DNS.ConnectException
 
@@ -9437,7 +9683,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Invisible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Net.Subscription.DNS.ConnectStart
 
@@ -9456,7 +9702,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Invisible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Net.Subscription.DNS.ConnectionExist
 
@@ -9475,7 +9721,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Visible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Net.Subscription.DNS.MissingLocalAddress
 
@@ -9494,7 +9740,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Visible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Net.Subscription.DNS.Restart
 
@@ -9513,7 +9759,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Invisible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Net.Subscription.DNS.SkippingPeer
 
@@ -9532,7 +9778,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Invisible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Net.Subscription.DNS.SocketAllocationException
 
@@ -9551,7 +9797,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Visible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Net.Subscription.DNS.Start
 
@@ -9570,7 +9816,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Invisible` by config value: `Notice`
+Filtered `Invisible` by config value: `Info`
 
 ### Net.Subscription.DNS.SubscriptionFailed
 
@@ -9589,7 +9835,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Visible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Net.Subscription.DNS.SubscriptionRunning
 
@@ -9608,7 +9854,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Invisible` by config value: `Notice`
+Filtered `Invisible` by config value: `Info`
 
 ### Net.Subscription.DNS.SubscriptionWaiting
 
@@ -9627,7 +9873,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Invisible` by config value: `Notice`
+Filtered `Invisible` by config value: `Info`
 
 ### Net.Subscription.DNS.SubscriptionWaitingNewConnection
 
@@ -9646,7 +9892,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Visible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Net.Subscription.DNS.TryConnectToPeer
 
@@ -9665,7 +9911,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Invisible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Net.Subscription.DNS.UnsupportedRemoteAddr
 
@@ -9684,7 +9930,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Visible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Net.Subscription.IP.AllocateSocket
 
@@ -9703,7 +9949,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Invisible` by config value: `Notice`
+Filtered `Invisible` by config value: `Info`
 
 ### Net.Subscription.IP.ApplicationException
 
@@ -9722,7 +9968,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Visible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Net.Subscription.IP.CloseSocket
 
@@ -9741,7 +9987,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Invisible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Net.Subscription.IP.ConnectEnd
 
@@ -9760,7 +10006,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Invisible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Net.Subscription.IP.ConnectException
 
@@ -9779,7 +10025,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Invisible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Net.Subscription.IP.ConnectStart
 
@@ -9798,7 +10044,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Invisible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Net.Subscription.IP.ConnectionExist
 
@@ -9817,7 +10063,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Visible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Net.Subscription.IP.MissingLocalAddress
 
@@ -9836,7 +10082,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Visible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Net.Subscription.IP.Restart
 
@@ -9855,7 +10101,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Invisible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Net.Subscription.IP.SkippingPeer
 
@@ -9874,7 +10120,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Invisible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Net.Subscription.IP.SocketAllocationException
 
@@ -9893,7 +10139,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Visible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Net.Subscription.IP.Start
 
@@ -9912,7 +10158,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Invisible` by config value: `Notice`
+Filtered `Invisible` by config value: `Info`
 
 ### Net.Subscription.IP.SubscriptionFailed
 
@@ -9931,7 +10177,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Visible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Net.Subscription.IP.SubscriptionRunning
 
@@ -9950,7 +10196,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Invisible` by config value: `Notice`
+Filtered `Invisible` by config value: `Info`
 
 ### Net.Subscription.IP.SubscriptionWaiting
 
@@ -9969,7 +10215,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Invisible` by config value: `Notice`
+Filtered `Invisible` by config value: `Info`
 
 ### Net.Subscription.IP.SubscriptionWaitingNewConnection
 
@@ -9988,7 +10234,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Visible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Net.Subscription.IP.TryConnectToPeer
 
@@ -10007,7 +10253,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Invisible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Net.Subscription.IP.UnsupportedRemoteAddr
 
@@ -10026,7 +10272,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Visible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### NodeState.NodeAddBlock
 
@@ -10292,6 +10538,42 @@ Backends:
       `Forwarder`
 Filtered `Visible` by config value: `Notice`
 
+### Startup.BlockForgingBlockTypeMismatch
+
+
+
+
+Severity:  `Error`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Visible` by config value: `Notice`
+
+### Startup.BlockForgingUpdate
+
+
+
+
+Severity:  `Info`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Invisible` by config value: `Notice`
+
 ### Startup.Byron
 
 
@@ -10371,7 +10653,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Invisible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Startup.DiffusionInit.ConfiguringServerSocket
 
@@ -10390,7 +10672,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Invisible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Startup.DiffusionInit.CreateSystemdSocketForSnocketPath
 
@@ -10409,7 +10691,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Invisible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Startup.DiffusionInit.CreatedLocalSocket
 
@@ -10428,7 +10710,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Invisible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Startup.DiffusionInit.CreatingServerSocket
 
@@ -10447,7 +10729,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Invisible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Startup.DiffusionInit.DiffusionErrored
 
@@ -10466,7 +10748,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Visible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Startup.DiffusionInit.ListeningLocalSocket
 
@@ -10485,7 +10767,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Invisible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Startup.DiffusionInit.ListeningServerSocket
 
@@ -10504,7 +10786,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Invisible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Startup.DiffusionInit.LocalSocketUp
 
@@ -10523,7 +10805,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Invisible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Startup.DiffusionInit.RunLocalServer
 
@@ -10542,7 +10824,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Invisible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Startup.DiffusionInit.RunServer
 
@@ -10561,7 +10843,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Invisible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Startup.DiffusionInit.ServerSocketUp
 
@@ -10580,7 +10862,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Invisible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Startup.DiffusionInit.SystemdSocketConfiguration
 
@@ -10599,7 +10881,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Visible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Startup.DiffusionInit.UnsupportedLocalSystemdSocket
 
@@ -10618,7 +10900,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Visible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Startup.DiffusionInit.UnsupportedReadySocketCase
 
@@ -10637,7 +10919,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Invisible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Startup.DiffusionInit.UsingSystemdSocket
 
@@ -10656,7 +10938,7 @@ Backends:
       `EKGBackend`,
       `Stdout MachineFormat`,
       `Forwarder`
-Filtered `Invisible` by config value: `Notice`
+Filtered `Visible` by config value: `Info`
 
 ### Startup.Info
 
@@ -10842,24 +11124,6 @@ Backends:
       `Forwarder`
 Filtered `Visible` by config value: `Notice`
 
-### Startup.P2PWarningDevelopementNetworkProtocols
-
-
-
-
-Severity:  `Warning`
-Privacy:   `Public`
-Details:   `DNormal`
-
-
-From current configuration:
-
-Backends:
-      `EKGBackend`,
-      `Stdout MachineFormat`,
-      `Forwarder`
-Filtered `Visible` by config value: `Notice`
-
 ### Startup.ShelleyBased
 
 
@@ -10919,7 +11183,25 @@ Backends:
       `Forwarder`
 Filtered `Invisible` by config value: `Notice`
 
-### Startup.WarningDevelopmentNetworkProtocols
+### Startup.WarningDevelopmentNodeToClientVersions
+
+
+
+
+Severity:  `Warning`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Visible` by config value: `Notice`
+
+### Startup.WarningDevelopmentNodeToNodeVersions
 
 
 
@@ -12279,14 +12561,14 @@ ChainDB.AddBlockEvent.SwitchedToAFork
 
 ### ChainDB.SlotInEpoch
 
-> Relative slot number of the tip of the current chain within theepoch..
+> Relative slot number of the tip of the current chain within the epoch..
 
 
 Dispatched by: 
 ChainDB.AddBlockEvent.AddedToCurrentChain
 ChainDB.AddBlockEvent.SwitchedToAFork
 
-### ChainDB.Slots
+### ChainDB.SlotNum
 
 > Number of slots in this chain fragment.
 
@@ -12340,6 +12622,13 @@ Forge.Loop.StartLeadershipCheck
 
 Dispatched by: 
 Forge.Loop.AdoptedBlock
+
+### Forge.AdoptionThreadDied
+
+
+
+Dispatched by: 
+Forge.Loop.AdoptionThreadDied
 
 ### Forge.BlockContext
 
@@ -12631,6 +12920,14 @@ Net.InboundGovernor.Local.InboundGovernorCounters
 Dispatched by: 
 Net.PeerSelection.Counters.Counters
 
+### Net.PeerSelection.ColdBigLedgerPeers
+
+> Number of cold big ledger peers
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
 ### Net.PeerSelection.Hot
 
 > Number of hot peers
@@ -12639,9 +12936,33 @@ Net.PeerSelection.Counters.Counters
 Dispatched by: 
 Net.PeerSelection.Counters.Counters
 
+### Net.PeerSelection.HotBigLedgerPeers
+
+> Number of hot big ledger peers
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
+### Net.PeerSelection.LocalRoots
+
+> Numbers of warm & hot local roots
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
 ### Net.PeerSelection.Warm
 
 > Number of warm peers
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
+### Net.PeerSelection.WarmBigLedgerPeers
+
+> Number of warm big ledger peers
 
 
 Dispatched by: 
@@ -12795,8 +13116,92 @@ TxSubmission.TxInbound.Collected
 >  _suiSlotsPerKESPeriod_: KES period length, in slots.
 
 
-Configuration: TraceConfig {tcOptions = fromList [([],[ConfSeverity {severity = Notice},ConfDetail {detail = DNormal},ConfBackend {backends = [Stdout MachineFormat,EKGBackend,Forwarder]}]),(["BlockFetch","Client","CompletedBlockFetch"],[ConfLimiter {maxFrequency = 2.0}]),(["BlockFetch","Decision"],[ConfSeverity {severity = Info}]),(["ChainDB"],[ConfSeverity {severity = Info}]),(["ChainDB","AddBlockEvent","AddBlockValidation","ValidCandidate"],[ConfLimiter {maxFrequency = 2.0}]),(["ChainDB","AddBlockEvent","AddedBlockToQueue"],[ConfLimiter {maxFrequency = 2.0}]),(["ChainDB","AddBlockEvent","AddedBlockToVolatileDB"],[ConfLimiter {maxFrequency = 2.0}]),(["ChainDB","CopyToImmutableDBEvent","CopiedBlockToImmutableDB"],[ConfLimiter {maxFrequency = 2.0}]),(["ChainSync","Client"],[ConfSeverity {severity = Info}]),(["ChainSync","Client","DownloadedHeader"],[ConfLimiter {maxFrequency = 2.0}]),(["DNSSubscription"],[ConfSeverity {severity = Info}]),(["DiffusionInit"],[ConfSeverity {severity = Info}]),(["ErrorPolicy"],[ConfSeverity {severity = Info}]),(["Forge"],[ConfSeverity {severity = Info}]),(["IpSubscription"],[ConfSeverity {severity = Info}]),(["LocalErrorPolicy"],[ConfSeverity {severity = Info}]),(["Mempool"],[ConfSeverity {severity = Info}]),(["Net","ConnectionManager","Remote"],[ConfSeverity {severity = Info}]),(["Net","InboundGovernor","Remote"],[ConfSeverity {severity = Info}]),(["Net","Mux","Remote"],[ConfSeverity {severity = Info}]),(["Net","PeerSelection"],[ConfSeverity {severity = Info}]),(["Resources"],[ConfSeverity {severity = Info}])], tcForwarder = TraceOptionForwarder {tofConnQueueSize = 2000, tofDisconnQueueSize = 200000, tofVerbosity = Minimum}, tcNodeName = Nothing, tcPeerFrequency = Just 3000, tcResourceFrequency = Just 4000}
+##Configuration: 
+```
+{
+    "TraceOptionForwarder": null,
+    "TraceOptionNodeName": null,
+    "TraceOptionPeerFrequency": 3000,
+    "TraceOptionResourceFrequency": 4000,
+    "TraceOptions": {
+        "": {
+            "backends": [
+                "Stdout MachineFormat",
+                "EKGBackend",
+                "Forwarder"
+            ],
+            "detail": "DNormal",
+            "severity": "Notice"
+        },
+        "BlockFetch.Client.CompletedBlockFetch": {
+            "maxFrequency": 2
+        },
+        "BlockFetch.Decision": {
+            "severity": "Info"
+        },
+        "ChainDB": {
+            "severity": "Info"
+        },
+        "ChainDB.AddBlockEvent.AddBlockValidation.ValidCandidate": {
+            "maxFrequency": 2
+        },
+        "ChainDB.AddBlockEvent.AddedBlockToQueue": {
+            "maxFrequency": 2
+        },
+        "ChainDB.AddBlockEvent.AddedBlockToVolatileDB": {
+            "maxFrequency": 2
+        },
+        "ChainDB.CopyToImmutableDBEvent.CopiedBlockToImmutableDB": {
+            "maxFrequency": 2
+        },
+        "ChainSync.Client": {
+            "severity": "Info"
+        },
+        "ChainSync.Client.DownloadedHeader": {
+            "maxFrequency": 2
+        },
+        "Forge.Loop": {
+            "severity": "Info"
+        },
+        "Forge.StateInfo": {
+            "severity": "Info"
+        },
+        "Mempool": {
+            "severity": "Info"
+        },
+        "Net.ConnectionManager.Remote": {
+            "severity": "Info"
+        },
+        "Net.ErrorPolicy": {
+            "severity": "Info"
+        },
+        "Net.ErrorPolicy.Local": {
+            "severity": "Info"
+        },
+        "Net.InboundGovernor.Remote": {
+            "severity": "Info"
+        },
+        "Net.Mux.Remote": {
+            "severity": "Info"
+        },
+        "Net.PeerSelection": {
+            "severity": "Info"
+        },
+        "Net.Subscription.DNS": {
+            "severity": "Info"
+        },
+        "Net.Subscription.IP": {
+            "severity": "Info"
+        },
+        "Resources": {
+            "severity": "Info"
+        },
+        "Startup.DiffusionInit": {
+            "severity": "Info"
+        }
+    }
+}
+```
+698 log messages.
 
-679 log messages.
-
-Generated at 2023-02-08 18:19:08.071683952 -05.
+Generated at 2023-10-02 16:52:00.116155828 CEST.

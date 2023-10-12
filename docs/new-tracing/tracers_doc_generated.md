@@ -5,9 +5,10 @@
 ### [Trace Messages](#trace-messages)
 
 1. __BlockFetch__
-	1. __Clientⓣ__
+	1. __Clientⓣⓢ__
 		1. [AcknowledgedFetchRequest](#blockfetchclientacknowledgedfetchrequest)
 		1. [AddedFetchRequest](#blockfetchclientaddedfetchrequest)
+		1. [ClientMetrics](#blockfetchclientclientmetrics)
 		1. [ClientTerminating](#blockfetchclientclientterminating)
 		1. [CompletedBlockFetch](#blockfetchclientcompletedblockfetch)
 		1. [CompletedFetchBatch](#blockfetchclientcompletedfetchbatch)
@@ -251,6 +252,8 @@
 		1. [SlotIsImmutable](#forgeloopslotisimmutable)
 		1. [StartLeadershipCheck](#forgeloopstartleadershipcheck)
 		1. [StartLeadershipCheckPlus](#forgeloopstartleadershipcheckplus)
+	1. __ThreadStatsⓣⓢ__
+		1. [ForgeThreadStats](#forgethreadstatsforgethreadstats)
 1. __Mempoolⓣⓜ__
 	1. [AddedTx](#mempooladdedtx)
 	1. [ManuallyRemovedTxs](#mempoolmanuallyremovedtxs)
@@ -602,6 +605,15 @@
 	1. [NodeStartup](#nodestatenodestartup)
 	1. [NodeTracingOnlineConfiguring](#nodestatenodetracingonlineconfiguring)
 	1. [OpeningDbs](#nodestateopeningdbs)
+1. __Reflectionⓣ__
+	1. [MetricsInfo](#reflectionmetricsinfo)
+	1. [RememberLimiting](#reflectionrememberlimiting)
+	1. [StartLimiting](#reflectionstartlimiting)
+	1. [StopLimiting](#reflectionstoplimiting)
+	1. [TracerConfigInfo](#reflectiontracerconfiginfo)
+	1. [TracerConsistencyWarnings](#reflectiontracerconsistencywarnings)
+	1. [TracerInfo](#reflectiontracerinfo)
+	1. [UnknownNamespace](#reflectionunknownnamespace)
 1. [Resources](#resources)
 1. __Shutdownⓣ__
 	1. [Abnormal](#shutdownabnormal)
@@ -735,6 +747,12 @@
 
 1. __Blockfetch__
 	1. [BlocksServed](#blockfetchblocksserved)
+	1. __Client__
+		1. [Blockdelay](#blockfetchclientblockdelay)
+		1. __Blockdelay__
+			1. [cdfFive](#blockfetchclientblockdelaycdffive)
+			1. [cdfOne](#blockfetchclientblockdelaycdfone)
+			1. [cdfThree](#blockfetchclientblockdelaycdfthree)
 	1. [ConnectedPeers](#blockfetchconnectedpeers)
 1. __ChainDB__
 	1. [BlockReplayProgress](#chaindbblockreplayprogress)
@@ -755,6 +773,7 @@
 	1. [AdoptionThreadDied](#forgeadoptionthreaddied)
 	1. [BlockContext](#forgeblockcontext)
 	1. [BlockFromFuture](#forgeblockfromfuture)
+	1. [BlocksForgedNum](#forgeblocksforgednum)
 	1. [CouldNotForgeSlotLast](#forgecouldnotforgeslotlast)
 	1. [CurrentKESPeriod](#forgecurrentkesperiod)
 	1. [DelegMapSize](#forgedelegmapsize)
@@ -763,13 +782,16 @@
 	1. [LedgerState](#forgeledgerstate)
 	1. [LedgerView](#forgeledgerview)
 	1. [NodeCannotForge](#forgenodecannotforge)
+	1. [NodeCannotForgeNum](#forgenodecannotforgenum)
 	1. [NodeIsLeader](#forgenodeisleader)
+	1. [NodeIsLeaderNum](#forgenodeisleadernum)
 	1. [NodeNotLeader](#forgenodenotleader)
 	1. [NotAdoptedSlotLast](#forgenotadoptedslotlast)
 	1. [OperationalCertificateExpiryKESPeriod](#forgeoperationalcertificateexpirykesperiod)
 	1. [OperationalCertificateStartKESPeriod](#forgeoperationalcertificatestartkesperiod)
 	1. [RemainingKESPeriods](#forgeremainingkesperiods)
 	1. [SlotIsImmutable](#forgeslotisimmutable)
+	1. [SlotsMissed](#forgeslotsmissed)
 	1. [UtxoSize](#forgeutxosize)
 1. __Mempool__
 	1. [MempoolBytes](#mempoolmempoolbytes)
@@ -832,6 +854,9 @@
 1. [NodeInfo](#nodeinfo)
 1. [NodeStartupInfo](#nodestartupinfo)
 
+### [Configuration](#configuration)
+
+
 
 ## Trace Messages
 
@@ -858,6 +883,24 @@ Filtered `Invisible` by config value: `Notice`
 
 
 > The block fetch decision thread has added a new fetch instruction consisting of one or more individual request ranges.
+
+
+Severity:  `Info`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Invisible` by config value: `Notice`
+
+### BlockFetch.Client.ClientMetrics
+
+
 
 
 Severity:  `Info`
@@ -4696,6 +4739,24 @@ Backends:
       `Stdout MachineFormat`,
       `Forwarder`
 Filtered `Visible` by config value: `Info`
+
+### Forge.ThreadStats.ForgeThreadStats
+
+
+
+
+Severity:  `Info`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Invisible` by config value: `Notice`
 
 ### Mempool.AddedTx
 
@@ -10425,6 +10486,166 @@ Backends:
       `Forwarder`
 Filtered `Invisible` by config value: `Notice`
 
+### Reflection.MetricsInfo
+
+
+> Writes out numbers for metrics delivered.
+> This internal message can't be filtered by the current configuration
+
+
+Severity:  `Debug`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Invisible` by config value: `Notice`
+
+### Reflection.RememberLimiting
+
+
+> ^ This message remembers of ongoing frequency limiting, and gives the number of messages that has been suppressed
+> This internal message can't be filtered by the current configuration
+
+
+Severity:  `Notice`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Visible` by config value: `Notice`
+
+### Reflection.StartLimiting
+
+
+> This message indicates the start of frequency limiting
+> This internal message can't be filtered by the current configuration
+
+
+Severity:  `Notice`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Visible` by config value: `Notice`
+
+### Reflection.StopLimiting
+
+
+> This message indicates the stop of frequency limiting, and gives the number of messages that has been suppressed
+> This internal message can't be filtered by the current configuration
+
+
+Severity:  `Notice`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Visible` by config value: `Notice`
+
+### Reflection.TracerConfigInfo
+
+
+> Trace the tracer configuration which is effectively used.
+> This internal message can't be filtered by the current configuration
+
+
+Severity:  `Notice`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Visible` by config value: `Notice`
+
+### Reflection.TracerConsistencyWarnings
+
+
+> Tracer consistency check found errors.
+> This internal message can't be filtered by the current configuration
+
+
+Severity:  `Error`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Visible` by config value: `Notice`
+
+### Reflection.TracerInfo
+
+
+> Writes out tracers with metrics and silent tracers.
+> This internal message can't be filtered by the current configuration
+
+
+Severity:  `Notice`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Visible` by config value: `Notice`
+
+### Reflection.UnknownNamespace
+
+
+> A value was queried for a namespaces from a tracer,which is unknown. This indicates a bug in the tracer implementation.
+> This internal message can't be filtered by the current configuration
+
+
+Severity:  `Error`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Visible` by config value: `Notice`
+
 ### Resources
 
 
@@ -11128,7 +11349,7 @@ Filtered `Visible` by config value: `Notice`
 
 
 > bisEra is the current era, e.g. "Shelley", "Allegra", "Mary" or "Alonzo". 
-> _bisSystemStartTime_: TODO JNF 
+> _bisSystemStartTime_: 
 > _bisSlotLength_: gives the length of a slot as time interval. 
 > _bisEpochLength_: gives the number of slots which forms an epoch. 
 > _bisSlotsPerKESPeriod_: gives the slots per KES period.
@@ -12515,6 +12736,34 @@ Filtered `Invisible` by config value: `Notice`
 Dispatched by: 
 BlockFetch.Server.SendBlock
 
+### Blockfetch.Client.Blockdelay
+
+
+
+Dispatched by: 
+BlockFetch.Client.ClientMetrics
+
+### Blockfetch.Client.Blockdelay.cdfFive
+
+
+
+Dispatched by: 
+BlockFetch.Client.ClientMetrics
+
+### Blockfetch.Client.Blockdelay.cdfOne
+
+
+
+Dispatched by: 
+BlockFetch.Client.ClientMetrics
+
+### Blockfetch.Client.Blockdelay.cdfThree
+
+
+
+Dispatched by: 
+BlockFetch.Client.ClientMetrics
+
 ### Blockfetch.ConnectedPeers
 
 > Number of connected peers
@@ -12644,6 +12893,14 @@ Forge.Loop.BlockContext
 Dispatched by: 
 Forge.Loop.BlockFromFuture
 
+### Forge.BlocksForgedNum
+
+> How many blocks did forge in this node?
+
+
+Dispatched by: 
+Forge.ThreadStats.ForgeThreadStats
+
 ### Forge.CouldNotForgeSlotLast
 
 
@@ -12701,12 +12958,28 @@ Forge.Loop.LedgerView
 Dispatched by: 
 Forge.Loop.NodeCannotForge
 
+### Forge.NodeCannotForgeNum
+
+> How many times this node could not forge?
+
+
+Dispatched by: 
+Forge.ThreadStats.ForgeThreadStats
+
 ### Forge.NodeIsLeader
 
 
 
 Dispatched by: 
 Forge.Loop.NodeIsLeader
+
+### Forge.NodeIsLeaderNum
+
+> How many times this node was leader?
+
+
+Dispatched by: 
+Forge.ThreadStats.ForgeThreadStats
 
 ### Forge.NodeNotLeader
 
@@ -12749,6 +13022,14 @@ Forge.Loop.ForgeStateUpdateError
 
 Dispatched by: 
 Forge.Loop.SlotIsImmutable
+
+### Forge.SlotsMissed
+
+> How many slots were missed in this node?
+
+
+Dispatched by: 
+Forge.ThreadStats.ForgeThreadStats
 
 ### Forge.UtxoSize
 
@@ -13115,8 +13396,7 @@ TxSubmission.TxInbound.Collected
 >  _suiEpochLength_: Epoch length, in slots. 
 >  _suiSlotsPerKESPeriod_: KES period length, in slots.
 
-
-##Configuration: 
+## Configuration: 
 ```
 {
     "TraceOptionForwarder": null,
@@ -13202,6 +13482,14 @@ TxSubmission.TxInbound.Collected
     }
 }
 ```
-698 log messages.
+629 log messages, 
+85 metrics,
+2 datapoints.
 
-Generated at 2023-10-02 16:52:00.116155828 CEST.
+ⓣ - This is the root of a tracer
+
+ⓢ - This is the root of a tracer that is silent because of the current configuration
+
+ⓜ - This is the root of a tracer, that provides metrics
+
+Generated at 2023-10-12 15:56:44.103089469 CEST.

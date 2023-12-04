@@ -45,6 +45,34 @@ sudo apt-get update -y
 sudo apt-get install automake build-essential pkg-config libffi-dev libgmp-dev libssl-dev libtinfo-dev libsystemd-dev zlib1g-dev make g++ tmux git jq wget libncursesw5 libtool autoconf liblmdb-dev -y
 ```
 
+Possible issue with `pkg-config`:
+
+`pkgconf` 1.9.5 (which is default in `Fedora 39` and `Rawhide`) produces output unreadable by `cabal`, which results in an errors like:
+
+```
+conflict: pkg-config package libsodium-any, not found in the pkg-config database 
+```
+
+despite having `libsodium` installed in the system. 
+
+The possible solutions to this problem are:
+
+- to upgrade `pkgconf` to version 2 by building it from source:
+  ```
+  yum update -y && \
+  yum install git diffutils gcc gcc-c++ tmux gmp-devel make tar xz wget zlib-devel libtool autoconf -y && \
+  mkdir -p /root/src/ && cd /root/src && \
+  curl -O https://distfiles.ariadne.space/pkgconf/pkgconf-2.0.3.tar.xz && \
+  tar -xvf pkgconf-2.0.3.tar.xz && \
+  cd pkgconf-2.0.3 && \
+  ./configure && make && make install && \
+  ```
+
+- to use `cabal` version (higher than `3.10.2.0`) that have these changes already integrated:
+  - [Try each pkg-config query separatedly](https://github.com/haskell/cabal/pull/9134)
+  - [fix pkgconf 1.9 --modversion regression](https://github.com/haskell/cabal/pull/9391)
+
+
 Optional dependencies that may be required: llvm libnuma-dev
 
 If you are using a different flavor of Linux, you will need to use the correct package manager for your platform instead of `yum` or `apt-get`, and the names of the packages you need to install might differ.
@@ -282,6 +310,7 @@ Build the node and CLI with `cabal`:
 ```bash
 cabal update
 cabal build all
+cabal build cardano-cli
 ```
 
 Install the newly built node and CLI commands to the `~/.local/bin` directory:

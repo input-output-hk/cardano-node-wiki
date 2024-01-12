@@ -24,7 +24,7 @@ advice to use namespaces for any analysis tools of traces!
 
 ### Configuration of new tracing
 
-In Cardano a default configuration is given in the module [Cardano.Node.Tracing.DefaultTraceConfig](https://github.com/input-output-hk/cardano-node/blob/master/cardano-node/src/Cardano/Node/Tracing/DefaultTraceConfig.hs). In the config file all entries of the default configuration can be overridden. To remove a frequency limiter, define a limiter with maxFrequency 0.0.
+In Cardano a default configuration is given in the module [Cardano.Node.Tracing.DefaultTraceConfig](https://github.com/intersectmbo/cardano-node/blob/master/cardano-node/src/Cardano/Node/Tracing/DefaultTraceConfig.hs). In the config file all entries of the default configuration can be overridden. To remove a frequency limiter, define a limiter with maxFrequency 0.0.
 
 1. Specify a filter for the severity of the messages you want to see, e.g.:
 
@@ -97,7 +97,7 @@ Configuration can be written in JSON and YAML, we have shown the examples in YAM
 ### Configuration and use of cardano-tracer
 
 `cardano-tracer` is a part of the new tracing infrastructure. It is a separate service that accepts different messages from the node and handles them.
-So it is assumed that if you want to use the new tracing infrastructure - you will use `cardano-tracer`. Please read its [documentation](https://github.com/input-output-hk/cardano-node/blob/master/cardano-tracer/docs/cardano-tracer.md) for more details.
+So it is assumed that if you want to use the new tracing infrastructure - you will use `cardano-tracer`. Please read its [documentation](https://github.com/intersectmbo/cardano-node/blob/master/cardano-tracer/docs/cardano-tracer.md) for more details.
 
 This example describes the simplest case, when the node and `cardano-tracer` on the same machine.
 
@@ -152,8 +152,8 @@ messages with the current default configuration:
 
 This document describes the underlying library trace-dispatcher:
 
-[trace-dispatcher: efficient, simple and flexible program tracing](https://github.com/input-output-hk/cardano-node/blob/master/trace-dispatcher/doc/trace-dispatcher.md)
+[trace-dispatcher: efficient, simple and flexible program tracing](https://github.com/intersectmbo/cardano-node/blob/master/trace-dispatcher/doc/trace-dispatcher.md)
 
 This document describes a seperate service for logging and monitoring Cardano nodes:
 
-[Cardano Tracer](https://github.com/input-output-hk/cardano-node/blob/master/cardano-tracer/docs/cardano-tracer.md)
+[Cardano Tracer](https://github.com/intersectmbo/cardano-node/blob/master/cardano-tracer/docs/cardano-tracer.md)

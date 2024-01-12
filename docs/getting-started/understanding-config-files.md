@@ -78,7 +78,7 @@ A minimal version of this file looks like this:
 
 - `warmValency` is an optional field, similar to `valency` or `hotValency`, that informs the node about the number of peers it should maintain as established (warm). This field is optional and defaults to the value set in the `valency` or `hotValency` field. If a value is specified for `warmValency`, it should be greater than or equal to the one defined in `valency` or `hotValency`; otherwise, `valency` or `hotValency` will be adjusted to match this value. We recommend users set the `warmValency` value to `hotValency` + 1 to ensure at least one backup peer is available to be promoted to a hot connection in case of unexpected events.
 
-  Check [this issue](https://github.com/input-output-hk/ouroboros-network/issues/4565) for more
+  Check [this issue](https://github.com/intersectmbo/ouroboros-network/issues/4565) for more
   context on this `WarmValency` addition.
 
 * Local root groups shall be non-overlapping.
@@ -195,7 +195,7 @@ The `genesis.json` file looks like the one below:
   "securityParam": 2160
 }
 ```
-Here is a brief description of each parameter. You can learn more in the [spec](https://github.com/input-output-hk/cardano-ledger/tree/master/eras/shelley/impl).
+Here is a brief description of each parameter. You can learn more in the [spec](https://github.com/intersectmbo/cardano-ledger/tree/master/eras/shelley/impl).
 
 
 | PARAMETER | MEANING |
@@ -411,7 +411,7 @@ The following traces can be enabled:
   governor_.
 
 At this point [Haddock
-documentation](https://input-output-hk.github.io/ouroboros-network/ouroboros-network/Ouroboros-Network-PeerSelection-Governor.html)
+documentation](https://ouroboros-network.cardano.intersectmbo.org/ouroboros-network/Ouroboros-Network-PeerSelection-Governor.html)
 of the outbound governor is available.
 
 #### Peer sharing
@@ -470,8 +470,7 @@ peer (its outbound governor).
   transitions between remote cold, remote warm, and remote hot states.
 
 The inbound governor is documented in [The Shelley networking
-protocol](https://input-output-hk.github.io/ouroboros-network/pdfs/network-spec) (section
-4.5).
+protocol](https://ouroboros-network.cardano.intersectmbo.org/pdfs/network-spec) (section 4.5).
 
 #### Connection manager
 
@@ -491,8 +490,7 @@ available:
   connection state changes in the connection manager state machine.
 
 The connection manager is documented in [The Shelley networking
-protocol](https://input-output-hk.github.io/ouroboros-network/pdfs/network-spec) (section
-4).
+protocol](https://ouroboros-network.cardano.intersectmbo.org/pdfs/network-spec) (section 4).
 
 #### Ledger peers
 

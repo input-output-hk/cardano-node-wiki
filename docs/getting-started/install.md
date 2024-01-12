@@ -1,6 +1,6 @@
 # Installing the node from source
 
-The **latest** version of the node may be downloaded from the [cardano-node GitHub Releases](https://github.com/input-output-hk/cardano-node/releases) page.
+The **latest** version of the node may be downloaded from the [cardano-node GitHub Releases](https://github.com/intersectmbo/cardano-node/releases) page.
 
 #### Prerequisites
 
@@ -125,7 +125,7 @@ and it should return a path of this shape: `/home/<user>/.ghcup/bin/cabal`.
 
 Cardano uses a custom fork of `libsodium` which exposes some internal functions
 and adds some other new functions. This fork lives in
-[https://github.com/input-output-hk/libsodium](https://github.com/input-output-hk/libsodium).
+[https://github.com/intersectmbo/libsodium](https://github.com/intersectmbo/libsodium).
 Users need to install that custom version of `libsodium` with the following steps.
 
 Create a working directory for your builds:
@@ -138,7 +138,7 @@ cd ~/src
 Download and install libsodium:
 
 ```bash
-git clone https://github.com/input-output-hk/libsodium
+git clone https://github.com/intersectmbo/libsodium
 cd libsodium
 git checkout dbb48cc
 ./autogen.sh
@@ -246,7 +246,7 @@ cd ~/src
 Download the Cardano node sources:
 
 ```bash
-git clone https://github.com/input-output-hk/cardano-node.git
+git clone https://github.com/intersectmbo/cardano-node.git
 ```
 
 Change the working directory to the downloaded source code folder:

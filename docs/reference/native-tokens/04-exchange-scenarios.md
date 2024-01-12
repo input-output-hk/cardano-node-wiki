@@ -21,7 +21,7 @@ Exchanges listing ada usually might encounter two specific scenarios:
 
 Exchanges and third-party wallets that manage their own UTXOs often use a local block explorer (`cardano-graphql` or `cardano-rosetta`, for example). 
 
-`cardano-graphql` is a Cardano API query language and a runtime component for fulfilling queries with existing data extracted from the [cardano-db-sync](https://github.com/input-output-hk/cardano-db-sync#cardano-db-sync) PostgreSQL database. It provides a complete and understandable description of this data, and gives clients the power to request the necessary information. This, in turn, both simplifies the evolution of client APIs’ overtime and enables powerful developer tools.
+`cardano-graphql` is a Cardano API query language and a runtime component for fulfilling queries with existing data extracted from the [cardano-db-sync](https://github.com/intersectmbo/cardano-db-sync#cardano-db-sync) PostgreSQL database. It provides a complete and understandable description of this data, and gives clients the power to request the necessary information. This, in turn, both simplifies the evolution of client APIs’ overtime and enables powerful developer tools.
 
 Cardano has adapted `cardano-rosetta` (initially developed by Coinbase as blockchain middleware) to help exchanges and third-party wallets extract blockchain data and integrate with Cardano. See this [Readme file](https://github.com/input-output-hk/cardano-rosetta/blob/master/docs/multi-assets-support.md) for more information about extracting multi-asset information from `cardano-rosetta`.
 

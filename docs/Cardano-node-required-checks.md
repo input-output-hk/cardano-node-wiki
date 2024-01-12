@@ -1,6 +1,6 @@
 ## Checks for the `master` branch
 
-These are the agreed-upon required checks for the [`cardano-node` repository](https://github.com/input-output-hk/cardano-node).
+These are the agreed-upon required checks for the [`cardano-node` repository](https://github.com/intersectmbo/cardano-node).
 
 Whenever there is a variation to this document, the required checks for the `cardano-node`
 repository should be updated accordingly.

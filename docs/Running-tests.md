@@ -6,7 +6,7 @@ cabal test all --enable-tests
 
 Many of tests are automatically run in CI in PRs.
 For an exact list of which tests are run,
-please see the "Run tests" step in [haskell.yml](https://github.com/input-output-hk/cardano-node/blob/master/.github/workflows/haskell.yml) Github
+please see the "Run tests" step in [haskell.yml](https://github.com/intersectmbo/cardano-node/blob/master/.github/workflows/haskell.yml) Github
 Actions workflow file.
 
 # Types of tests
@@ -72,7 +72,7 @@ The annotations can be for things like:
 * Command line arguments used to run processes
 * `stdout` and `stderr` of processes that have been run
 
-A walkthrough of the leadership-schedule integration test can be found in this PR: https://github.com/input-output-hk/cardano-node/pull/5082
+A walkthrough of the leadership-schedule integration test can be found in this PR: https://github.com/intersectmbo/cardano-node/pull/5082
 
 # Tips & tricks
 
@@ -83,4 +83,4 @@ You can use `TASTY_PATTERN` shell variable to limit the tests which get executed
 ```bash
 TASTY_PATTERN='/golden view alonzo signed yaml/' cabal test cardano-cli
 ```
-In this example, test case name is derived from `hprop_golden_view_alonzo_signed_yaml` name by [`tasty-discover`](hprop_golden_view_alonzo_signed_yaml ) plugin.
+In this example, test case name is derived from `hprop_golden_view_alonzo_signed_yaml` name by [`tasty-discover`](https://hackage.haskell.org/package/tasty-discover) plugin.

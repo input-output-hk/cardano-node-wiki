@@ -1148,7 +1148,7 @@ After that, you should see the nodes start to alternately create blocks and
 adopt each others blocks. Remember that we have configured slots to be 1 second
 long but only 1 in 20 slots will have a block in it.
 
-[Byron mainnet configuration]: https://github.com/input-output-hk/cardano-node/blob/master/configuration/defaults/byron-mainnet/configuration.yaml
+[Byron mainnet configuration]: https://github.com/intersectmbo/cardano-node/blob/master/configuration/defaults/byron-mainnet/configuration.yaml
 
 
 ## Querying the node

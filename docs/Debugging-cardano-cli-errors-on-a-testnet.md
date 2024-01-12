@@ -2,16 +2,16 @@
 
 This document is intended for Cardano node and `cardano-cli` (CLI) users, as well as Cardano developers that wish to investigate CLI problems.
 
-We recommend making sure the `cardano-node` tests pass before starting to debug a problem. Additionally, take a look at the [Consensus sanity checklist](https://input-output-hk.github.io/ouroboros-consensus/docs/for-developers/SanityChecks).
+We recommend making sure the `cardano-node` tests pass before starting to debug a problem. Additionally, take a look at the [Consensus sanity checklist](https://ouroboros-consensus.cardano.intersectmbo.org/docs/for-developers/SanityChecks).
 
 Once the node tests successfully pass, and you've read through the Consensus checklist, collect node logs to speed up the process of finding the cause of a problem. Below, we describe the steps to run a node that connects to a given testnet and get access to a `cardano-cli` that can be used to communicate with the node. These instructions work on a Unix environment with `nix` installed.
 
-Clone [cardano-world](https://github.com/input-output-hk/cardano-world) and check out the testnet branch (eg `sanchonet`).
+Clone [cardano-world](https://github.com/intersectmbo/cardano-world) and check out the testnet branch (eg `sanchonet`).
 
 Once inside the `cardano-world` directory, enter a `nix` shell which has `cardano-node` in its path:
 
 ```sh
-nix shell github:input-output-hk/cardano-node\?ref=8.1.1\#cardano-node
+nix shell github:intersectmbo/cardano-node\?ref=8.1.1\#cardano-node
 ```
 
 where `8.1.1` should be replaced with the version intended to be tested. Once inside the `nix` shell, we can check whether the `cardano-node` executable is in our `PATH`:

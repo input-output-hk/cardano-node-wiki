@@ -1,4 +1,4 @@
-This document provides a step-by-step example of how to work with [`demo-acceptor`](https://github.com/input-output-hk/cardano-node/blob/master/cardano-tracer/demo/acceptor.hs).
+This document provides a step-by-step example of how to work with [`demo-acceptor`](https://github.com/intersectmbo/cardano-node/blob/master/cardano-tracer/demo/acceptor.hs).
 
 ## What is it?
 

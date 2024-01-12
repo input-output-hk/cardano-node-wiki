@@ -43,7 +43,7 @@ transaction_metadata =
 
 ## How to create a transaction with metadata using the cardano-cli
 
-To create a transaction with metadata, first ensure that you have installed the [cardano-node](https://github.com/input-output-hk/cardano-node#cardano-node-overview) and follow instructions on how to launch [cardano-CLI](https://github.com/input-output-hk/cardano-cli/tree/master/cardano-cli#cardano-cli).
+To create a transaction with metadata, first ensure that you have installed the [cardano-node](https://github.com/intersectmbo/cardano-node#cardano-node-overview) and follow instructions on how to launch [cardano-CLI](https://github.com/intersectmbo/cardano-cli/tree/master/cardano-cli#cardano-cli).
 
 To create a transaction with specified metadata, run this command:
 
@@ -163,5 +163,5 @@ Detailed Schema:
 
 Here are some materials for further reading:
 
-+ Tx metadata motivation and use: [Design Specification for Delegation and Incentives in Cardano](https://github.com/input-output-hk/cardano-ledger/releases/latest/download/shelley-delegation.pdf), p 53.
++ Tx metadata motivation and use: [Design Specification for Delegation and Incentives in Cardano](https://github.com/intersectmbo/cardano-ledger/releases/latest/download/shelley-delegation.pdf), p 53.
 + [Tx metadata in wallet-CLI](https://github.com/input-output-hk/cardano-wallet/wiki/TxMetadata).

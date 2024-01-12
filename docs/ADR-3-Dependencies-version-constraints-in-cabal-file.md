@@ -4,7 +4,7 @@
 
 # Context
 
-In a project with multiple packages, there is a need to control version bounds of the dependencies used to provide stable and reproducible builds. This is achieved by entering version bounds into the `.cabal` file, as described in [Cabal documentation](https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-build-depends).
+In a project with multiple packages, there is a need to control version bounds of the dependencies used to provide stable and reproducible builds. This is achieved by entering version bounds into the `.cabal` file, as described in [Cabal documentation](https://cabal.readthedocs.io/en/latest/cabal-package-description-file.html#pkg-field-build-depends).
 
 Let's consider an example where multiple package *components* (eg, libraries, internal libraries, test-suites,
 executables) form a more complex dependency graph like the following one:
@@ -88,7 +88,7 @@ This will allow for less error-prone dependency management.
 
 # References
 
-1. https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-build-depends
+1. https://cabal.readthedocs.io/en/latest/cabal-package-description-file.html#pkg-field-build-depends
 1. [Per-cabal-file `constraints` - Issue in haskell/cabal](https://github.com/haskell/cabal/issues/8912)
 1. https://input-output-hk.github.io/cardano-engineering-handbook/policy/haskell/packaging/versioning.html
 

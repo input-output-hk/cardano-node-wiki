@@ -5,7 +5,7 @@ This demo is the second demo of a cluster of independent Cardano nodes in the Sh
 
 The previous demo showed the full integration of all the major components. This demo focuses on the consensus chain state functionality. Whereas the previous demo used the mock implementation of this functionality, this time we are using the full implementation. The full implementation uses the on-disk storage components (immutable, volatile and ledger), and provides efficient, concurrent, implementations of the chain state API.
 
-There are still some features of the node missing that will be included over the coming weeks. For a comprehensive overview of the current capabilities and limitations, see the [this page](https://github.com/input-output-hk/cardano-node/wiki/Cardano-Haskell-Node-Capabilities).
+There are still some features of the node missing that will be included over the coming weeks. For a comprehensive overview of the current capabilities and limitations, see the [this page](https://github.com/input-output-hk/cardano-node-wiki/wiki/Cardano-Haskell-Node-Capabilities).
 
 # What are we looking at?
 

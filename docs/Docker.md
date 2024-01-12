@@ -15,7 +15,7 @@ $ docker pull inputoutput/cardano-node:master
 ​
 ## How To Configure
 ​
-Example configurations are available in the [cardano-node](https://github.com/input-output-hk/cardano-node/tree/master/configuration/defaults) repository:
+Example configurations are available in the [cardano-node](https://github.com/intersectmbo/cardano-node/tree/master/configuration/defaults) repository:
 ​
 ```
 configuration/

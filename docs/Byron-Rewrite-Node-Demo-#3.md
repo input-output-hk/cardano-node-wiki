@@ -9,7 +9,7 @@ This demo focuses on mainnet compatibility. In this demo we will show our new no
 
 We will also demonstrate the Byron network proxy. This is a component that understands both the old Byron network protocols and the new Shelley node network protocols and allows the two to exchange data. In this demo we will show that it can download blocks from Byron mainnet relays nodes and allow Shelley nodes to download blocks from it. In future demos we will show information flowing in the opposite direction, both blocks and transactions.
 
-There are still some features of the node missing that will be included over the coming weeks. For a comprehensive overview of the current capabilities and limitations, see the [this page](https://github.com/input-output-hk/cardano-node/wiki/Cardano-Haskell-Node-Capabilities).
+There are still some features of the node missing that will be included over the coming weeks. For a comprehensive overview of the current capabilities and limitations, see the [this page](https://github.com/input-output-hk/cardano-node-wiki/wiki/Cardano-Haskell-Node-Capabilities).
 
 # What are we looking at?
 

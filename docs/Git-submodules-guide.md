@@ -2,7 +2,7 @@
 
 The official way to integrate multiple components in Cardano software is to
 maintain the code in `git` as separate repositories and publish releases to
-[Cardano Haskell Packages (CHaP)](https://github.com/input-output-hk/cardano-haskell-packages).
+[Cardano Haskell Packages (CHaP)](https://github.com/intersectmbo/cardano-haskell-packages).
 
 All published components must operate in this manner.
 
@@ -86,11 +86,11 @@ $ git checkout newhoggy/test-submodules
 $ cat .gitmodules
 [submodule "cardano-api"]
 	path = cardano-api
-	url = git@github.com:input-output-hk/cardano-api.git
+	url = git@github.com:intersectmbo/cardano-api.git
 	branch = newhoggy/use-tag-script-from-cardano-dev-instead
 [submodule "cardano-cli"]
 	path = cardano-cli
-	url = git@github.com:input-output-hk/cardano-cli.git
+	url = git@github.com:intersectmbo/cardano-cli.git
 	branch = main
 ```
 

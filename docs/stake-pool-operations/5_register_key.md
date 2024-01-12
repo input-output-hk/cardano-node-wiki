@@ -28,7 +28,7 @@ For the transaction draft, --tx.out, --invalid-hereafter and --fee can be set to
 Compute the minimum fee.
 
 Note that only one witness is required because
-[Chapter 3.3 "we do not require a witness to register a stake address"](https://github.com/input-output-hk/cardano-ledger/releases/latest/download/shelley-delegation.pdf).
+[Chapter 3.3 "we do not require a witness to register a stake address"](https://github.com/intersectmbo/cardano-ledger/releases/latest/download/shelley-delegation.pdf).
 
     cardano-cli transaction calculate-min-fee \
     --tx-body-file tx.draft \

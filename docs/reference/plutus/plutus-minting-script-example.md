@@ -12,7 +12,7 @@ process involving:
 + the creation of the `AlwaysSucceeds` Plutus minting script (i.e. anybody can mint)
 + the creation of a transaction that mints multi-assets using the `AlwaysSucceeds` Plutus minting script
 
-In this example we will use the [anyone can mint](https://github.com/input-output-hk/plutus-apps/blob/main/plutus-example/src/PlutusExample/PlutusVersion1/MintingScript.hs) Plutus minting script. To execute it, we require the following:
+In this example we will use the [anyone can mint](https://github.com/intersectmbo/plutus-apps/blob/main/plutus-example/src/PlutusExample/PlutusVersion1/MintingScript.hs) Plutus minting script. To execute it, we require the following:
 
 - Collateral tx input(s) that are provided and forfeited if the Plutus script fails to execute.
 - Serialization of the Plutus script in the text envelope format (required for cardano-cli).
@@ -75,6 +75,6 @@ cardano-cli transaction sign \
   --out-file "plutusmint.tx"
 ```
 
-You can use the [simple-minting-policy.sh](https://github.com/input-output-hk/cardano-node/blob/master/scripts/plutus/simple-minting-policy.sh) in conjunction with the [mkfiles.sh alonzo](https://github.com/input-output-hk/cardano-node/blob/master/scripts/byron-to-alonzo/mkfiles.sh) script to automagically run the `AlwaysSucceeds` minting script.
+You can use the [simple-minting-policy.sh](https://github.com/intersectmbo/cardano-node/blob/master/scripts/plutus/simple-minting-policy.sh) in conjunction with the [mkfiles.sh alonzo](https://github.com/intersectmbo/cardano-node/blob/master/scripts/byron-to-alonzo/mkfiles.sh) script to automagically run the `AlwaysSucceeds` minting script.
 
 

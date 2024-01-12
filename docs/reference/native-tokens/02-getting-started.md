@@ -1,8 +1,8 @@
 Before you start, you should:
 
-- have the [latest version of the node](https://github.com/input-output-hk/cardano-node/releases)
+- have the [latest version of the node](https://github.com/intersectmbo/cardano-node/releases)
 - configure the node to communicate with the [testnet environment](https://book.world.dev.cardano.org/environments.html)
-- set up a relay node and [run CLI](https://github.com/input-output-hk/cardano-node#using-cardano-cli)
+- set up a relay node and [run CLI](https://github.com/intersectmbo/cardano-node#using-cardano-cli)
 
 ### Understanding values
 
@@ -100,7 +100,7 @@ Here’s an example of a very simple minting policy, which grants the right to m
 }
 ```
 
-This minting policy requires any transaction that mints tokens to be witnessed by the key with the hash `fe38d7...599`. More involved examples can be found in the [multi-signature simple scripts documentation](https://github.com/input-output-hk/cardano-node/blob/c6b574229f76627a058a7e559599d2fc3f40575d/doc/reference/simple-scripts.md).
+This minting policy requires any transaction that mints tokens to be witnessed by the key with the hash `fe38d7...599`. More involved examples can be found in the [multi-signature simple scripts documentation](https://github.com/intersectmbo/cardano-node/blob/c6b574229f76627a058a7e559599d2fc3f40575d/doc/reference/simple-scripts.md).
 
 ### Example: minting a new native token
 
@@ -110,7 +110,7 @@ This section describes how to manually mint a new native token ('melcoin') using
  
 #### Pre-requisites 
 
-1. Download the latest version of cardano-node from the releases page (https://github.com/input-output-hk/cardano-node/releases) and config files for the public testnet from the Cardano World (https://book.world.dev.cardano.org/environments.html)
+1. Download the latest version of cardano-node from the releases page (https://github.com/intersectmbo/cardano-node/releases) and config files for the public testnet from the Cardano World (https://book.world.dev.cardano.org/environments.html)
 
 2. Run the cardano-node:
 

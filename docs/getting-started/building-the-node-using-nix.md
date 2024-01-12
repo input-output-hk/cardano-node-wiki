@@ -35,14 +35,14 @@ EOF
 Once Nix is installed, log out and then log back in.
 After that you can build the full node package with Mainnet configuration as follows:
 ```
-git clone https://github.com/input-output-hk/cardano-node
+git clone https://github.com/intersectmbo/cardano-node
 cd cardano-node
 nix build .#mainnet/node -o mainnet-node-local
 ./mainnet-node-local/bin/cardano-node-mainnet
 ```
 or run in in one go:
 ```
-nix run github:input-output-hk/cardano-node#mainnet/node
+nix run github:intersectmbo/cardano-node#mainnet/node
 ```
 
 If you only want to build just the cardano-node executable, without the configuration bundle:

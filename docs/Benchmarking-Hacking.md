@@ -7,7 +7,7 @@
 Clone the GitHub repo:
 
 ```console
-$ git clone https://github.com/input-output-hk/cardano-node/
+$ git clone https://github.com/intersectmbo/cardano-node/
 ...
 ...
 $ cd cardano-node
@@ -18,7 +18,7 @@ nix bug with ```import-from-derivation```:
 
 ```console
 $ nix flake show
-git+file:///home/fmaste/Workspace/GitHub/input-output-hk/cardano-node?ref=master&rev=2df4e4130685f27ad5d9d732b1df266b921c585f
+git+file:///home/fmaste/Workspace/GitHub/intersectmbo/cardano-node?ref=master&rev=2df4e4130685f27ad5d9d732b1df266b921c585f
 ├───apps
 │   ├───x86_64-darwin
 trace: To make project.plan-nix for cardano-node a fixed-output derivation but not materialized, set `plan-sha256` to the output of the 'calculateMaterializedSha' script in 'passthru'.
@@ -120,7 +120,7 @@ wb-wrapped start --batch-name plain --profile-name default-bage --profile /nix/s
 
 And starts multiple cardano nodes as:
 ```console
-/home/fmaste/Workspace/GitHub/input-output-hk/cardano-node/dist-newstyle/build/x86_64-linux/ghc-8.10.7/cardano-node-1.33.0/x/cardano-node/build/cardano-node/cardano-node +RTS -sghc-rts-report.txt -RTS run --config config.json --database-path run/current/node-5/db-testnet --topology topology.json --host-addr 127.0.0.1 --port 30005 --socket-path node.socket --tracer-socket-path-connect ../tracer/tracer.socket --shelley-vrf-key ../genesis/node-keys/node-vrf5.skey --shelley-kes-key ../genesis/node-keys/node-kes5.skey --shelley-operational-certificate ../genesis/node-keys/node5.opcert --shutdown-on-slot-synced 300 +RTS -N2 -I0 -A16m -qg -qb --disable-delayed-os-memory-return -RTS
+/home/fmaste/Workspace/GitHub/intersectmbo/cardano-node/dist-newstyle/build/x86_64-linux/ghc-8.10.7/cardano-node-1.33.0/x/cardano-node/build/cardano-node/cardano-node +RTS -sghc-rts-report.txt -RTS run --config config.json --database-path run/current/node-5/db-testnet --topology topology.json --host-addr 127.0.0.1 --port 30005 --socket-path node.socket --tracer-socket-path-connect ../tracer/tracer.socket --shelley-vrf-key ../genesis/node-keys/node-vrf5.skey --shelley-kes-key ../genesis/node-keys/node-kes5.skey --shelley-operational-certificate ../genesis/node-keys/node5.opcert --shutdown-on-slot-synced 300 +RTS -N2 -I0 -A16m -qg -qb --disable-delayed-os-memory-return -RTS
 ```
 
 ## Infrastructure and code hierarchy
@@ -132,9 +132,9 @@ We're currently not using docker or OCI at all, we're using plain regular
 
 ### Services
 
-- [nix/nixos/cardano-node.service](https://github.com/input-output-hk/cardano-node/blob/master/nix/nixos/cardano-node-service.nix)
-- [nix/nixos/cardano-tracer.service](https://github.com/input-output-hk/cardano-node/blob/master/nix/nixos/cardano-tracer-service.nix)
-- [nix/nixos/tx-generator.service](https://github.com/input-output-hk/cardano-node/blob/master/nix/nixos/tx-generator-service.nix)
+- [nix/nixos/cardano-node.service](https://github.com/intersectmbo/cardano-node/blob/master/nix/nixos/cardano-node-service.nix)
+- [nix/nixos/cardano-tracer.service](https://github.com/intersectmbo/cardano-node/blob/master/nix/nixos/cardano-tracer-service.nix)
+- [nix/nixos/tx-generator.service](https://github.com/intersectmbo/cardano-node/blob/master/nix/nixos/tx-generator-service.nix)
 
 This services are used for running on three contexts:
 1. AWS
@@ -148,12 +148,12 @@ Looking at the code you can see how it does 1 (AWS) and 2 (local).
 ### Workbench
 
 Workbench (Links are to master branch but there's a workbench-master branch):
-1. [Top-level wb script](https://github.com/input-output-hk/cardano-node/blob/master/nix/workbench/wb)
+1. [Top-level wb script](https://github.com/intersectmbo/cardano-node/blob/master/nix/workbench/wb)
    1. First thought: Why this scripts starts with ```#!/usr/bin/env bash```,
       shouldn't it be a ```/nix/store/sdfsjdlhflsdhflsdkjh```?
-2. [Profile computation (profile.sh)](https://github.com/input-output-hk/cardano-node/blob/master/nix/workbench/profile/profile.sh)
-3. [Run allocation & starting](https://github.com/input-output-hk/cardano-node/blob/master/nix/workbench/run.sh)
-4. [Run scenarios](https://github.com/input-output-hk/cardano-node/blob/master/nix/workbench/scenario.sh)
+2. [Profile computation (profile.sh)](https://github.com/intersectmbo/cardano-node/blob/master/nix/workbench/profile/profile.sh)
+3. [Run allocation & starting](https://github.com/intersectmbo/cardano-node/blob/master/nix/workbench/run.sh)
+4. [Run scenarios](https://github.com/intersectmbo/cardano-node/blob/master/nix/workbench/scenario.sh)
 
 ### About profile computation
 
@@ -171,7 +171,7 @@ Configuration generation does heavy use of [jq](https://stedolan.github.io/jq/) 
 
 #### ```profiles.json```
 
-[```workbench/default.nix```](https://github.com/input-output-hk/cardano-node/blob/master/nix/workbench/default.nix) has the Nix derivation that calls the profile builder:
+[```workbench/default.nix```](https://github.com/intersectmbo/cardano-node/blob/master/nix/workbench/default.nix) has the Nix derivation that calls the profile builder:
 ```
 ...
 ## materialise-profile :: ProfileNix -> BackendProfile -> Profile
@@ -182,7 +182,7 @@ profile = materialise-profile
     backendProfile = backend.materialise-profile { inherit profileNix; };
   };
 ```
-and [```workbench/profile.nix```](https://github.com/input-output-hk/cardano-node/blob/master/nix/workbench/profile/profile.nix) does at the end:
+and [```workbench/profile.nix```](https://github.com/intersectmbo/cardano-node/blob/master/nix/workbench/profile/profile.nix) does at the end:
 ```
 ''
 mkdir $out
@@ -194,9 +194,9 @@ cp $tracerServicePath    $out/tracer-service.json
 wb profile node-specs $out/profile.json > $out/node-specs.json
 ''
 ```
-after importing [```workbench/default.nix```](https://github.com/input-output-hk/cardano-node/blob/master/nix/workbench/default.nix).
+after importing [```workbench/default.nix```](https://github.com/intersectmbo/cardano-node/blob/master/nix/workbench/default.nix).
 
-The only thing ```wb``` needs is the profile outputs as they are created by [```workbench/profiles/default.nix```](https://github.com/input-output-hk/cardano-node/blob/master/nix/workbench/default.nix).
+The only thing ```wb``` needs is the profile outputs as they are created by [```workbench/profiles/default.nix```](https://github.com/intersectmbo/cardano-node/blob/master/nix/workbench/default.nix).
 
 ### Modes
 

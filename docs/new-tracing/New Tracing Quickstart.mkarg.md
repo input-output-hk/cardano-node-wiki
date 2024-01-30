@@ -3,36 +3,40 @@
 
 # New Tracing Quickstart
 
-* What is it?  
+* What is it?
 
-* What does it deliver?  
+* What does it deliver?
 
 * Architecture (service; polling; socket-only)
 
 * choice legacy
 
-## Table of contents
-
+##Table of contents
 - [New Tracing Quickstart](#new-tracing-quickstart)
-  - [Table of contents](#table-of-contents)
-  - [Difference to the legacy system](#difference-to-the-legacy-system)
+   * [Difference to the legacy system](#difference-to-the-legacy-system)
 - [TBD: split this up](#tbd-split-this-up)
 - [Running `cardano-tracer`](#running-cardano-tracer)
-  - [Setting up `cardano-tracer`](#setting-up-cardano-tracer)
-    - [Running on different machines](#running-on-different-machines)
-    - [Configuring tracers in `cardano-node`](#configuring-tracers-in-cardano-node)
+- [Setting up `cardano-tracer`](#setting-up-cardano-tracer)
+   * [Running on different machines](#running-on-different-machines)
+- [Configuring tracers in `cardano-node`](#configuring-tracers-in-cardano-node)
+   * [TraceOptions](#traceoptions)
+      + [Severity](#severity)
+      + [Backends:](#backends)
+      + [Detail](#detail)
+      + [MaxFrequency](#maxfrequency)
+   * [Other configuration entries](#other-configuration-entries)
+   * [Example configuration](#example-configuration)
 - [Migration to new tracing](#migration-to-new-tracing)
-    - [Using the legacy system](#using-the-legacy-system)
-    - [Mapping of legacy (Prometheus) names](#mapping-of-legacy-prometheus-names)
-    - [For developers](#for-developers)
-    - [Support](#support)
+      + [Using the legacy system](#using-the-legacy-system)
+      + [Mapping of legacy (Prometheus) names](#mapping-of-legacy-prometheus-names)
+      + [For developers](#for-developers)
+      + [Support](#support)
 - [Glossary](#glossary)
 - [Further reading](#further-reading)
-    - [Documentation of trace messages and further documentation](#documentation-of-trace-messages-and-further-documentation)
+      + [Documentation of trace messages and further documentation](#documentation-of-trace-messages-and-further-documentation)
+
 
 ## Difference to the legacy system
-
-
 
 
 # TBD: split this up
@@ -55,7 +59,7 @@ possible to log to stdout without cardano-tracer.
 First of all, add `--tracer-socket-path-connect /tmp/forwarder.sock` option to the node's command line options, asking it to connect to `cardano-tracer`.
 > TBD: does that exist in node config?
 
-## Setting up `cardano-tracer`
+# Setting up `cardano-tracer`
 
 1. Build and run `cardano-tracer` using `cabal`:
 ~~~shell
@@ -64,14 +68,14 @@ $ cd <PATH_TO_DIR>
 $ ./cardano-tracer --config <PATH_TO_CONFIG>
 ~~~
 
-2. Build and run `cardano-tracer` using `nix`:  
+2. Build and run `cardano-tracer` using `nix`:
   (A `nix` build assumes the identical `nix` setup as described for `cardano-node`; for details please see [here](https://github.com/input-output-hk/cardano-node/blob/master/doc/getting-started/building-the-node-using-nix.md))
 ~~~shell
 $ nix build .#cardano-tracer -o cardano-tracer-build
 $ ./cardano-tracer-build/bin/cardano-tracer --config <PATH_TO_CONFIG>
 ~~~
 
-   
+
 
 `<PATH_TO_CONFIG>` is a path to `cardano-tracer`'s configuration file. Configuration can be provided both in JSON and YAML format. This is a minimal example:
 
@@ -94,95 +98,212 @@ After you run the node, it will establish the connection with `cardano-tracer` a
 > TBD assume c-t is up and running
 As a result, you will find log files, in JSON format, in `/tmp/cardano-tracer-logs` directory.
 
-### Running on different machines
+## Running on different machines
 
-> TBD: ssh tunnel for sockets 
+> TBD: ssh tunnel for sockets
 > TBD: SSH setup!!!
 >
 > Initiator lingo
 
-### Configuring tracers in `cardano-node`
+# Configuring tracers in `cardano-node`
 
+The conventional method for configuring tracers in cardano-node involves utilizing the node configuration file. The node configuration file, specified by the --config flag, refers to a .yaml (or .json) file responsible for configuring logging and other crucial settings for the node.
 
+To enable or disable new tracing during the transition period, the following line in the configuration file toggles the TraceDispatcher, which is the name of the new library:
 
-In Cardano a default configuration is given in the module [Cardano.Node.Tracing.DefaultTraceConfig](https://github.com/input-output-hk/cardano-node/blob/master/cardano-node/src/Cardano/Node/Tracing/DefaultTraceConfig.hs). In the config file all entries of the default configuration can be overridden. To remove a frequency limiter, define a limiter with maxFrequency 0.0.
+```yaml
+UseTraceDispatcher: True
+```
 
-> TBD.: include default config as explicit appendix in JSON / YAML
-> root level ""
+## TraceOptions
 
-1. Specify a filter for the severity of the messages you want to see, e.g.:
+The primary configuration for new tracing is accomplished through the TraceOptions entry in the config file. These options are organized by namespace, with tracers structured hierarchically within a namespace. The trace dispatcher mandates that all messages have a unique name within this namespace.
 
-  ~~~yaml
-  # Show messages of Severity Notice or higher as default
+The empty namespace ("") configures all tracers, and more specific namespace settings override more general ones. This allows the configuration of groups of messages down to individual messages.
+
+The configurable values are:
+
+### Severity
+
+Filter messages based on severity, where messages with a severity less than the configured cutoff are excluded. Severity levels follow the enumeration outlined in section 6.2.1 of RFC 5424. Severity levels range from Debug (least severe) to Emergency (most severe).
+
+  * `Emergency`: system is unusable
+  * `Alert`: action must be taken immediatel
+  * `Critical`: critical conditions
+  * `Error`: error conditions
+  * `Warning`: warning conditions
+  * `Notice`: normal but significant condition
+  * `Info`: informational messages
+  * `Debug`: debug-level messages
+
+Additionally, a `Silent` filter level unconditionally filters out all messages.
+
+So e.g. if you want to see all messages of type `BlockFetch.Client.StartedFetchBatch` you can set the filter level of this messages to `Debug`, which means that it is shown independent of its severity. As this message has severity `Info`, it will as well be displayed for severity `Ìnfo`. If you don't want to see this messages, set the severity filter to Silent (or any value greater then `Info`).
+
+```yaml
+TraceOptions:
   "":
-      severity: Notice
+    severity: Notice
 
-    # But show ChainDB messages starting from Info
+  BlockFetch.Client.StartedFetchBatch:
+    severity: Debug
+```
+
+Tip: You can look up the severity, privacy and the default detail level of all cardano messages in the following document: https://github.com/input-output-hk/cardano-node-wiki/blob/main/docs/new-tracing/tracers_doc_generated.md
+
+
+### Backends:
+Configure the backends to which messages are sent. Available backends currently are:
+
+* Forwarder:
+Send these messages to cardano-tracer for logging it in a central place. This will not happen for private messages, which will not be forwarded.
+
+* Stdout
+Write these messages to your local stdout. It takes the additional parameters: `MachineFormat`, `HumanFormatColoured` and `HumanFormatUncoloured`, which specifies the format in which it writes to Stdout.
+
+* EKGBackend
+This tracer submits metrics to a local EKG store, which then further forwards the messages. It is necessary to specify this backend to get metrics delivered, e.g. to Prometheus.
+
+So a TraceOption entry will start like this:
+
+```yaml
+TraceOptions:
+  "":
+    backends:
+      - Stdout MachineFormat
+      - EKGBackend
+      - Forwarder
+```
+
+### Detail
+
+Some messages support the representation in different detail levels. This applies only to the forMachine representation. Options are `DMinimal`, `DNormal`, `DDetailed`, and `DMaximum`. If no configuration value is given, the default output will use the `DNormal` representation.
+
+```yaml
+TraceOptions:
+  "":
+    detail: DNormal
+
+  Net.Mux.Local.HandshakeClientError:
+    detail: DDetailed
+```
+
+### MaxFrequency
+
+Frequency filtering is used to limit the frequency of individual trace messages or group of trace messages. It offers a probabilistic suppression of messages when their average frequency surpasses a specified threshold parameter.
+
+The frequency limiter, in addition to controlling message frequency, emits a suppression summary message under specific conditions:
+
+- When message suppression commences.
+- Every 10 seconds during active limiting, providing the count of suppressed messages.
+- When message suppression concludes, indicating the total number of suppressed messages.
+
+It is important to note that frequency filtering is designed to be applied selectively to a subset of traces, specifically those identified as potentially noisy. The configuration of frequency limits can thus be tailored to this subset of traces.
+
+```yaml
+TraceOptions:
+  ChainDB.AddBlockEvent.AddedBlockToQueue:
+    maxFrequency: 2.0
+    # Limit the AddedBlockToQueue events to a maximum of two per second.
+```
+
+## Other configuration entries
+
+With the following option you can set the frequency in which _peer messages_ are send.
+
+```yaml
+TraceOptionPeerFrequency: 2000
+```
+The unit are milliseconds. So the above configuration will trace peer messages every 2 seconds. If you leave out this entry, two seconds is as well the default.
+
+With the following option you can set the frequency in which resource messages are send. Resource messages reports ghc statistics and OS information f
+
+```yaml
+TraceOptionResourceFrequency: 4000,
+```
+The unit are milliseconds. So the above configuration will trace resource messages every 4 seconds. If you leave out this entry, 5 seconds are the default.
+
+With the following option you can specify an optional node name, which is used only for the NodeInfo message. If not given, or in  all other cases the hostName of the origin machine is used. The hostName is a standard part of traceMessages. TODO: Does this make any sense at all? Either use hostName always, or use this value always?
+
+```yaml
+TraceOptionNodeName: "heavenAndHell",
+```
+
+The TraceOptionForwarder options control parameters for the forwarding of trace messges to the cardano-tracer process from the node side. It should be generally fine to keep the default options here.
+
+```yaml
+TraceOptionForwarder:
+  connQueueSize = 2000
+  disconnQueueSize = 200000
+  verbosity = Minimum
+```
+
+Cardano-tracer queries periodically trace messages from cardano-node. For this reason we have a queue in
+cardaon-node, which stores messages. When the queue overfolws, we loose trace messages. If at start up, the connection to cardano tracer, yet has not been established, the disconnQueueSize is used as the size of the queue. After establishing the connection the smaller connQueueSize is used. The verbosity can be used to debug message forwarding to cardano-tracer via the trace-forward library.
+
+## Example configuration
+
+Finally an example configuration, which includes different aspects and which we show in YAML and JSON:
+
+```yaml
+UseTraceDispatcher: True
+TraceOptions:
+  "":
+    severity: Notice
+    detail: DNormal
+    backends:
+      - Stdout MachineFormat
+      - EKGBackend
+      - Forwarder
   ChainDB:
-      severity: Info
-  ~~~
+    severity: Info
+    detail: DDetailed
+  ChainDB.AddBlockEvent.AddedBlockToQueue:
+    maxFrequency: 2.0
+TraceOptionPeerFrequency: 5000
 
+```
 
-  So the namespaces are used for configuration values, which works
-  down to individual messages, and the more specialized value overwrites the more general.
+```json
+{
+  "UseTraceDispatcher": true,
+  "TraceOptions": {
+    "": {
+      "severity": "Notice",
+      "detail": "DNormal",
+      "backends": [
+        "Stdout MachineFormat",
+        "EKGBackend",
+        "Forwarder"
+      ]
+    },
+    "ChainDB": {
+      "severity": "Info",
+      "detail": "DDetailed"
+    },
+    "ChainDB.AddBlockEvent.AddedBlockToQueue": {
+      "maxFrequency": 2.0
+    }
+  },
+  "TraceOptionPeerFrequency": 5000
+}
+```
 
-  If you don't want to see any messages from tracers the new severity `Silence`
-  exists, which suppresses all messages.
-  
-  > Q: Is Silence a regular severity level for which traces can never be emitted?   (only from config viewpoint) 
+When `TraceOptions` is empty, or other entries are missing in the configuration file, default entries are taken from
+[Cardano.Node.Tracing.DefaultTraceConfig](https://github.com/intersectmbo/cardano-node/blob/master/cardano-node/src/Cardano/Node/Tracing/DefaultTraceConfig.hs) module.
+
+  > Q: Is Silence a regular severity level for which traces can never be emitted?   (only from config viewpoint)
+
+It is a filter level. So no message can have a severity of Silence
+
   > Q: Can I nested overriding? How is the severity of a specific trace evaluated? -- most specific info is taken
 
-
-2. Specify in which detail level, the messages get shown
-> TBD rendering
-
-  ~~~yaml
-  "":
-      # Keep this
-      severity: Notice
-      # All messages are shown with normal detail level
-      detail: DNormal
-  ~~~
-
-  Other options would be DMinimal, DDetailed and DMaximum. This has only an effect on messages which support the representation in different ways.
+True
 
   > Q: Is there a related concept of detail in legacy tracing? Yes - different
 
-3. Specify limiters for the frequency of messages
+  The same in old tracing, but with a different name
 
-    Eliding tracers are not supported in new-tracing, instead you can limit the
-    frequency in which messages get shown.
-
-    ~~~yaml
-    ChainDB.AddBlockEvent.AddedBlockToQueue:
-        # Only show a maximum of 2 of these messages per second
-        maxFrequency: 2.0
-    ~~~
-
-    The activity of limiters will be written in the traces as well.
-
-4. Specify the backends the messages are routed to.
-
-  ~~~yaml
-  "":
-      # Keep this
-      severity: Notice
-      # And this
-      detail: DNormal
-      # And specify a list of backends to use
-      backends:
-        - Stdout MachineFormat
-        - EKGBackend
-        - Forwarder
-  ~~~
-
-  These are all the backends currently supported. With Stdout you have the
-  options MachineFormat or HumanFormatColoured/HumanFormatUncoloured.
-  If messages don't support representation in HumanFormat* they are shown in MachineFormat anyway.
-
-  Forwarder means that messages are send to cardano-tracer
-
-Configuration can be written in JSON and YAML, we have shown the examples in YAML.
 
 
 # Migration to new tracing
@@ -234,7 +355,7 @@ it is expected that you will find regressions and bugs in the port, please help 
 
 # Glossary
 
-> TBD: tracer nomenclature here;  
+> TBD: tracer nomenclature here;
 > This is the terminology we want to be used in all sorts of communication, e.g. issue tracking, support questions...
 > cardano node forum
 

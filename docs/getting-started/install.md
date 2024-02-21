@@ -50,10 +50,10 @@ Possible issue with `pkg-config`:
 `pkgconf` 1.9.5 (which is default in `Fedora 39` and `Rawhide`) produces output unreadable by `cabal`, which results in an errors like:
 
 ```
-conflict: pkg-config package libsodium-any, not found in the pkg-config database 
+conflict: pkg-config package libsodium-any, not found in the pkg-config database
 ```
 
-despite having `libsodium` installed in the system. 
+despite having `libsodium` installed in the system.
 
 The possible solutions to this problem are:
 
@@ -163,7 +163,7 @@ is using the wrong library, run `ldconfig`.
 
 ##### Using the ported `c` code for development
 **Note:** the ported `c` code should not be used to run the node, and should only be
-used for development purposes. 
+used for development purposes.
 
 In order to avoid having to install the custom version of libsodium for development
 purposes, `cardano-crypto-praos` defines a `cabal` flag that makes use of C code located
@@ -195,10 +195,19 @@ cd ~/src
 
 Download and install `libsecp256k1`:
 
+>[!CAUTION]
+>
+>Make sure that `libsecp256k1` version matches flake `libsecp256k1` input version in `iohkNix`: https://github.com/input-output-hk/iohk-nix/blob/master/flake.nix#L14.
+>You can obtain the correct version using this snippet:
+>```bash
+>SECP256K1_VERSION=$(curl https://raw.githubusercontent.com/input-output-hk/iohk-nix/master/flake.lock | jq -r '.nodes.secp256k1.original.ref')
+>echo "Using secp256k1 version: ${SECP256K1_VERSION}"
+>```
+
 ```bash
-git clone https://github.com/bitcoin-core/secp256k1
+: ${SECP256K1_VERSION:='v0.3.2'}
+git clone --depth 1 --branch ${SECP256K1_VERSION} https://github.com/bitcoin-core/secp256k1
 cd secp256k1
-git checkout ac83be33
 ./autogen.sh
 ./configure --enable-module-schnorrsig --enable-experimental
 make
@@ -206,14 +215,23 @@ make check
 sudo make install
 ```
 
-#### Installing BLST
+#### Installing `blst`
 
-Download and install BLST so that cardano-base can pick it up (assuming that pkg-config is installed):
+Download and install `blst` so that cardano-base can pick it up (assuming that `pkg-config` is installed):
+
+>[!CAUTION]
+>
+>Make sure that `blst` version matches flake `blst` input version in `iohkNix`: https://github.com/input-output-hk/iohk-nix/blob/master/flake.nix#L15.
+>You can obtain the correct version using this snippet:
+>```bash
+>BLST_VERSION=$(curl https://raw.githubusercontent.com/input-output-hk/iohk-nix/master/flake.lock | jq -r '.nodes.blst.original.ref')
+>echo "Using blst version: ${BLST_VERSION}"
+>```
 
 ```bash
-git clone https://github.com/supranational/blst
+: ${BLST_VERSION:='v0.3.11'}
+git clone --depth 1 --branch ${BLST_VERSION} https://github.com/supranational/blst
 cd blst
-git checkout v0.3.10
 ./build.sh
 cat > libblst.pc << EOF
 prefix=/usr/local
@@ -224,7 +242,7 @@ includedir=\${prefix}/include
 Name: libblst
 Description: Multilingual BLS12-381 signature library
 URL: https://github.com/supranational/blst
-Version: 0.3.10
+Version: ${BLST_VERSION#v}
 Cflags: -I\${includedir}
 Libs: -L\${libdir} -lblst
 EOF

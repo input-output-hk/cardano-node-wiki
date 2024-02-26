@@ -2,7 +2,7 @@
 
 The **latest** version of the node may be downloaded from the [cardano-node GitHub Releases](https://github.com/intersectmbo/cardano-node/releases) page.
 
-#### Prerequisites
+## Prerequisites
 
 To set up your platform, you will need:
 
@@ -15,7 +15,7 @@ To set up your platform, you will need:
 ****Note** If you are building on Windows, we recommend using WSL2 under Windows 10 as this provides a development and execution environment that is very similar to Ubuntu.
 
 
-#### Installation dependencies
+## System dependencies installation
 
 To download the source code and build it, you need the following packages and tools on your Linux system:
 
@@ -50,10 +50,10 @@ Possible issue with `pkg-config`:
 `pkgconf` 1.9.5 (which is default in `Fedora 39` and `Rawhide`) produces output unreadable by `cabal`, which results in an errors like:
 
 ```
-conflict: pkg-config package libsodium-any, not found in the pkg-config database 
+conflict: pkg-config package libsodium-any, not found in the pkg-config database
 ```
 
-despite having `libsodium` installed in the system. 
+despite having `libsodium` installed in the system.
 
 The possible solutions to this problem are:
 
@@ -90,13 +90,13 @@ Then using homebrew install the following:
 ```bash
 brew install jq libtool autoconf automake pkg-config openssl
 ```
-#### You will need to install llvm in case you are using M1
+### You will need to install llvm in case you are using M1
 
 ```
 brew install llvm@13
 ```
 
-#### Installing the Haskell environment
+## Installing the Haskell environment
 
 The recommended way to install the Haskell tools is via [GHCup](https://www.haskell.org/ghcup/). Its installation script will guide you through the installation, and warn you about packages that you have to make sure are installed in the system (the ones described on the step above). Check [this page](https://www.haskell.org/ghcup/install/) for further explanation on the installation process.
 
@@ -121,26 +121,48 @@ which cabal
 
 and it should return a path of this shape: `/home/<user>/.ghcup/bin/cabal`.
 
-#### Installing Libsodium
+## Installing dependencies
 
-Cardano uses a custom fork of `libsodium` which exposes some internal functions
+Decide which version of Cardano Node you will be installing. 
+A list of available tags is available at: https://github.com/IntersectMBO/cardano-node/tags.
+Set the environment variable to the tag you selected (or use `master` for the latest unstable version):
+```bash
+CARDANO_NODE_VERSION='8.7.3'
+IOHKNIX_VERSION=$(curl https://raw.githubusercontent.com/IntersectMBO/cardano-node/$CARDANO_NODE_VERSION/flake.lock | jq -r '.nodes.iohkNix.locked.rev')
+echo "iohk-nix version: $IOHKNIX_VERSION"
+```
+The variable `IOHKNIX_VERSION` is used to retrieve the correct versions of `sodium`, `secp256k1` and `blst`.
+
+>[!CAUTION]
+>
+>Make sure that `secp256k1`, `sodium` and `blst` versions match flake input version in [`iohkNix`](https://github.com/input-output-hk/iohk-nix/blob/master/flake.nix#L14) for a particular node version used.
+>
+
+### Installing `sodium`
+
+Cardano uses a custom fork of `sodium` which exposes some internal functions
 and adds some other new functions. This fork lives in
 [https://github.com/intersectmbo/libsodium](https://github.com/intersectmbo/libsodium).
-Users need to install that custom version of `libsodium` with the following steps.
+Users need to install that custom version of `sodium` with the following steps.
 
 Create a working directory for your builds:
-
 ```bash
 mkdir -p ~/src
 cd ~/src
 ```
 
-Download and install libsodium:
-
+Find out the correct `sodium` version for your build:
 ```bash
+SODIUM_VERSION=$(curl https://raw.githubusercontent.com/input-output-hk/iohk-nix/$IOHKNIX_VERSION/flake.lock | jq -r '.nodes.sodium.original.rev')
+echo "Using sodium version: $SODIUM_VERSION"
+```
+
+Download and install `sodium`:
+```bash
+: ${SODIUM_VERSION:='dbb48cc'}
 git clone https://github.com/intersectmbo/libsodium
 cd libsodium
-git checkout dbb48cc
+git checkout $SODIUM_VERSION
 ./autogen.sh
 ./configure
 make
@@ -149,7 +171,6 @@ sudo make install
 ```
 
 Add the following to your `~/.bashrc` file and source it (or re-open the terminal):
-
 ```bash
 export LD_LIBRARY_PATH="/usr/local/lib:$LD_LIBRARY_PATH"
 export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH"
@@ -161,9 +182,10 @@ check by running `ldd`), the running binary might still use the wrong library.
 You can check this by running `pldd`. If the `pldd` shows that the running executable
 is using the wrong library, run `ldconfig`.
 
-##### Using the ported `c` code for development
-**Note:** the ported `c` code should not be used to run the node, and should only be
-used for development purposes. 
+#### Using the ported `c` code for development
+>[!WARNING]
+>The ported `c` code should not be used to run the node, and should only be
+used for development purposes.
 
 In order to avoid having to install the custom version of libsodium for development
 purposes, `cardano-crypto-praos` defines a `cabal` flag that makes use of C code located
@@ -172,33 +194,30 @@ purposes, `cardano-crypto-praos` defines a `cabal` flag that makes use of C code
 The C code is merely a port of the bits missing in a normal `libsodium`
 installation. To enable this code, one has to add the following code in the
 `cabal.project.local` file:
-
 ```bash
 package cardano-crypto-praos
   flags: -external-libsodium-vrf
 ```
 
 For this to work, `libsodium` has to be in the system. For Ubuntu, this is achieved by:
-
 ```bash
 sudo apt install libsodium-dev
 ```
 
-#### Installing Secp256k1
+### Installing `secp256k1`
 
-Create a working directory for your builds:
 
+Find out the correct `secp256k1` version:
 ```bash
-mkdir -p ~/src
-cd ~/src
+SECP256K1_VERSION=$(curl https://raw.githubusercontent.com/input-output-hk/iohk-nix/$IOHKNIX_VERSION/flake.lock | jq -r '.nodes.secp256k1.original.ref')
+echo "Using secp256k1 version: ${SECP256K1_VERSION}"
 ```
 
-Download and install `libsecp256k1`:
-
+Download and install `secp256k1`:
 ```bash
-git clone https://github.com/bitcoin-core/secp256k1
+: ${SECP256K1_VERSION:='v0.3.2'}
+git clone --depth 1 --branch ${SECP256K1_VERSION} https://github.com/bitcoin-core/secp256k1
 cd secp256k1
-git checkout ac83be33
 ./autogen.sh
 ./configure --enable-module-schnorrsig --enable-experimental
 make
@@ -206,14 +225,19 @@ make check
 sudo make install
 ```
 
-#### Installing BLST
+### Installing `blst`
 
-Download and install BLST so that cardano-base can pick it up (assuming that pkg-config is installed):
-
+Find out the correct `blst` version:
 ```bash
-git clone https://github.com/supranational/blst
+BLST_VERSION=$(curl https://raw.githubusercontent.com/input-output-hk/iohk-nix/master/flake.lock | jq -r '.nodes.blst.original.ref')
+echo "Using blst version: ${BLST_VERSION}"
+```
+
+Download and install `blst` so that `cardano-base` can pick it up (assuming that `pkg-config` is installed):
+```bash
+: ${BLST_VERSION:='v0.3.11'}
+git clone --depth 1 --branch ${BLST_VERSION} https://github.com/supranational/blst
 cd blst
-git checkout v0.3.10
 ./build.sh
 cat > libblst.pc << EOF
 prefix=/usr/local
@@ -224,7 +248,7 @@ includedir=\${prefix}/include
 Name: libblst
 Description: Multilingual BLS12-381 signature library
 URL: https://github.com/supranational/blst
-Version: 0.3.10
+Version: ${BLST_VERSION#v}
 Cflags: -I\${includedir}
 Libs: -L\${libdir} -lblst
 EOF
@@ -234,37 +258,34 @@ sudo cp libblst.a /usr/local/lib
 sudo chmod u=rw,go=r /usr/local/{lib/{libblst.a,pkgconfig/libblst.pc},include/{blst.{h,hpp},blst_aux.h}}
 ```
 
-#### Downloading the source code for cardano-node
+## Installing the node
+### Downloading the source code for cardano-node
 
 Create a working directory for your builds:
-
 ```bash
 mkdir -p ~/src
 cd ~/src
 ```
 
 Download the Cardano node sources:
-
 ```bash
 git clone https://github.com/intersectmbo/cardano-node.git
 ```
 
 Change the working directory to the downloaded source code folder:
-
 ```bash
 cd cardano-node
 ```
 
 
 Check out the latest version of cardano-node (choose the tag with the highest version number: ``TAGGED-VERSION``):
-
 ```bash
 git fetch --all --recurse-submodules --tags
 git tag | sort -V
 git checkout tags/<TAGGED VERSION>
 ```
 
-#### Configuring the build options
+### Configuring the build options
 
 We explicitly use the GHC version that we installed earlier.  This avoids defaulting to a system version of GHC that might be different than the one you have installed.
 
@@ -303,7 +324,7 @@ sudo ln -s /opt/homebrew/opt/openssl@3/include /usr/local/opt/openssl/include
 
 This is a wart of the `HsOpenSSL` library wrapper, and using classic methods such as setting `LDFLAGS` & `CPPFLAGS`, or using `--extra-include-dirs` and `--extra-lib-dirs` won't work properly.
 
-#### Building and installing the node
+### Building and installing the node
 
 Build the node and CLI with `cabal`:
 

@@ -230,7 +230,7 @@
         1. [Update](#chainsyncserverblockupdate)
     1. __ServerHeaderⓣⓢ__
         1. [Update](#chainsyncserverheaderupdate)
-1. __Forge__
+1. __Forgeⓣⓜ__
     1. __Loopⓣⓜ__
         1. [AdoptedBlock](#forgeloopadoptedblock)
         1. [AdoptionThreadDied](#forgeloopadoptionthreaddied)
@@ -252,6 +252,7 @@
         1. [SlotIsImmutable](#forgeloopslotisimmutable)
         1. [StartLeadershipCheck](#forgeloopstartleadershipcheck)
         1. [StartLeadershipCheckPlus](#forgeloopstartleadershipcheckplus)
+    1. [StateInfo](#forgestateinfo)
     1. __ThreadStatsⓣⓢ__
         1. [ForgeThreadStats](#forgethreadstatsforgethreadstats)
 1. __Mempoolⓣⓜ__
@@ -796,6 +797,11 @@
     1. [SlotIsImmutable](#forgeslotisimmutable)
     1. [SlotsMissed](#forgeslotsmissed)
     1. [UtxoSize](#forgeutxosize)
+1. __KESInfo__
+    1. [currentKESPeriod](#kesinfocurrentkesperiod)
+    1. [operationalCertificateExpiryKESPeriod](#kesinfooperationalcertificateexpirykesperiod)
+    1. [operationalCertificateStartKESPeriod](#kesinfooperationalcertificatestartkesperiod)
+    1. [remainingKESPeriods](#kesinforemainingkesperiods)
 1. __Mempool__
     1. [MempoolBytes](#mempoolmempoolbytes)
     1. [TxsInMempool](#mempooltxsinmempool)
@@ -4728,6 +4734,27 @@ Filtered `Visible` by config value: `Info`
 
 
 > We adopted the block we produced, we also trace the transactions  that were adopted.
+
+
+Severity:  `Info`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Visible` by config value: `Info`
+
+### Forge.StateInfo
+
+
+> kesStartPeriod 
+> kesEndPeriod is kesStartPeriod + tpraosMaxKESEvo
+> kesEvolution is the current evolution or /relative period/.
 
 
 Severity:  `Info`
@@ -13095,6 +13122,34 @@ Forge.ThreadStats.ForgeThreadStats
 Dispatched by: 
 Forge.Loop.StartLeadershipCheckPlus
 
+### KESInfo.currentKESPeriod
+
+
+
+Dispatched by: 
+Forge.StateInfo
+
+### KESInfo.operationalCertificateExpiryKESPeriod
+
+
+
+Dispatched by: 
+Forge.StateInfo
+
+### KESInfo.operationalCertificateStartKESPeriod
+
+
+
+Dispatched by: 
+Forge.StateInfo
+
+### KESInfo.remainingKESPeriods
+
+
+
+Dispatched by: 
+Forge.StateInfo
+
 ### Mempool.MempoolBytes
 
 > Byte size of the mempool
@@ -13539,8 +13594,8 @@ TxSubmission.TxInbound.Collected
     }
 }
 ```
-632 log messages, 
-85 metrics,
+633 log messages, 
+89 metrics,
 2 datapoints.
 
 ⓣ- This is the root of a tracer
@@ -13549,4 +13604,4 @@ TxSubmission.TxInbound.Collected
 
 ⓜ- This is the root of a tracer, that provides metrics
 
-Generated at 2023-12-06 11:58:34.435884708 CET.
+Generated at 2023-12-21 17:31:48.371365048 CET.

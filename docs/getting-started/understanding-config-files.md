@@ -125,7 +125,7 @@ To re-enable block forging, ensure that the necessary files are present.
 
 You can disable ledger peers by setting the `useLedgerAfterSlot` to a negative value.
 
-### Light Genesis a.k.a Bootstrap Peers
+### Genesis lite a.k.a Bootstrap Peers
 
 Bootstrap Peers is a pre-Genesis feature that means to provide a way for a node to connect to a trustable set of peers when the its chain falls behind.
 

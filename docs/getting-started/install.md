@@ -341,7 +341,7 @@ mkdir -p ~/.local/bin
 cp -p "$(./scripts/bin-path.sh cardano-node)" ~/.local/bin/
 cp -p "$(./scripts/bin-path.sh cardano-cli)" ~/.local/bin/
 ```
-
+**Note:** If cardano-cli does not build with 'cabal build all', run 'cabal build cardano-cli'.
 **Note:** `~/.local/bin` should be in the `$PATH`.
 
 Note, we avoid using `cabal install` because that method prevents the installed binaries from reporting

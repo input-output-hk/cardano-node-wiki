@@ -453,43 +453,58 @@ At this point [Haddock
 documentation](https://ouroboros-network.cardano.intersectmbo.org/ouroboros-network/Ouroboros-Network-PeerSelection-Governor.html)
 of the outbound governor is available.
 
-#### Peer sharing
+#### Peer Sharing
 
 Peer sharing is a novel feature that provides an additional method for the outbound
 governor to reach its targets for known peers. With peer sharing, the node can request
 peer information from other nodes with which it has an established connection.
 
-**IMPORTANT:** _Peer sharing_ is an experimental feature that is turned off by default.
-Please be aware that until the availability of Genesis and eclipse evasion, this feature may
-leave a node vulnerable to eclipse attacks.
+**NOTE** _Peer sharing_ is a relatively new feature which is turned off by default.
+It is important to use big ledger peers (on by default) when enabling peer sharing.
 
 The main method for configuring peer sharing involves setting the following option:
 
-- `PeerSharing` (default value: `PeerSharingDisabled`) - this option can take two possible values:
-    * `PeerSharingDisabled`: peer sharing is disabled, which means the node won't request peer
+- `PeerSharing` (a boolean value, default `False`)
+    * `False`: peer sharing is disabled, which means the node won't request peer
       information from any other node, and will not respond to such requests from others
       (the mini-protocol won't even start);
-    * `PeerSharingEnabled`: peer Sharing is enabled and the node will notify other nodes
-      that it is permissible to share its address.
+    * `True`: peer sharing is enabled, the node may issue as well as respond
+      to requests for peers.
 
-The `PeerSharing` flag interacts with `PeerAdvertise` (`advertise` flag in the topology
-file) values as follows:
+When `advertise: true` is set in the topology file for a given local root peers
+group, the node can disseminate knowledge of such peers with other participants
+of the network through the peer-sharing mechanism. The node only sends IP
+addresses and port numbers through peer sharing, no additional information is
+shared, in particular, the node doesn't send DNS names.
 
-`AdvertisePeer` (`advertise: true`) is local to the configuration of a specific node. A
-node might be willing to share those peers it has set as `PeerAdvertise`. Conversely,
-`PeerSharing` is about whether the peer (itself) is willing to participate in
-`PeerSharing`.
+Let's consider an example configuration:
 
-`PeerSharing` takes precedence over `AdvertisePeer`. Consider the following example:
+* a block-producing node (BP) has the `PeerSharing: False` set in its
+  configuration file;
+* a relay node should set `advertise: false` for the BP in its local peer
+  section of its topology file.
 
-A block-producing node (BP) has the `NoPeerSharing` flag value (which means it won't participate
-in peer sharing or run the mini-protocol). A relay node has the BP set as a local peer
-configured as `AdvertisePeer` (likely a misconfiguration). When the handshake between the
-BP and the relay occurs, the relay will see that the BP doesn't want to participate in
-peer sharing. As a result, it won't engage in peer sharing with it or share its details
-with others.
+**IMPORTANT** When the handshake between the BP and the relay occurs, the relay will see that
+the BP doesn't want to participate in peer sharing. As a result, neither side
+will engage in peer sharing on this connection.  If the BP had `PeerSharing:
+True` it could ask its relays for additional peers to connect to and up talking
+directly to untrusted peers
 
-In the handshake, if either party has `PeerSharingDisabled`, that value will be negotiated, resulting in the absence of any peer sharing protocol between the two parties. Peer sharing will only be enabled if both parties have `PeerSharingEnabled`.
+**IMPORTANT** Please note that if the relay set `advertise: true` for the BP in its
+topology file, it could leak the knowledge about the BP's IP address to the
+outside word.
+
+For two nodes to share peers between themselves, both of them
+have to run with `PeerSharing: True`, if either of them sets it to `False`
+sharing peers will not be possible in any direction.
+
+**IMPORTANT** Note that if BP connects to some other relay which doesn't have
+a BP entry in its local root peers, the BP's IP address might be
+leaked by it to the outside word, since that relay will not know that BP's IP
+address should not be advertised.  It is __recommended__ to setup a firewall
+which blocks incoming traffic to `cardano-node`'s port apart from SPO's own
+relays (if one is using P2P mode on BPs and relays, one can actually block all
+incoming traffic, the relays will reuse the connection opened by the BP).
 
 #### Inbound governor
 

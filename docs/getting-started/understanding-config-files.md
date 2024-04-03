@@ -406,7 +406,7 @@ It is also possible to have more fine grained control over filtering of trace ou
 
 ### Peer-to-peer (P2P) parameters and tracers
 
-To run a node in P2P mode, configure the `EnableP2P` setting to `true` (the default is `False`) in the configuration file. Additionally, ensure you specify the topology in the new format as described above.
+To run a node in P2P mode, configure the `EnableP2P` setting to `true`, which is the default value since `cardano-node-8.10`, in the configuration file. Additionally, ensure you specify the topology in the new format as described above.
 
 There are a few new tracers and configuration options that you can set (listed below by
 component):

@@ -11384,7 +11384,7 @@ Backends:
       `Forwarder`
 Filtered `Invisible` by config value: `Notice`
 
-### Startup.P2PWarning
+### Startup.NonP2PWarning
 
 
 

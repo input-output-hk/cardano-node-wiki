@@ -13,7 +13,7 @@ will only begin (or stop) block production when it receives a SIGHUP signal.
 ## Enabling and Disabling Block Forging
 
 Block Forging can be toggled on and off using the SIGHUP signal. Sending such a signal
-triggers the node to read the block forging credential files. Not that this will also
+triggers the node to read the block forging credential files. Note that this will also
 trigger the re-reading of the topology configuration file, so connections might be lost.
 
 As these credential files are provided through CLI flags, they cannot be removed without

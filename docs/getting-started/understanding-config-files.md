@@ -86,8 +86,8 @@ A minimal version of this file looks like this:
   It will then make efforts to establish a connection with at least one of the resolved IPs.
 
 * `hotValency` or `valency` (deprecated name that can also be used) tells the node the number of connections it should attempt to select from the specified group.
-  If you add multiple entries in the `accessPoints` array, you should update this value accordingly.
-  When DNS address are provided, valency determines the count of resolved IP addresses for which the node should maintain an active (hot) connection.
+  If you add multiple entries in the `accessPoints` array, you should update this value to the number of entries for which the node should maintain an active (hot) connection.
+  When DNS addresses are provided, valency determines the count of resolved IP addresses of all entries together for which the node should maintain an active (hot) connection.
 
 
 - `warmValency` is an optional field, similar to `hotValency`, that informs the node about the number of peers it should maintain as warm.

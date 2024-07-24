@@ -65,9 +65,11 @@
             1. [ValidCandidate](#chaindbaddblockeventaddblockvalidationvalidcandidate)
         1. [AddedBlockToQueue](#chaindbaddblockeventaddedblocktoqueue)
         1. [AddedBlockToVolatileDB](#chaindbaddblockeventaddedblocktovolatiledb)
+        1. [AddedReprocessLoEBlocksToQueue](#chaindbaddblockeventaddedreprocessloeblockstoqueue)
         1. [AddedToCurrentChain](#chaindbaddblockeventaddedtocurrentchain)
         1. [BlockInTheFuture](#chaindbaddblockeventblockinthefuture)
         1. [ChainSelectionForFutureBlock](#chaindbaddblockeventchainselectionforfutureblock)
+        1. [ChainSelectionLoEDebug](#chaindbaddblockeventchainselectionloedebug)
         1. [ChangingSelection](#chaindbaddblockeventchangingselection)
         1. [IgnoreBlockAlreadyInVolatileDB](#chaindbaddblockeventignoreblockalreadyinvolatiledb)
         1. [IgnoreBlockOlderThanK](#chaindbaddblockeventignoreblockolderthank)
@@ -77,6 +79,7 @@
             1. [SetTentativeHeader](#chaindbaddblockeventpipeliningeventsettentativeheader)
             1. [TrapTentativeHeader](#chaindbaddblockeventpipeliningeventtraptentativeheader)
         1. [PoppedBlockFromQueue](#chaindbaddblockeventpoppedblockfromqueue)
+        1. [PoppedReprocessLoEBlocksFromQueue](#chaindbaddblockeventpoppedreprocessloeblocksfromqueue)
         1. [StoreButDontChange](#chaindbaddblockeventstorebutdontchange)
         1. [SwitchedToAFork](#chaindbaddblockeventswitchedtoafork)
         1. [TryAddToCurrentChain](#chaindbaddblockeventtryaddtocurrentchain)
@@ -118,7 +121,7 @@
         1. [NoValidLastLocation](#chaindbimmdbeventnovalidlastlocation)
         1. [ValidatedLastLocation](#chaindbimmdbeventvalidatedlastlocation)
     1. __InitChainSelEvent__
-        1. [InitalChainSelected](#chaindbinitchainseleventinitalchainselected)
+        1. [InitialChainSelected](#chaindbinitchainseleventinitialchainselected)
         1. [StartedInitChainSelection](#chaindbinitchainseleventstartedinitchainselection)
         1. __Validation__
             1. [CandidateContainsFutureBlocks](#chaindbinitchainseleventvalidationcandidatecontainsfutureblocks)
@@ -160,15 +163,24 @@
     1. __VolatileDbEvent__
         1. [BlockAlreadyHere](#chaindbvolatiledbeventblockalreadyhere)
         1. [DBAlreadyClosed](#chaindbvolatiledbeventdbalreadyclosed)
+        1. [DBClosed](#chaindbvolatiledbeventdbclosed)
         1. [InvalidFileNames](#chaindbvolatiledbeventinvalidfilenames)
         1. [Truncate](#chaindbvolatiledbeventtruncate)
 1. __ChainSync__
     1. __Clientⓣ__
+        1. [AccessingForecastHorizon](#chainsyncclientaccessingforecasthorizon)
         1. [DownloadedHeader](#chainsyncclientdownloadedheader)
         1. [Exception](#chainsyncclientexception)
         1. [FoundIntersection](#chainsyncclientfoundintersection)
+        1. [GaveLoPToken](#chainsyncclientgaveloptoken)
+        1. [JumpResult](#chainsyncclientjumpresult)
+        1. [JumpingInstructionIs](#chainsyncclientjumpinginstructionis)
+        1. [JumpingWaitingForNextInstruction](#chainsyncclientjumpingwaitingfornextinstruction)
+        1. [OfferJump](#chainsyncclientofferjump)
         1. [RolledBack](#chainsyncclientrolledback)
         1. [Termination](#chainsyncclienttermination)
+        1. [ValidatedHeader](#chainsyncclientvalidatedheader)
+        1. [WaitingBeyondForecastHorizon](#chainsyncclientwaitingbeyondforecasthorizon)
     1. __Localⓣⓢ__
         1. __Receive__
             1. [AwaitReply](#chainsynclocalreceiveawaitreply)
@@ -265,6 +277,8 @@
         1. [ConnectionHardLimit](#netacceptpolicyconnectionhardlimit)
         1. [ConnectionLimitResume](#netacceptpolicyconnectionlimitresume)
         1. [ConnectionRateLimiting](#netacceptpolicyconnectionratelimiting)
+    1. __Churnⓣⓢ__
+        1. [ChurnCounters](#netchurnchurncounters)
     1. __ConnectionManager__
         1. __Localⓣⓜ__
             1. [Connect](#netconnectionmanagerlocalconnect)
@@ -374,8 +388,10 @@
         1. __Localⓣⓜ__
             1. [DemotedToColdRemote](#netinboundgovernorlocaldemotedtocoldremote)
             1. [DemotedToWarmRemote](#netinboundgovernorlocaldemotedtowarmremote)
+            1. [Inactive](#netinboundgovernorlocalinactive)
             1. [InboundGovernorCounters](#netinboundgovernorlocalinboundgovernorcounters)
             1. [InboundGovernorError](#netinboundgovernorlocalinboundgovernorerror)
+            1. [MaturedConnections](#netinboundgovernorlocalmaturedconnections)
             1. [MuxCleanExit](#netinboundgovernorlocalmuxcleanexit)
             1. [MuxErrored](#netinboundgovernorlocalmuxerrored)
             1. [NewConnection](#netinboundgovernorlocalnewconnection)
@@ -392,8 +408,10 @@
         1. __Remoteⓣⓜ__
             1. [DemotedToColdRemote](#netinboundgovernorremotedemotedtocoldremote)
             1. [DemotedToWarmRemote](#netinboundgovernorremotedemotedtowarmremote)
+            1. [Inactive](#netinboundgovernorremoteinactive)
             1. [InboundGovernorCounters](#netinboundgovernorremoteinboundgovernorcounters)
             1. [InboundGovernorError](#netinboundgovernorremoteinboundgovernorerror)
+            1. [MaturedConnections](#netinboundgovernorremotematuredconnections)
             1. [MuxCleanExit](#netinboundgovernorremotemuxcleanexit)
             1. [MuxErrored](#netinboundgovernorremotemuxerrored)
             1. [NewConnection](#netinboundgovernorremotenewconnection)
@@ -488,6 +506,7 @@
         1. __Selectionⓣ__
             1. [ChurnMode](#netpeerselectionselectionchurnmode)
             1. [ChurnWait](#netpeerselectionselectionchurnwait)
+            1. [DebugState](#netpeerselectionselectiondebugstate)
             1. [DemoteAsynchronous](#netpeerselectionselectiondemoteasynchronous)
             1. [DemoteHotDone](#netpeerselectionselectiondemotehotdone)
             1. [DemoteHotFailed](#netpeerselectionselectiondemotehotfailed)
@@ -501,8 +520,9 @@
             1. [GossipRequests](#netpeerselectionselectiongossiprequests)
             1. [GossipResults](#netpeerselectionselectiongossipresults)
             1. [GovernorWakeup](#netpeerselectionselectiongovernorwakeup)
-            1. [KnownInboundConnection](#netpeerselectionselectionknowninboundconnection)
             1. [LocalRootPeersChanged](#netpeerselectionselectionlocalrootpeerschanged)
+            1. [OutboundGovernorCriticalFailure](#netpeerselectionselectionoutboundgovernorcriticalfailure)
+            1. [PickInboundPeers](#netpeerselectionselectionpickinboundpeers)
             1. [PromoteColdDone](#netpeerselectionselectionpromotecolddone)
             1. [PromoteColdFailed](#netpeerselectionselectionpromotecoldfailed)
             1. [PromoteColdLocalPeers](#netpeerselectionselectionpromotecoldlocalpeers)
@@ -609,7 +629,7 @@
     1. [NodeStartup](#nodestatenodestartup)
     1. [NodeTracingOnlineConfiguring](#nodestatenodetracingonlineconfiguring)
     1. [OpeningDbs](#nodestateopeningdbs)
-1. __Reflectionⓣ__
+1. __Reflectionⓣⓜ__
     1. [MetricsInfo](#reflectionmetricsinfo)
     1. [RememberLimiting](#reflectionrememberlimiting)
     1. [StartLimiting](#reflectionstartlimiting)
@@ -625,7 +645,7 @@
     1. [Requested](#shutdownrequested)
     1. [Requesting](#shutdownrequesting)
     1. [UnexpectedInput](#shutdownunexpectedinput)
-1. __Startupⓣ__
+1. __Startupⓣⓜ__
     1. [BlockForgingBlockTypeMismatch](#startupblockforgingblocktypemismatch)
     1. [BlockForgingUpdate](#startupblockforgingupdate)
     1. [Byron](#startupbyron)
@@ -656,8 +676,8 @@
     1. [NetworkConfigUpdateError](#startupnetworkconfigupdateerror)
     1. [NetworkConfigUpdateUnsupported](#startupnetworkconfigupdateunsupported)
     1. [NetworkMagic](#startupnetworkmagic)
+    1. [NonP2PWarning](#startupnonp2pwarning)
     1. [P2PInfo](#startupp2pinfo)
-    1. [P2PWarning](#startupp2pwarning)
     1. [ShelleyBased](#startupshelleybased)
     1. [SocketConfigError](#startupsocketconfigerror)
     1. [Time](#startuptime)
@@ -746,117 +766,184 @@
         1. [ControlMessage](#txsubmissiontxoutboundcontrolmessage)
         1. [RecvMsgRequest](#txsubmissiontxoutboundrecvmsgrequest)
         1. [SendMsgReply](#txsubmissiontxoutboundsendmsgreply)
+1. __Versionⓣⓢ__
+    1. [NodeVersion](#versionnodeversion)
 
 ### [Metrics](#metrics)
 
-1. __Blockfetch__
-    1. [BlocksServed](#blockfetchblocksserved)
-    1. __Client__
-        1. [Blockdelay](#blockfetchclientblockdelay)
-        1. __Blockdelay__
-            1. [cdfFive](#blockfetchclientblockdelaycdffive)
-            1. [cdfOne](#blockfetchclientblockdelaycdfone)
-            1. [cdfThree](#blockfetchclientblockdelaycdfthree)
-    1. [ConnectedPeers](#blockfetchconnectedpeers)
-1. __ChainDB__
-    1. [BlockReplayProgress](#chaindbblockreplayprogress)
-    1. [Blocks](#chaindbblocks)
-    1. [Density](#chaindbdensity)
-    1. [Epoch](#chaindbepoch)
-    1. [SlotInEpoch](#chaindbslotinepoch)
-    1. [SlotNum](#chaindbslotnum)
-1. __ChainSync__
-    1. [HeadersServed](#chainsyncheadersserved)
-    1. [HeadersServed](#chainsyncheadersserved)
-    1. __HeadersServed__
-        1. [Falling](#chainsyncheadersservedfalling)
-        1. [Falling](#chainsyncheadersservedfalling)
 1. __Forge__
-    1. [AboutToLeadSlotLast](#forgeabouttoleadslotlast)
-    1. [AdoptedOwnBlockSlotLast](#forgeadoptedownblockslotlast)
-    1. [AdoptionThreadDied](#forgeadoptionthreaddied)
-    1. [BlockContext](#forgeblockcontext)
-    1. [BlockFromFuture](#forgeblockfromfuture)
-    1. [BlocksForgedNum](#forgeblocksforgednum)
-    1. [CouldNotForgeSlotLast](#forgecouldnotforgeslotlast)
-    1. [CurrentKESPeriod](#forgecurrentkesperiod)
     1. [DelegMapSize](#forgedelegmapsize)
-    1. [ForgedInvalidSlotLast](#forgeforgedinvalidslotlast)
-    1. [ForgedSlotLast](#forgeforgedslotlast)
-    1. [LedgerState](#forgeledgerstate)
-    1. [LedgerView](#forgeledgerview)
-    1. [NodeCannotForge](#forgenodecannotforge)
-    1. [NodeCannotForgeNum](#forgenodecannotforgenum)
-    1. [NodeIsLeader](#forgenodeisleader)
-    1. [NodeIsLeaderNum](#forgenodeisleadernum)
-    1. [NodeNotLeader](#forgenodenotleader)
-    1. [NotAdoptedSlotLast](#forgenotadoptedslotlast)
-    1. [OperationalCertificateExpiryKESPeriod](#forgeoperationalcertificateexpirykesperiod)
-    1. [OperationalCertificateStartKESPeriod](#forgeoperationalcertificatestartkesperiod)
-    1. [RemainingKESPeriods](#forgeremainingkesperiods)
-    1. [SlotIsImmutable](#forgeslotisimmutable)
-    1. [SlotsMissed](#forgeslotsmissed)
     1. [UtxoSize](#forgeutxosize)
-1. __KESInfo__
-    1. [currentKESPeriod](#kesinfocurrentkesperiod)
-    1. [operationalCertificateExpiryKESPeriod](#kesinfooperationalcertificateexpirykesperiod)
-    1. [operationalCertificateStartKESPeriod](#kesinfooperationalcertificatestartkesperiod)
-    1. [remainingKESPeriods](#kesinforemainingkesperiods)
-1. __Mempool__
-    1. [MempoolBytes](#mempoolmempoolbytes)
-    1. [TxsInMempool](#mempooltxsinmempool)
-    1. [TxsProcessedNum](#mempooltxsprocessednum)
-1. __Net__
-    1. __ConnectionManager__
-        1. [DuplexConns](#netconnectionmanagerduplexconns)
-        1. [DuplexConns](#netconnectionmanagerduplexconns)
-        1. [FullDuplexConns](#netconnectionmanagerfullduplexconns)
-        1. [FullDuplexConns](#netconnectionmanagerfullduplexconns)
-        1. [InboundConns](#netconnectionmanagerinboundconns)
-        1. [InboundConns](#netconnectionmanagerinboundconns)
-        1. [OutboundConns](#netconnectionmanageroutboundconns)
-        1. [OutboundConns](#netconnectionmanageroutboundconns)
-        1. [UnidirectionalConns](#netconnectionmanagerunidirectionalconns)
-        1. [UnidirectionalConns](#netconnectionmanagerunidirectionalconns)
-    1. __InboundGovernor__
-        1. [Cold](#netinboundgovernorcold)
-        1. [Cold](#netinboundgovernorcold)
-        1. [Hot](#netinboundgovernorhot)
-        1. [Hot](#netinboundgovernorhot)
-        1. [Idle](#netinboundgovernoridle)
-        1. [Idle](#netinboundgovernoridle)
-        1. [Warm](#netinboundgovernorwarm)
-        1. [Warm](#netinboundgovernorwarm)
-    1. __PeerSelection__
-        1. [Cold](#netpeerselectioncold)
-        1. [ColdBigLedgerPeers](#netpeerselectioncoldbigledgerpeers)
-        1. [Hot](#netpeerselectionhot)
-        1. [HotBigLedgerPeers](#netpeerselectionhotbigledgerpeers)
-        1. [LocalRoots](#netpeerselectionlocalroots)
-        1. [Warm](#netpeerselectionwarm)
-        1. [WarmBigLedgerPeers](#netpeerselectionwarmbigledgerpeers)
-    1. [PeersFromNodeKernel](#netpeersfromnodekernel)
-1. __Resources__
-    1. __Mem__
-        1. [Resident](#resourcesmemresident)
-    1. __RTS__
-        1. [GcLiveBytes](#resourcesrtsgclivebytes)
-        1. [GcMajorNum](#resourcesrtsgcmajornum)
-        1. [GcMinorNum](#resourcesrtsgcminornum)
-        1. [Gcticks](#resourcesrtsgcticks)
-        1. [Mutticks](#resourcesrtsmutticks)
-        1. [Threads](#resourcesrtsthreads)
-    1. __Stat__
-        1. [Cputicks](#resourcesstatcputicks)
-    1. __State__
-        1. [FsRd](#resourcesstatefsrd)
-        1. [FsWr](#resourcesstatefswr)
-        1. [NetRd](#resourcesstatenetrd)
-        1. [NetWr](#resourcesstatenetwr)
-1. __TxSubmission__
-    1. [Accepted](#txsubmissionaccepted)
-    1. [Rejected](#txsubmissionrejected)
-    1. [Submitted](#txsubmissionsubmitted)
+1. __Mem__
+    1. [resident](#memresident)
+1. __RTS__
+    1. [alloc](#rtsalloc)
+    1. [gcHeapBytes](#rtsgcheapbytes)
+    1. [gcLiveBytes](#rtsgclivebytes)
+    1. [gcMajorNum](#rtsgcmajornum)
+    1. [gcMinorNum](#rtsgcminornum)
+    1. [gcticks](#rtsgcticks)
+    1. [mutticks](#rtsmutticks)
+    1. [threads](#rtsthreads)
+1. __Stat__
+    1. [cputicks](#statcputicks)
+    1. [fsRd](#statfsrd)
+    1. [fsWr](#statfswr)
+    1. [netRd](#statnetrd)
+    1. [netWr](#statnetwr)
+1. __SuppressedMessages__
+    1. ____
+        1. ____
+            1. [](#suppressedmessages)
+1. [aboutToLeadSlotLast](#abouttoleadslotlast)
+1. [adoptedOwnBlockSlotLast](#adoptedownblockslotlast)
+1. [adoptionThreadDied](#adoptionthreaddied)
+1. [blockContext](#blockcontext)
+1. [blockFromFuture](#blockfromfuture)
+1. [blockNum](#blocknum)
+1. [blockReplayProgress](#blockreplayprogress)
+1. __blockfetchclient__
+    1. [blockdelay](#blockfetchclientblockdelay)
+    1. __blockdelay__
+        1. [cdfFive](#blockfetchclientblockdelaycdffive)
+        1. [cdfOne](#blockfetchclientblockdelaycdfone)
+        1. [cdfThree](#blockfetchclientblockdelaycdfthree)
+    1. [blocksize](#blockfetchclientblocksize)
+    1. [lateblocks](#blockfetchclientlateblocks)
+1. [blocksForged](#blocksforged)
+1. [cardano_build_info](#cardano_build_info)
+1. [cardano_version_major](#cardano_version_major)
+1. [cardano_version_minor](#cardano_version_minor)
+1. [cardano_version_patch](#cardano_version_patch)
+1. [connectedPeers](#connectedpeers)
+1. __connectionManager__
+    1. [duplexConns](#connectionmanagerduplexconns)
+    1. [duplexConns](#connectionmanagerduplexconns)
+    1. [fullDuplexConns](#connectionmanagerfullduplexconns)
+    1. [fullDuplexConns](#connectionmanagerfullduplexconns)
+    1. [inboundConns](#connectionmanagerinboundconns)
+    1. [inboundConns](#connectionmanagerinboundconns)
+    1. [outboundConns](#connectionmanageroutboundconns)
+    1. [outboundConns](#connectionmanageroutboundconns)
+    1. [unidirectionalConns](#connectionmanagerunidirectionalconns)
+    1. [unidirectionalConns](#connectionmanagerunidirectionalconns)
+1. [couldNotForgeSlotLast](#couldnotforgeslotlast)
+1. [currentKESPeriod](#currentkesperiod)
+1. [currentKESPeriod](#currentkesperiod)
+1. [density](#density)
+1. [epoch](#epoch)
+1. [forgedInvalidSlotLast](#forgedinvalidslotlast)
+1. [forgedSlotLast](#forgedslotlast)
+1. [forging_enabled](#forging_enabled)
+1. [haskell_compiler_major](#haskell_compiler_major)
+1. [haskell_compiler_minor](#haskell_compiler_minor)
+1. [headersServed](#headersserved)
+1. [headersServed](#headersserved)
+1. __headersServed__
+    1. [falling](#headersservedfalling)
+    1. [falling](#headersservedfalling)
+1. __inboundGovernor__
+    1. [Cold](#inboundgovernorcold)
+    1. [Cold](#inboundgovernorcold)
+    1. [Hot](#inboundgovernorhot)
+    1. [Hot](#inboundgovernorhot)
+    1. [Idle](#inboundgovernoridle)
+    1. [Idle](#inboundgovernoridle)
+    1. [Warm](#inboundgovernorwarm)
+    1. [Warm](#inboundgovernorwarm)
+1. [ledgerState](#ledgerstate)
+1. [ledgerView](#ledgerview)
+1. __localInboundGovernor__
+    1. [cold](#localinboundgovernorcold)
+    1. [cold](#localinboundgovernorcold)
+    1. [hot](#localinboundgovernorhot)
+    1. [hot](#localinboundgovernorhot)
+    1. [idle](#localinboundgovernoridle)
+    1. [idle](#localinboundgovernoridle)
+    1. [warm](#localinboundgovernorwarm)
+    1. [warm](#localinboundgovernorwarm)
+1. [lotsMissed](#lotsmissed)
+1. [mempoolBytes](#mempoolbytes)
+1. [nodeCannotForge](#nodecannotforge)
+1. [nodeCannotForge](#nodecannotforge)
+1. [nodeIsLeader](#nodeisleader)
+1. [nodeIsLeader](#nodeisleader)
+1. [nodeNotLeader](#nodenotleader)
+1. [notAdoptedSlotLast](#notadoptedslotlast)
+1. [operationalCertificateExpiryKESPeriod](#operationalcertificateexpirykesperiod)
+1. [operationalCertificateExpiryKESPeriod](#operationalcertificateexpirykesperiod)
+1. [operationalCertificateStartKESPeriod](#operationalcertificatestartkesperiod)
+1. [operationalCertificateStartKESPeriod](#operationalcertificatestartkesperiod)
+1. __peerSelection__
+    1. [ActiveBigLedgerPeers](#peerselectionactivebigledgerpeers)
+    1. [ActiveBigLedgerPeersDemotions](#peerselectionactivebigledgerpeersdemotions)
+    1. [ActiveBootstrapPeers](#peerselectionactivebootstrappeers)
+    1. [ActiveBootstrapPeersDemotions](#peerselectionactivebootstrappeersdemotions)
+    1. [ActiveLocalRootPeers](#peerselectionactivelocalrootpeers)
+    1. [ActiveLocalRootPeersDemotions](#peerselectionactivelocalrootpeersdemotions)
+    1. [ActiveNonRootPeers](#peerselectionactivenonrootpeers)
+    1. [ActiveNonRootPeersDemotions](#peerselectionactivenonrootpeersdemotions)
+    1. [ActivePeers](#peerselectionactivepeers)
+    1. [ActivePeersDemotions](#peerselectionactivepeersdemotions)
+    1. [Cold](#peerselectioncold)
+    1. [ColdBigLedgerPeers](#peerselectioncoldbigledgerpeers)
+    1. [ColdBigLedgerPeersPromotions](#peerselectioncoldbigledgerpeerspromotions)
+    1. [ColdBootstrapPeersPromotions](#peerselectioncoldbootstrappeerspromotions)
+    1. [ColdNonRootPeersPromotions](#peerselectioncoldnonrootpeerspromotions)
+    1. [ColdPeersPromotions](#peerselectioncoldpeerspromotions)
+    1. [EstablishedBigLedgerPeers](#peerselectionestablishedbigledgerpeers)
+    1. [EstablishedBootstrapPeers](#peerselectionestablishedbootstrappeers)
+    1. [EstablishedLocalRootPeers](#peerselectionestablishedlocalrootpeers)
+    1. [EstablishedNonRootPeers](#peerselectionestablishednonrootpeers)
+    1. [EstablishedPeers](#peerselectionestablishedpeers)
+    1. [Hot](#peerselectionhot)
+    1. [HotBigLedgerPeers](#peerselectionhotbigledgerpeers)
+    1. [KnownBigLedgerPeers](#peerselectionknownbigledgerpeers)
+    1. [KnownBootstrapPeers](#peerselectionknownbootstrappeers)
+    1. [KnownLocalRootPeers](#peerselectionknownlocalrootpeers)
+    1. [KnownNonRootPeers](#peerselectionknownnonrootpeers)
+    1. [KnownPeers](#peerselectionknownpeers)
+    1. [LocalRoots](#peerselectionlocalroots)
+    1. [RootPeers](#peerselectionrootpeers)
+    1. [Warm](#peerselectionwarm)
+    1. [WarmBigLedgerPeers](#peerselectionwarmbigledgerpeers)
+    1. [WarmBigLedgerPeersDemotions](#peerselectionwarmbigledgerpeersdemotions)
+    1. [WarmBigLedgerPeersPromotions](#peerselectionwarmbigledgerpeerspromotions)
+    1. [WarmBootstrapPeersDemotions](#peerselectionwarmbootstrappeersdemotions)
+    1. [WarmBootstrapPeersPromotions](#peerselectionwarmbootstrappeerspromotions)
+    1. [WarmLocalRootPeersPromotions](#peerselectionwarmlocalrootpeerspromotions)
+    1. [WarmNonRootPeersDemotions](#peerselectionwarmnonrootpeersdemotions)
+    1. [WarmNonRootPeersPromotions](#peerselectionwarmnonrootpeerspromotions)
+    1. [WarmPeersDemotions](#peerselectionwarmpeersdemotions)
+    1. [WarmPeersPromotions](#peerselectionwarmpeerspromotions)
+    1. __churn__
+        1. [DecreasedActiveBigLedgerPeers](#peerselectionchurndecreasedactivebigledgerpeers)
+        1. [DecreasedActivePeers](#peerselectionchurndecreasedactivepeers)
+        1. [DecreasedEstablishedBigLedgerPeers](#peerselectionchurndecreasedestablishedbigledgerpeers)
+        1. [DecreasedEstablishedPeers](#peerselectionchurndecreasedestablishedpeers)
+        1. [DecreasedKnownBigLedgerPeers](#peerselectionchurndecreasedknownbigledgerpeers)
+        1. [DecreasedKnownPeers](#peerselectionchurndecreasedknownpeers)
+        1. [IncreasedActiveBigLedgerPeers](#peerselectionchurnincreasedactivebigledgerpeers)
+        1. [IncreasedActivePeers](#peerselectionchurnincreasedactivepeers)
+        1. [IncreasedEstablishedBigLedgerPeers](#peerselectionchurnincreasedestablishedbigledgerpeers)
+        1. [IncreasedEstablishedPeers](#peerselectionchurnincreasedestablishedpeers)
+        1. [IncreasedKnownBigLedgerPeers](#peerselectionchurnincreasedknownbigledgerpeers)
+        1. [IncreasedKnownPeers](#peerselectionchurnincreasedknownpeers)
+1. [peersFromNodeKernel](#peersfromnodekernel)
+1. [remainingKESPeriods](#remainingkesperiods)
+1. [remainingKESPeriods](#remainingkesperiods)
+1. __served__
+    1. [block](#servedblock)
+1. [slotInEpoch](#slotinepoch)
+1. [slotIsImmutable](#slotisimmutable)
+1. [slotNum](#slotnum)
+1. __submissions__
+    1. [accepted](#submissionsaccepted)
+    1. [rejected](#submissionsrejected)
+    1. [submitted](#submissionssubmitted)
+1. [systemStartTime](#systemstarttime)
+1. [txsInMempool](#txsinmempool)
+1. [txsProcessedNum](#txsprocessednum)
 
 ### [Datapoints](#datapoints)
 
@@ -1768,6 +1855,24 @@ Backends:
 Filtered `Invisible` by config value: `Info`
 Limiter `ChainDB.AddBlockEvent.AddedBlockToVolatileDB` with frequency `2.0`
 
+### ChainDB.AddBlockEvent.AddedReprocessLoEBlocksToQueue
+
+
+
+
+Severity:  `Debug`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Invisible` by config value: `Info`
+
 ### ChainDB.AddBlockEvent.AddedToCurrentChain
 
 
@@ -1810,6 +1915,24 @@ Filtered `Visible` by config value: `Info`
 
 
 > Run chain selection for a block that was previously from the future. This is done for all blocks from the future each time a new block is added.
+
+
+Severity:  `Debug`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Invisible` by config value: `Info`
+
+### ChainDB.AddBlockEvent.ChainSelectionLoEDebug
+
+
 
 
 Severity:  `Debug`
@@ -1959,6 +2082,24 @@ Backends:
 Filtered `Invisible` by config value: `Info`
 
 ### ChainDB.AddBlockEvent.PoppedBlockFromQueue
+
+
+
+
+Severity:  `Debug`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Invisible` by config value: `Info`
+
+### ChainDB.AddBlockEvent.PoppedReprocessLoEBlocksFromQueue
 
 
 
@@ -2611,7 +2752,7 @@ Backends:
       `Forwarder`
 Filtered `Visible` by config value: `Info`
 
-### ChainDB.InitChainSelEvent.InitalChainSelected
+### ChainDB.InitChainSelEvent.InitialChainSelected
 
 
 > A garbage collection for the given 'SlotNo' was performed.
@@ -3251,6 +3392,25 @@ Backends:
       `Forwarder`
 Filtered `Invisible` by config value: `Info`
 
+### ChainDB.VolatileDbEvent.DBClosed
+
+
+> Closing the volatile DB
+
+
+Severity:  `Debug`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Invisible` by config value: `Info`
+
 ### ChainDB.VolatileDbEvent.InvalidFileNames
 
 
@@ -3274,6 +3434,25 @@ Filtered `Invisible` by config value: `Info`
 
 
 > Truncates a file up to offset because of the error.
+
+
+Severity:  `Debug`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Invisible` by config value: `Info`
+
+### ChainSync.Client.AccessingForecastHorizon
+
+
+> The slot number, which was previously beyond the forecast horizon, has now entered it
 
 
 Severity:  `Debug`
@@ -3347,6 +3526,101 @@ Backends:
       `Forwarder`
 Filtered `Visible` by config value: `Info`
 
+### ChainSync.Client.GaveLoPToken
+
+
+> May have added atoken to the LoP bucket of the peer
+
+
+Severity:  `Debug`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Invisible` by config value: `Info`
+
+### ChainSync.Client.JumpResult
+
+
+> Response to a jump offer (accept or reject)
+
+
+Severity:  `Debug`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Invisible` by config value: `Info`
+
+### ChainSync.Client.JumpingInstructionIs
+
+
+> The client got its next instruction
+
+
+Severity:  `Debug`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Invisible` by config value: `Info`
+
+### ChainSync.Client.JumpingWaitingForNextInstruction
+
+
+> The client is waiting for the next instruction
+
+
+Severity:  `Debug`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Invisible` by config value: `Info`
+
+### ChainSync.Client.OfferJump
+
+
+> Offering a jump to the remote peer
+
+
+Severity:  `Debug`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Invisible` by config value: `Info`
+
 ### ChainSync.Client.RolledBack
 
 
@@ -3384,6 +3658,44 @@ Backends:
       `Stdout MachineFormat`,
       `Forwarder`
 Filtered `Visible` by config value: `Info`
+
+### ChainSync.Client.ValidatedHeader
+
+
+> The header has been validated
+
+
+Severity:  `Debug`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Invisible` by config value: `Info`
+
+### ChainSync.Client.WaitingBeyondForecastHorizon
+
+
+> The slot number is beyond the forecast horizon
+
+
+Severity:  `Debug`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Invisible` by config value: `Info`
 
 ### ChainSync.Local.Receive.AwaitReply
 
@@ -4425,7 +4737,7 @@ Filtered `Invisible` by config value: `Info`
 ### Forge.Loop.BlockFromFuture
 
 
-> Leadership check failed: the current chain contains a block from a slot  /after/ the current slot   This can only happen if the system is under heavy load.   We record both the current slot number as well as the slot number of the  block at the tip of the chain.   See also <https://github.com/intersectmbo/ouroboros-network/issues/1462>
+> Leadership check failed: the current chain contains a block from a slot  /after/ the current slot   This can only happen if the system is under heavy load.   We record both the current slot number as well as the slot number of the  block at the tip of the chain.   See also <https://github.com/input-output-hk/ouroboros-network/issues/1462>
 
 
 Severity:  `Error`
@@ -4695,7 +5007,7 @@ Filtered `Visible` by config value: `Info`
 ### Forge.Loop.SlotIsImmutable
 
 
-> Leadership check failed: the tip of the ImmutableDB inhabits the  current slot   This might happen in two cases.    1. the clock moved backwards, on restart we ignored everything from the      VolatileDB since it's all in the future, and now the tip of the      ImmutableDB points to a block produced in the same slot we're trying      to produce a block in    2. k = 0 and we already adopted a block from another leader of the same      slot.   We record both the current slot number as well as the tip of the  ImmutableDB.  See also <https://github.com/intersectmbo/ouroboros-network/issues/1462>
+> Leadership check failed: the tip of the ImmutableDB inhabits the  current slot   This might happen in two cases.    1. the clock moved backwards, on restart we ignored everything from the      VolatileDB since it's all in the future, and now the tip of the      ImmutableDB points to a block produced in the same slot we're trying      to produce a block in    2. k = 0 and we already adopted a block from another leader of the same      slot.   We record both the current slot number as well as the tip of the  ImmutableDB.  See also <https://github.com/input-output-hk/ouroboros-network/issues/1462>
 
 
 Severity:  `Error`
@@ -4905,6 +5217,25 @@ Filtered `Invisible` by config value: `Notice`
 
 
 > Rate limiting accepting connections, delaying next accept for given time, currently serving n connections.
+
+
+Severity:  `Info`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Invisible` by config value: `Notice`
+
+### Net.Churn.ChurnCounters
+
+
+> churn counters
 
 
 Severity:  `Info`
@@ -6623,6 +6954,24 @@ Backends:
       `Forwarder`
 Filtered `Invisible` by config value: `Notice`
 
+### Net.InboundGovernor.Local.Inactive
+
+
+
+
+Severity:  `Debug`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Invisible` by config value: `Notice`
+
 ### Net.InboundGovernor.Local.InboundGovernorCounters
 
 
@@ -6658,6 +7007,24 @@ Backends:
       `Stdout MachineFormat`,
       `Forwarder`
 Filtered `Visible` by config value: `Notice`
+
+### Net.InboundGovernor.Local.MaturedConnections
+
+
+
+
+Severity:  `Info`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Invisible` by config value: `Notice`
 
 ### Net.InboundGovernor.Local.MuxCleanExit
 
@@ -6931,6 +7298,24 @@ Backends:
       `Forwarder`
 Filtered `Visible` by config value: `Info`
 
+### Net.InboundGovernor.Remote.Inactive
+
+
+
+
+Severity:  `Debug`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Invisible` by config value: `Info`
+
 ### Net.InboundGovernor.Remote.InboundGovernorCounters
 
 
@@ -6955,6 +7340,24 @@ Filtered `Visible` by config value: `Info`
 
 
 Severity:  `Error`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Visible` by config value: `Info`
+
+### Net.InboundGovernor.Remote.MaturedConnections
+
+
+
+
+Severity:  `Info`
 Privacy:   `Public`
 Details:   `DNormal`
 
@@ -8453,7 +8856,7 @@ Filtered `Visible` by config value: `Info`
 ### Net.PeerSelection.Counters.Counters
 
 
-> Counters for cold, warm and hot peers
+> Counters of selected peers
 
 
 Severity:  `Info`
@@ -8526,6 +8929,25 @@ Filtered `Visible` by config value: `Info`
 ### Net.PeerSelection.Selection.ChurnWait
 
 
+
+
+Severity:  `Info`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Visible` by config value: `Info`
+
+### Net.PeerSelection.Selection.DebugState
+
+
+> peer selection internal state
 
 
 Severity:  `Info`
@@ -8784,13 +9206,12 @@ Backends:
       `Forwarder`
 Filtered `Visible` by config value: `Info`
 
-### Net.PeerSelection.Selection.KnownInboundConnection
+### Net.PeerSelection.Selection.LocalRootPeersChanged
 
 
-> An inbound connection was added to known set of outbound governor
 
 
-Severity:  `Info`
+Severity:  `Notice`
 Privacy:   `Public`
 Details:   `DNormal`
 
@@ -8803,12 +9224,32 @@ Backends:
       `Forwarder`
 Filtered `Visible` by config value: `Info`
 
-### Net.PeerSelection.Selection.LocalRootPeersChanged
+### Net.PeerSelection.Selection.OutboundGovernorCriticalFailure
 
 
+> Outbound Governor was killed unexpectedly
 
 
-Severity:  `Notice`
+Severity:  `Error`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Visible` by config value: `Info`
+
+### Net.PeerSelection.Selection.PickInboundPeers
+
+
+> An inbound connection was added to known set of outbound governor
+
+
+Severity:  `Info`
 Privacy:   `Public`
 Details:   `DNormal`
 
@@ -11393,24 +11834,6 @@ Backends:
       `Forwarder`
 Filtered `Invisible` by config value: `Notice`
 
-### Startup.P2PInfo
-
-
-
-
-Severity:  `Info`
-Privacy:   `Public`
-Details:   `DNormal`
-
-
-From current configuration:
-
-Backends:
-      `EKGBackend`,
-      `Stdout MachineFormat`,
-      `Forwarder`
-Filtered `Invisible` by config value: `Notice`
-
 ### Startup.NonP2PWarning
 
 
@@ -11428,6 +11851,24 @@ Backends:
       `Stdout MachineFormat`,
       `Forwarder`
 Filtered `Visible` by config value: `Notice`
+
+### Startup.P2PInfo
+
+
+
+
+Severity:  `Info`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Invisible` by config value: `Notice`
 
 ### Startup.ShelleyBased
 
@@ -12811,194 +13252,26 @@ Backends:
       `Stdout MachineFormat`,
       `Forwarder`
 Filtered `Invisible` by config value: `Notice`
+
+### Version.NodeVersion
+
+
+> Node version information
+
+
+Severity:  `Info`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Invisible` by config value: `Notice`
 ## Metrics
-
-### Blockfetch.BlocksServed
-
-
-
-Dispatched by: 
-BlockFetch.Server.SendBlock
-
-### Blockfetch.Client.Blockdelay
-
-
-
-Dispatched by: 
-BlockFetch.Client.ClientMetrics
-
-### Blockfetch.Client.Blockdelay.cdfFive
-
-
-
-Dispatched by: 
-BlockFetch.Client.ClientMetrics
-
-### Blockfetch.Client.Blockdelay.cdfOne
-
-
-
-Dispatched by: 
-BlockFetch.Client.ClientMetrics
-
-### Blockfetch.Client.Blockdelay.cdfThree
-
-
-
-Dispatched by: 
-BlockFetch.Client.ClientMetrics
-
-### Blockfetch.ConnectedPeers
-
-> Number of connected peers
-
-
-Dispatched by: 
-BlockFetch.Decision.Accept
-BlockFetch.Decision.Decline
-
-### ChainDB.BlockReplayProgress
-
-> Progress in percent
-
-
-Dispatched by: 
-ChainDB.ReplayBlock.LedgerReplay
-
-### ChainDB.Blocks
-
-> Number of blocks in this chain fragment.
-
-
-Dispatched by: 
-ChainDB.AddBlockEvent.AddedToCurrentChain
-ChainDB.AddBlockEvent.SwitchedToAFork
-
-### ChainDB.Density
-
-> The actual number of blocks created over the maximum expected number of blocks that could be created over the span of the last @k@ blocks.
-
-
-Dispatched by: 
-ChainDB.AddBlockEvent.AddedToCurrentChain
-ChainDB.AddBlockEvent.SwitchedToAFork
-
-### ChainDB.Epoch
-
-> In which epoch is the tip of the current chain.
-
-
-Dispatched by: 
-ChainDB.AddBlockEvent.AddedToCurrentChain
-ChainDB.AddBlockEvent.SwitchedToAFork
-
-### ChainDB.SlotInEpoch
-
-> Relative slot number of the tip of the current chain within the epoch..
-
-
-Dispatched by: 
-ChainDB.AddBlockEvent.AddedToCurrentChain
-ChainDB.AddBlockEvent.SwitchedToAFork
-
-### ChainDB.SlotNum
-
-> Number of slots in this chain fragment.
-
-
-Dispatched by: 
-ChainDB.AddBlockEvent.AddedToCurrentChain
-ChainDB.AddBlockEvent.SwitchedToAFork
-
-### ChainSync.HeadersServed
-
-> A counter triggered on any header event
-
-
-Dispatched by: 
-ChainSync.ServerHeader.Update
-
-### ChainSync.HeadersServed
-
-> A counter triggered on any header event
-
-
-Dispatched by: 
-ChainSync.ServerBlock.Update
-
-### ChainSync.HeadersServed.Falling
-
-> A counter triggered only on header event with falling edge
-
-
-Dispatched by: 
-ChainSync.ServerHeader.Update
-
-### ChainSync.HeadersServed.Falling
-
-> A counter triggered only on header event with falling edge
-
-
-Dispatched by: 
-ChainSync.ServerBlock.Update
-
-### Forge.AboutToLeadSlotLast
-
-
-
-Dispatched by: 
-Forge.Loop.StartLeadershipCheck
-
-### Forge.AdoptedOwnBlockSlotLast
-
-
-
-Dispatched by: 
-Forge.Loop.AdoptedBlock
-
-### Forge.AdoptionThreadDied
-
-
-
-Dispatched by: 
-Forge.Loop.AdoptionThreadDied
-
-### Forge.BlockContext
-
-
-
-Dispatched by: 
-Forge.Loop.BlockContext
-
-### Forge.BlockFromFuture
-
-
-
-Dispatched by: 
-Forge.Loop.BlockFromFuture
-
-### Forge.BlocksForgedNum
-
-> How many blocks did this node forge?
-
-
-Dispatched by: 
-Forge.ThreadStats.ForgeThreadStats
-
-### Forge.CouldNotForgeSlotLast
-
-
-
-Dispatched by: 
-Forge.Loop.NoLedgerState
-Forge.Loop.NoLedgerView
-
-### Forge.CurrentKESPeriod
-
-
-
-Dispatched by: 
-Forge.Loop.ForgeStateUpdateError
 
 ### Forge.DelegMapSize
 
@@ -13007,114 +13280,6 @@ Forge.Loop.ForgeStateUpdateError
 Dispatched by: 
 Forge.Loop.StartLeadershipCheckPlus
 
-### Forge.ForgedInvalidSlotLast
-
-
-
-Dispatched by: 
-Forge.Loop.ForgedInvalidBlock
-
-### Forge.ForgedSlotLast
-
-
-
-Dispatched by: 
-Forge.Loop.ForgedBlock
-
-### Forge.LedgerState
-
-
-
-Dispatched by: 
-Forge.Loop.LedgerState
-
-### Forge.LedgerView
-
-
-
-Dispatched by: 
-Forge.Loop.LedgerView
-
-### Forge.NodeCannotForge
-
-
-
-Dispatched by: 
-Forge.Loop.NodeCannotForge
-
-### Forge.NodeCannotForgeNum
-
-> How many times was this node unable to forge [a block]?
-
-
-Dispatched by: 
-Forge.ThreadStats.ForgeThreadStats
-
-### Forge.NodeIsLeader
-
-
-
-Dispatched by: 
-Forge.Loop.NodeIsLeader
-
-### Forge.NodeIsLeaderNum
-
-> How many times was this node slot leader?
-
-
-Dispatched by: 
-Forge.ThreadStats.ForgeThreadStats
-
-### Forge.NodeNotLeader
-
-
-
-Dispatched by: 
-Forge.Loop.NodeNotLeader
-
-### Forge.NotAdoptedSlotLast
-
-
-
-Dispatched by: 
-Forge.Loop.DidntAdoptBlock
-
-### Forge.OperationalCertificateExpiryKESPeriod
-
-
-
-Dispatched by: 
-Forge.Loop.ForgeStateUpdateError
-
-### Forge.OperationalCertificateStartKESPeriod
-
-
-
-Dispatched by: 
-Forge.Loop.ForgeStateUpdateError
-
-### Forge.RemainingKESPeriods
-
-
-
-Dispatched by: 
-Forge.Loop.ForgeStateUpdateError
-
-### Forge.SlotIsImmutable
-
-
-
-Dispatched by: 
-Forge.Loop.SlotIsImmutable
-
-### Forge.SlotsMissed
-
-> How many slots did this node miss?
-
-
-Dispatched by: 
-Forge.ThreadStats.ForgeThreadStats
-
 ### Forge.UtxoSize
 
 
@@ -13122,35 +13287,584 @@ Forge.ThreadStats.ForgeThreadStats
 Dispatched by: 
 Forge.Loop.StartLeadershipCheckPlus
 
-### KESInfo.currentKESPeriod
+### Mem.resident
+
+> Kernel-reported RSS (resident set size)
+
+
+Dispatched by: 
+Resources
+
+### RTS.alloc
+
+> RTS-reported bytes allocated
+
+
+Dispatched by: 
+Resources
+
+### RTS.gcHeapBytes
+
+> RTS-reported heap bytes
+
+
+Dispatched by: 
+Resources
+
+### RTS.gcLiveBytes
+
+> RTS-reported live bytes
+
+
+Dispatched by: 
+Resources
+
+### RTS.gcMajorNum
+
+> Major GCs
+
+
+Dispatched by: 
+Resources
+
+### RTS.gcMinorNum
+
+> Minor GCs
+
+
+Dispatched by: 
+Resources
+
+### RTS.gcticks
+
+> RTS-reported CPU ticks spent on GC
+
+
+Dispatched by: 
+Resources
+
+### RTS.mutticks
+
+> RTS-reported CPU ticks spent on mutator
+
+
+Dispatched by: 
+Resources
+
+### RTS.threads
+
+> RTS green thread count
+
+
+Dispatched by: 
+Resources
+
+### Stat.cputicks
+
+> Kernel-reported CPU ticks (1/100th of a second), since process start
+
+
+Dispatched by: 
+Resources
+
+### Stat.fsRd
+
+> FS bytes read
+
+
+Dispatched by: 
+Resources
+
+### Stat.fsWr
+
+> FS bytes written
+
+
+Dispatched by: 
+Resources
+
+### Stat.netRd
+
+> IP packet bytes read
+
+
+Dispatched by: 
+Resources
+
+### Stat.netWr
+
+> IP packet bytes written
+
+
+Dispatched by: 
+Resources
+
+### SuppressedMessages...
+
+> Number of suppressed messages of a certain kind
+
+
+Dispatched by: 
+Reflection.StartLimiting
+
+### aboutToLeadSlotLast
+
+
+
+Dispatched by: 
+Forge.Loop.StartLeadershipCheck
+
+### adoptedOwnBlockSlotLast
+
+
+
+Dispatched by: 
+Forge.Loop.AdoptedBlock
+
+### adoptionThreadDied
+
+
+
+Dispatched by: 
+Forge.Loop.AdoptionThreadDied
+
+### blockContext
+
+
+
+Dispatched by: 
+Forge.Loop.BlockContext
+
+### blockFromFuture
+
+
+
+Dispatched by: 
+Forge.Loop.BlockFromFuture
+
+### blockNum
+
+> Number of blocks in this chain fragment.
+
+
+Dispatched by: 
+ChainDB.AddBlockEvent.AddedToCurrentChain
+ChainDB.AddBlockEvent.SwitchedToAFork
+
+### blockReplayProgress
+
+> Progress in percent
+
+
+Dispatched by: 
+ChainDB.ReplayBlock.LedgerReplay
+
+### blockfetchclient.blockdelay
+
+
+
+Dispatched by: 
+BlockFetch.Client.ClientMetrics
+
+### blockfetchclient.blockdelay.cdfFive
+
+
+
+Dispatched by: 
+BlockFetch.Client.ClientMetrics
+
+### blockfetchclient.blockdelay.cdfOne
+
+
+
+Dispatched by: 
+BlockFetch.Client.ClientMetrics
+
+### blockfetchclient.blockdelay.cdfThree
+
+
+
+Dispatched by: 
+BlockFetch.Client.ClientMetrics
+
+### blockfetchclient.blocksize
+
+
+
+Dispatched by: 
+BlockFetch.Client.ClientMetrics
+
+### blockfetchclient.lateblocks
+
+
+
+Dispatched by: 
+BlockFetch.Client.ClientMetrics
+
+### blocksForged
+
+> How many blocks did this node forge?
+
+
+Dispatched by: 
+Forge.ThreadStats.ForgeThreadStats
+
+### cardano_build_info
+
+> Cardano node build info
+
+
+Dispatched by: 
+Version.NodeVersion
+
+### cardano_version_major
+
+> Cardano node version information
+
+
+Dispatched by: 
+Version.NodeVersion
+
+### cardano_version_minor
+
+> Cardano node version information
+
+
+Dispatched by: 
+Version.NodeVersion
+
+### cardano_version_patch
+
+> Cardano node version information
+
+
+Dispatched by: 
+Version.NodeVersion
+
+### connectedPeers
+
+> Number of connected peers
+
+
+Dispatched by: 
+BlockFetch.Decision.Accept
+BlockFetch.Decision.Decline
+
+### connectionManager.duplexConns
+
+
+
+Dispatched by: 
+Net.ConnectionManager.Remote.ConnectionManagerCounters
+
+### connectionManager.duplexConns
+
+
+
+Dispatched by: 
+Net.ConnectionManager.Local.ConnectionManagerCounters
+
+### connectionManager.fullDuplexConns
+
+
+
+Dispatched by: 
+Net.ConnectionManager.Remote.ConnectionManagerCounters
+
+### connectionManager.fullDuplexConns
+
+
+
+Dispatched by: 
+Net.ConnectionManager.Local.ConnectionManagerCounters
+
+### connectionManager.inboundConns
+
+
+
+Dispatched by: 
+Net.ConnectionManager.Remote.ConnectionManagerCounters
+
+### connectionManager.inboundConns
+
+
+
+Dispatched by: 
+Net.ConnectionManager.Local.ConnectionManagerCounters
+
+### connectionManager.outboundConns
+
+
+
+Dispatched by: 
+Net.ConnectionManager.Remote.ConnectionManagerCounters
+
+### connectionManager.outboundConns
+
+
+
+Dispatched by: 
+Net.ConnectionManager.Local.ConnectionManagerCounters
+
+### connectionManager.unidirectionalConns
+
+
+
+Dispatched by: 
+Net.ConnectionManager.Remote.ConnectionManagerCounters
+
+### connectionManager.unidirectionalConns
+
+
+
+Dispatched by: 
+Net.ConnectionManager.Local.ConnectionManagerCounters
+
+### couldNotForgeSlotLast
+
+
+
+Dispatched by: 
+Forge.Loop.NoLedgerState
+Forge.Loop.NoLedgerView
+
+### currentKESPeriod
 
 
 
 Dispatched by: 
 Forge.StateInfo
 
-### KESInfo.operationalCertificateExpiryKESPeriod
+### currentKESPeriod
 
 
 
 Dispatched by: 
-Forge.StateInfo
+Forge.Loop.ForgeStateUpdateError
 
-### KESInfo.operationalCertificateStartKESPeriod
+### density
+
+> The actual number of blocks created over the maximum expected number of blocks that could be created over the span of the last @k@ blocks.
+
+
+Dispatched by: 
+ChainDB.AddBlockEvent.AddedToCurrentChain
+ChainDB.AddBlockEvent.SwitchedToAFork
+
+### epoch
+
+> In which epoch is the tip of the current chain.
+
+
+Dispatched by: 
+ChainDB.AddBlockEvent.AddedToCurrentChain
+ChainDB.AddBlockEvent.SwitchedToAFork
+
+### forgedInvalidSlotLast
 
 
 
 Dispatched by: 
-Forge.StateInfo
+Forge.Loop.ForgedInvalidBlock
 
-### KESInfo.remainingKESPeriods
+### forgedSlotLast
 
 
 
 Dispatched by: 
-Forge.StateInfo
+Forge.Loop.ForgedBlock
 
-### Mempool.MempoolBytes
+### forging_enabled
+
+> Can this node forge blocks? (Is it provided with block forging credentials) 0 = no, 1 = yes
+
+
+Dispatched by: 
+Startup.BlockForgingUpdate
+
+### haskell_compiler_major
+
+> Cardano compiler version information
+
+
+Dispatched by: 
+Version.NodeVersion
+
+### haskell_compiler_minor
+
+> Cardano compiler version information
+
+
+Dispatched by: 
+Version.NodeVersion
+
+### headersServed
+
+> A counter triggered on any header event
+
+
+Dispatched by: 
+ChainSync.ServerHeader.Update
+
+### headersServed
+
+> A counter triggered on any header event
+
+
+Dispatched by: 
+ChainSync.ServerBlock.Update
+
+### headersServed.falling
+
+> A counter triggered only on header event with falling edge
+
+
+Dispatched by: 
+ChainSync.ServerHeader.Update
+
+### headersServed.falling
+
+> A counter triggered only on header event with falling edge
+
+
+Dispatched by: 
+ChainSync.ServerBlock.Update
+
+### inboundGovernor.Cold
+
+
+
+Dispatched by: 
+Net.InboundGovernor.Remote.InboundGovernorCounters
+
+### inboundGovernor.Cold
+
+
+
+Dispatched by: 
+Net.InboundGovernor.Local.InboundGovernorCounters
+
+### inboundGovernor.Hot
+
+
+
+Dispatched by: 
+Net.InboundGovernor.Remote.InboundGovernorCounters
+
+### inboundGovernor.Hot
+
+
+
+Dispatched by: 
+Net.InboundGovernor.Local.InboundGovernorCounters
+
+### inboundGovernor.Idle
+
+
+
+Dispatched by: 
+Net.InboundGovernor.Remote.InboundGovernorCounters
+
+### inboundGovernor.Idle
+
+
+
+Dispatched by: 
+Net.InboundGovernor.Local.InboundGovernorCounters
+
+### inboundGovernor.Warm
+
+
+
+Dispatched by: 
+Net.InboundGovernor.Remote.InboundGovernorCounters
+
+### inboundGovernor.Warm
+
+
+
+Dispatched by: 
+Net.InboundGovernor.Local.InboundGovernorCounters
+
+### ledgerState
+
+
+
+Dispatched by: 
+Forge.Loop.LedgerState
+
+### ledgerView
+
+
+
+Dispatched by: 
+Forge.Loop.LedgerView
+
+### localInboundGovernor.cold
+
+
+
+Dispatched by: 
+Net.InboundGovernor.Remote.InboundGovernorCounters
+
+### localInboundGovernor.cold
+
+
+
+Dispatched by: 
+Net.InboundGovernor.Local.InboundGovernorCounters
+
+### localInboundGovernor.hot
+
+
+
+Dispatched by: 
+Net.InboundGovernor.Remote.InboundGovernorCounters
+
+### localInboundGovernor.hot
+
+
+
+Dispatched by: 
+Net.InboundGovernor.Local.InboundGovernorCounters
+
+### localInboundGovernor.idle
+
+
+
+Dispatched by: 
+Net.InboundGovernor.Remote.InboundGovernorCounters
+
+### localInboundGovernor.idle
+
+
+
+Dispatched by: 
+Net.InboundGovernor.Local.InboundGovernorCounters
+
+### localInboundGovernor.warm
+
+
+
+Dispatched by: 
+Net.InboundGovernor.Remote.InboundGovernorCounters
+
+### localInboundGovernor.warm
+
+
+
+Dispatched by: 
+Net.InboundGovernor.Local.InboundGovernorCounters
+
+### lotsMissed
+
+> How many slots did this node miss?
+
+
+Dispatched by: 
+Forge.ThreadStats.ForgeThreadStats
+
+### mempoolBytes
 
 > Byte size of the mempool
 
@@ -13161,7 +13875,585 @@ Mempool.ManuallyRemovedTxs
 Mempool.RejectedTx
 Mempool.RemoveTxs
 
-### Mempool.TxsInMempool
+### nodeCannotForge
+
+
+
+Dispatched by: 
+Forge.Loop.NodeCannotForge
+
+### nodeCannotForge
+
+> How many times was this node unable to forge [a block]?
+
+
+Dispatched by: 
+Forge.ThreadStats.ForgeThreadStats
+
+### nodeIsLeader
+
+
+
+Dispatched by: 
+Forge.Loop.NodeIsLeader
+
+### nodeIsLeader
+
+> How many times was this node slot leader?
+
+
+Dispatched by: 
+Forge.ThreadStats.ForgeThreadStats
+
+### nodeNotLeader
+
+
+
+Dispatched by: 
+Forge.Loop.NodeNotLeader
+
+### notAdoptedSlotLast
+
+
+
+Dispatched by: 
+Forge.Loop.DidntAdoptBlock
+
+### operationalCertificateExpiryKESPeriod
+
+
+
+Dispatched by: 
+Forge.StateInfo
+
+### operationalCertificateExpiryKESPeriod
+
+
+
+Dispatched by: 
+Forge.Loop.ForgeStateUpdateError
+
+### operationalCertificateStartKESPeriod
+
+
+
+Dispatched by: 
+Forge.StateInfo
+
+### operationalCertificateStartKESPeriod
+
+
+
+Dispatched by: 
+Forge.Loop.ForgeStateUpdateError
+
+### peerSelection.ActiveBigLedgerPeers
+
+> Number of active big ledger peers
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
+### peerSelection.ActiveBigLedgerPeersDemotions
+
+> Number of active big ledger peers demotions
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
+### peerSelection.ActiveBootstrapPeers
+
+> Number of active bootstrap peers
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
+### peerSelection.ActiveBootstrapPeersDemotions
+
+> Number of active bootstrap peers demotions
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
+### peerSelection.ActiveLocalRootPeers
+
+> Number of active local root peers
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
+### peerSelection.ActiveLocalRootPeersDemotions
+
+> Number of active local root peers demotions
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
+### peerSelection.ActiveNonRootPeers
+
+> Number of active non root peers
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
+### peerSelection.ActiveNonRootPeersDemotions
+
+> Number of active non root peers demotions
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
+### peerSelection.ActivePeers
+
+> Number of active peers
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
+### peerSelection.ActivePeersDemotions
+
+> Number of active peers demotions
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
+### peerSelection.Cold
+
+> Number of cold peers
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
+### peerSelection.ColdBigLedgerPeers
+
+> Number of cold big ledger peers
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
+### peerSelection.ColdBigLedgerPeersPromotions
+
+> Number of cold big ledger peers promotions
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
+### peerSelection.ColdBootstrapPeersPromotions
+
+> Number of cold bootstrap peers promotions
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
+### peerSelection.ColdNonRootPeersPromotions
+
+> Number of cold non root peers promotions
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
+### peerSelection.ColdPeersPromotions
+
+> Number of cold peers promotions
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
+### peerSelection.EstablishedBigLedgerPeers
+
+> Number of established big ledger peers
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
+### peerSelection.EstablishedBootstrapPeers
+
+> Number of established bootstrap peers
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
+### peerSelection.EstablishedLocalRootPeers
+
+> Number of established local root peers
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
+### peerSelection.EstablishedNonRootPeers
+
+> Number of established non root peers
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
+### peerSelection.EstablishedPeers
+
+> Number of established peers
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
+### peerSelection.Hot
+
+> Number of hot peers
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
+### peerSelection.HotBigLedgerPeers
+
+> Number of hot big ledger peers
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
+### peerSelection.KnownBigLedgerPeers
+
+> Number of known big ledger peers
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
+### peerSelection.KnownBootstrapPeers
+
+> Number of known bootstrap peers
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
+### peerSelection.KnownLocalRootPeers
+
+> Number of known local root peers
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
+### peerSelection.KnownNonRootPeers
+
+> Number of known non root peers
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
+### peerSelection.KnownPeers
+
+> Number of known peers
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
+### peerSelection.LocalRoots
+
+> Numbers of warm & hot local roots
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
+### peerSelection.RootPeers
+
+> Number of root peers
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
+### peerSelection.Warm
+
+> Number of warm peers
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
+### peerSelection.WarmBigLedgerPeers
+
+> Number of warm big ledger peers
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
+### peerSelection.WarmBigLedgerPeersDemotions
+
+> Number of warm big ledger peers demotions
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
+### peerSelection.WarmBigLedgerPeersPromotions
+
+> Number of warm big ledger peers promotions
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
+### peerSelection.WarmBootstrapPeersDemotions
+
+> Number of warm bootstrap peers demotions
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
+### peerSelection.WarmBootstrapPeersPromotions
+
+> Number of warm bootstrap peers promotions
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
+### peerSelection.WarmLocalRootPeersPromotions
+
+> Number of warm local root peers promotions
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
+### peerSelection.WarmNonRootPeersDemotions
+
+> Number of warm non root peers demotions
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
+### peerSelection.WarmNonRootPeersPromotions
+
+> Number of warm non root peers promotions
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
+### peerSelection.WarmPeersDemotions
+
+> Number of warm peers demotions
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
+### peerSelection.WarmPeersPromotions
+
+> Number of warm peers promotions
+
+
+Dispatched by: 
+Net.PeerSelection.Counters.Counters
+
+### peerSelection.churn.DecreasedActiveBigLedgerPeers
+
+> number of decreased active big ledger peers
+
+
+Dispatched by: 
+Net.Churn.ChurnCounters
+
+### peerSelection.churn.DecreasedActivePeers
+
+> number of decreased active peers
+
+
+Dispatched by: 
+Net.Churn.ChurnCounters
+
+### peerSelection.churn.DecreasedEstablishedBigLedgerPeers
+
+> number of decreased established big ledger peers
+
+
+Dispatched by: 
+Net.Churn.ChurnCounters
+
+### peerSelection.churn.DecreasedEstablishedPeers
+
+> number of decreased established peers
+
+
+Dispatched by: 
+Net.Churn.ChurnCounters
+
+### peerSelection.churn.DecreasedKnownBigLedgerPeers
+
+> number of decreased known big ledger peers
+
+
+Dispatched by: 
+Net.Churn.ChurnCounters
+
+### peerSelection.churn.DecreasedKnownPeers
+
+> number of decreased known peers
+
+
+Dispatched by: 
+Net.Churn.ChurnCounters
+
+### peerSelection.churn.IncreasedActiveBigLedgerPeers
+
+> number of increased active big ledger peers
+
+
+Dispatched by: 
+Net.Churn.ChurnCounters
+
+### peerSelection.churn.IncreasedActivePeers
+
+> number of increased active peers
+
+
+Dispatched by: 
+Net.Churn.ChurnCounters
+
+### peerSelection.churn.IncreasedEstablishedBigLedgerPeers
+
+> number of increased established big ledger peers
+
+
+Dispatched by: 
+Net.Churn.ChurnCounters
+
+### peerSelection.churn.IncreasedEstablishedPeers
+
+> number of increased established peers
+
+
+Dispatched by: 
+Net.Churn.ChurnCounters
+
+### peerSelection.churn.IncreasedKnownBigLedgerPeers
+
+> number of increased known big ledger peers
+
+
+Dispatched by: 
+Net.Churn.ChurnCounters
+
+### peerSelection.churn.IncreasedKnownPeers
+
+> number of increased known peers
+
+
+Dispatched by: 
+Net.Churn.ChurnCounters
+
+### peersFromNodeKernel
+
+
+
+Dispatched by: 
+Net.Peers.List.PeersFromNodeKernel
+
+### remainingKESPeriods
+
+
+
+Dispatched by: 
+Forge.StateInfo
+
+### remainingKESPeriods
+
+
+
+Dispatched by: 
+Forge.Loop.ForgeStateUpdateError
+
+### served.block
+
+
+
+Dispatched by: 
+BlockFetch.Server.SendBlock
+
+### slotInEpoch
+
+> Relative slot number of the tip of the current chain within the epoch..
+
+
+Dispatched by: 
+ChainDB.AddBlockEvent.AddedToCurrentChain
+ChainDB.AddBlockEvent.SwitchedToAFork
+
+### slotIsImmutable
+
+
+
+Dispatched by: 
+Forge.Loop.SlotIsImmutable
+
+### slotNum
+
+> Number of slots in this chain fragment.
+
+
+Dispatched by: 
+ChainDB.AddBlockEvent.AddedToCurrentChain
+ChainDB.AddBlockEvent.SwitchedToAFork
+
+### submissions.accepted
+
+
+
+Dispatched by: 
+TxSubmission.TxInbound.Processed
+
+### submissions.rejected
+
+
+
+Dispatched by: 
+TxSubmission.TxInbound.Processed
+
+### submissions.submitted
+
+
+
+Dispatched by: 
+TxSubmission.TxInbound.Collected
+
+### systemStartTime
+
+> The UTC time this node was started.
+
+
+Dispatched by: 
+Startup.Common
+
+### txsInMempool
 
 > Transactions in mempool
 
@@ -13172,318 +14464,12 @@ Mempool.ManuallyRemovedTxs
 Mempool.RejectedTx
 Mempool.RemoveTxs
 
-### Mempool.TxsProcessedNum
+### txsProcessedNum
 
 
 
 Dispatched by: 
 Mempool.ManuallyRemovedTxs
-
-### Net.ConnectionManager.DuplexConns
-
-
-
-Dispatched by: 
-Net.ConnectionManager.Remote.ConnectionManagerCounters
-
-### Net.ConnectionManager.DuplexConns
-
-
-
-Dispatched by: 
-Net.ConnectionManager.Local.ConnectionManagerCounters
-
-### Net.ConnectionManager.FullDuplexConns
-
-
-
-Dispatched by: 
-Net.ConnectionManager.Remote.ConnectionManagerCounters
-
-### Net.ConnectionManager.FullDuplexConns
-
-
-
-Dispatched by: 
-Net.ConnectionManager.Local.ConnectionManagerCounters
-
-### Net.ConnectionManager.InboundConns
-
-
-
-Dispatched by: 
-Net.ConnectionManager.Remote.ConnectionManagerCounters
-
-### Net.ConnectionManager.InboundConns
-
-
-
-Dispatched by: 
-Net.ConnectionManager.Local.ConnectionManagerCounters
-
-### Net.ConnectionManager.OutboundConns
-
-
-
-Dispatched by: 
-Net.ConnectionManager.Remote.ConnectionManagerCounters
-
-### Net.ConnectionManager.OutboundConns
-
-
-
-Dispatched by: 
-Net.ConnectionManager.Local.ConnectionManagerCounters
-
-### Net.ConnectionManager.UnidirectionalConns
-
-
-
-Dispatched by: 
-Net.ConnectionManager.Remote.ConnectionManagerCounters
-
-### Net.ConnectionManager.UnidirectionalConns
-
-
-
-Dispatched by: 
-Net.ConnectionManager.Local.ConnectionManagerCounters
-
-### Net.InboundGovernor.Cold
-
-
-
-Dispatched by: 
-Net.InboundGovernor.Remote.InboundGovernorCounters
-
-### Net.InboundGovernor.Cold
-
-
-
-Dispatched by: 
-Net.InboundGovernor.Local.InboundGovernorCounters
-
-### Net.InboundGovernor.Hot
-
-
-
-Dispatched by: 
-Net.InboundGovernor.Remote.InboundGovernorCounters
-
-### Net.InboundGovernor.Hot
-
-
-
-Dispatched by: 
-Net.InboundGovernor.Local.InboundGovernorCounters
-
-### Net.InboundGovernor.Idle
-
-
-
-Dispatched by: 
-Net.InboundGovernor.Remote.InboundGovernorCounters
-
-### Net.InboundGovernor.Idle
-
-
-
-Dispatched by: 
-Net.InboundGovernor.Local.InboundGovernorCounters
-
-### Net.InboundGovernor.Warm
-
-
-
-Dispatched by: 
-Net.InboundGovernor.Remote.InboundGovernorCounters
-
-### Net.InboundGovernor.Warm
-
-
-
-Dispatched by: 
-Net.InboundGovernor.Local.InboundGovernorCounters
-
-### Net.PeerSelection.Cold
-
-> Number of cold peers
-
-
-Dispatched by: 
-Net.PeerSelection.Counters.Counters
-
-### Net.PeerSelection.ColdBigLedgerPeers
-
-> Number of cold big ledger peers
-
-
-Dispatched by: 
-Net.PeerSelection.Counters.Counters
-
-### Net.PeerSelection.Hot
-
-> Number of hot peers
-
-
-Dispatched by: 
-Net.PeerSelection.Counters.Counters
-
-### Net.PeerSelection.HotBigLedgerPeers
-
-> Number of hot big ledger peers
-
-
-Dispatched by: 
-Net.PeerSelection.Counters.Counters
-
-### Net.PeerSelection.LocalRoots
-
-> Numbers of warm & hot local roots
-
-
-Dispatched by: 
-Net.PeerSelection.Counters.Counters
-
-### Net.PeerSelection.Warm
-
-> Number of warm peers
-
-
-Dispatched by: 
-Net.PeerSelection.Counters.Counters
-
-### Net.PeerSelection.WarmBigLedgerPeers
-
-> Number of warm big ledger peers
-
-
-Dispatched by: 
-Net.PeerSelection.Counters.Counters
-
-### Net.PeersFromNodeKernel
-
-
-
-Dispatched by: 
-Net.Peers.List.PeersFromNodeKernel
-
-### Resources.Mem.Resident
-
-> Kernel-reported RSS (resident set size)
-
-
-Dispatched by: 
-Resources
-
-### Resources.RTS.GcLiveBytes
-
-> RTS-reported live bytes
-
-
-Dispatched by: 
-Resources
-
-### Resources.RTS.GcMajorNum
-
-> Major GCs
-
-
-Dispatched by: 
-Resources
-
-### Resources.RTS.GcMinorNum
-
-> Minor GCs
-
-
-Dispatched by: 
-Resources
-
-### Resources.RTS.Gcticks
-
-> RTS-reported CPU ticks spent on GC
-
-
-Dispatched by: 
-Resources
-
-### Resources.RTS.Mutticks
-
-> RTS-reported CPU ticks spent on mutator
-
-
-Dispatched by: 
-Resources
-
-### Resources.RTS.Threads
-
-> RTS green thread count
-
-
-Dispatched by: 
-Resources
-
-### Resources.Stat.Cputicks
-
-> Kernel-reported CPU ticks (1/100th of a second), since process start
-
-
-Dispatched by: 
-Resources
-
-### Resources.State.FsRd
-
-> FS bytes read
-
-
-Dispatched by: 
-Resources
-
-### Resources.State.FsWr
-
-> FS bytes written
-
-
-Dispatched by: 
-Resources
-
-### Resources.State.NetRd
-
-> IP packet bytes read
-
-
-Dispatched by: 
-Resources
-
-### Resources.State.NetWr
-
-> IP packet bytes written
-
-
-Dispatched by: 
-Resources
-
-### TxSubmission.Accepted
-
-
-
-Dispatched by: 
-TxSubmission.TxInbound.Processed
-
-### TxSubmission.Rejected
-
-
-
-Dispatched by: 
-TxSubmission.TxInbound.Processed
-
-### TxSubmission.Submitted
-
-
-
-Dispatched by: 
-TxSubmission.TxInbound.Collected
 ## Datapoints
 
 ### NodeInfo
@@ -13512,6 +14498,7 @@ TxSubmission.TxInbound.Collected
 ```
 {
     "TraceOptionForwarder": null,
+    "TraceOptionMetricsPrefix": null,
     "TraceOptionNodeName": null,
     "TraceOptionPeerFrequency": 3000,
     "TraceOptionResourceFrequency": 4000,
@@ -13594,8 +14581,8 @@ TxSubmission.TxInbound.Collected
     }
 }
 ```
-633 log messages, 
-89 metrics,
+653 log messages, 
+156 metrics,
 2 datapoints.
 
 ⓣ- This is the root of a tracer
@@ -13604,4 +14591,4 @@ TxSubmission.TxInbound.Collected
 
 ⓜ- This is the root of a tracer, that provides metrics
 
-Generated at 2023-12-21 17:31:48.371365048 CET.
+Generated at 2024-07-24 13:39:37.058960212 CEST.

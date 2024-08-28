@@ -47,15 +47,15 @@ data BabbageEra
 
 -- Let's us constrain the era possibilities to mainnet's era
 -- and a potential upcoming era
-type family ToConstrainedEra era = (r :: Type) | r -> era where
-  ToConstrainedEra BabbageEra = Ledger.Babbage
-  ToConstrainedEra ConwayEra = Ledger.Conway
+type family LedgerEra era = (r :: Type) | r -> era where
+  LedgerEra BabbageEra = Ledger.Babbage
+  LedgerEra ConwayEra = Ledger.Conway
 
 -- Allows us to gradually change the api without breaking things.
 -- This will eventually be removed.
-type family AvailableErasToSbe era = (r :: Type) | r -> era where
-  AvailableErasToSbe BabbageEra = Api.BabbageEra
-  AvailableErasToSbe ConwayEra = Api.ConwayEra
+type family ExperimentalEraToApiEra era = (r :: Type) | r -> era where
+  ExperimentalEraToApiEra BabbageEra = Api.BabbageEra
+  ExperimentalEraToApiEra ConwayEra = Api.ConwayEra
 
 
 data Era era where
@@ -81,14 +81,17 @@ instance UseEra ConwayEra where
 The following is an example of how a user would consume the api and how a user would see a deprecation of an era
 
 ```haskell
--- TODO: These constraints can be hidden
+
+newtype UnsignedTx era
+  = UnsignedTx (Ledger.Tx (LedgerEra era))
+ 
 makeUnsignedTx
-  :: Ledger.EraCrypto (ToConstrainedEra era) ~ L.StandardCrypto
-  => L.AlonzoEraTx (ToConstrainedEra era)
-  => L.BabbageEraTxBody (ToConstrainedEra era)
-  => ShelleyLedgerEra (AvailableErasToSbe era) ~ ToConstrainedEra era
+  :: Ledger.EraCrypto (LedgerEra era) ~ L.StandardCrypto
+  => L.AlonzoEraTx (LedgerEra era)
+  => L.BabbageEraTxBody (LedgerEra era)
+  => ShelleyLedgerEra (ExperimentalEraToApiEra era) ~ LedgerEra era
   => Era era
-  -> TxBodyContent BuildTx (AvailableErasToSbe era)
+  -> TxBodyContent BuildTx (ExperimentalEraToApiEra era)
   -> Either UnsignedTxError (UnsignedTx era)
 makeUnsignedTx era bc = ...
 

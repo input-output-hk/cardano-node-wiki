@@ -862,7 +862,6 @@
     1. [idle](#localinboundgovernoridle)
     1. [warm](#localinboundgovernorwarm)
     1. [warm](#localinboundgovernorwarm)
-1. [lotsMissed](#lotsmissed)
 1. [mempoolBytes](#mempoolbytes)
 1. [nodeCannotForge](#nodecannotforge)
 1. [nodeCannotForge](#nodecannotforge)
@@ -937,6 +936,7 @@
 1. [slotInEpoch](#slotinepoch)
 1. [slotIsImmutable](#slotisimmutable)
 1. [slotNum](#slotnum)
+1. [slotsMissed](#slotsmissed)
 1. __submissions__
     1. [accepted](#submissionsaccepted)
     1. [rejected](#submissionsrejected)
@@ -13856,14 +13856,6 @@ Net.InboundGovernor.Remote.InboundGovernorCounters
 Dispatched by: 
 Net.InboundGovernor.Local.InboundGovernorCounters
 
-### lotsMissed
-
-> How many slots did this node miss?
-
-
-Dispatched by: 
-Forge.ThreadStats.ForgeThreadStats
-
 ### mempoolBytes
 
 > Byte size of the mempool
@@ -14424,6 +14416,14 @@ Dispatched by:
 ChainDB.AddBlockEvent.AddedToCurrentChain
 ChainDB.AddBlockEvent.SwitchedToAFork
 
+### slotsMissed
+
+> How many slots did this node miss?
+
+
+Dispatched by: 
+Forge.ThreadStats.ForgeThreadStats
+
 ### submissions.accepted
 
 
@@ -14591,4 +14591,4 @@ Mempool.ManuallyRemovedTxs
 
 ⓜ- This is the root of a tracer, that provides metrics
 
-Generated at 2024-07-24 13:39:37.058960212 CEST.
+Generated at 2024-09-04 11:24:43.975290647 CEST.

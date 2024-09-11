@@ -1,12 +1,13 @@
 Haskell Style Guide
 ============================
+>
 > This style guide is mostly a copy of [Johan Tibell's guide](https://github.com/tibbe/haskell-style-guide/blob/master/haskell-style.md)
 > with some restructurization, elaboration on some topics and some additions.
 > This style guide's aims are code beauty, readability and understandability.
 
-
 Principles
 ----------
+
 * The primary goal is readability/maintainability with performance as a close second.
 * Always use types to clarify intent and make invalid states unrepresentable.
 * Use type signatures as compiler checked documentation.
@@ -15,7 +16,9 @@ Principles
 
 General guide lines
 -------------------
+
 ### Code linting and formatting tools
+
 `stylish-haskell` is used for automatic code formatting and `hlint` for linting.
 Those are configured using `.stylish-haskell.yml` and `.hlint.yml` files in the repository root.
 If you would like to check your changes before committing them, you can use the following [`.git/hooks/pre-commit` hook](https://github.com/intersectmbo/cardano-node/blob/master/scripts/githooks/haskell-style-lint).
@@ -32,7 +35,6 @@ On the other hand, restricting line size to a very small number like 80 leads to
 some crazy indentation despite the fact that
 shorter lines should force you to write well structured code.
 That's why *100* is a reasonable compromise.
-
 
 ### Indentation
 
@@ -85,8 +87,8 @@ currying add one space between the argument and the operation.
 
 **Casing**:
 
-+ **_lowerCamelCase_** for function and variable names.
-+ **_UpperCamelCase_** for types.
+* ***lowerCamelCase*** for function and variable names.
+* ***UpperCamelCase*** for types.
 
 * Don't use short names like `n`, `sk`, `f` unless their meaning is clear from
 context (function name, types, other variables, etc.).
@@ -109,6 +111,7 @@ data User = User Int String
 Choose a reasonable prefix is used such that we can ensure the field name will remain unique throughout the package. Use your discretion.
 
 e.g
+
 ```haskell
 data MempoolEnv m blk = MempoolEnv
   { meLedger :: LedgerInterface m blk
@@ -209,7 +212,7 @@ Top-down guideline
 ### LANGUAGE extensions section
 
 Write each `LANGUAGE` pragma on its own line, sort them alphabetically.
-_Do not_ align by max width as future re-alignment when adding new pragmas
+*Do not* align by max width as future re-alignment when adding new pragmas
 will cause semantically null changes in the diff.
 
 ```haskell
@@ -254,7 +257,7 @@ Some clarifications:
   * **Exception**:
    [`cardano-prelude`](https://github.com/intersectmbo/cardano-prelude) (import implicitly)
 
-If the `import` is unqualified then put _11 spaces_ between the `import` keyword and the module name (i.e. length of `qualified` + 2).
+If the `import` is unqualified then put *11 spaces* between the `import` keyword and the module name (i.e. length of `qualified` + 2).
 
 Unqualified types (i.e. `Map` vs. `M.Map`) look pretty good and not so ugly.
 Prefer two-line imports for such standard containers.
@@ -287,9 +290,8 @@ data Person = Person
 Type classes in `deriving` section should be always surrounded by
 parentheses.
 
-_WARNING_: try to avoid aggressive autoderiving. Deriving instances can
+*WARNING*: try to avoid aggressive autoderiving. Deriving instances can
 slowdown compilation
-(stated here: http://www.stephendiehl.com/posts/production.html)
 
 > Deriving instances of Read/Show/Data/Generic for largely recursive ADTs can
 > sometimes lead to quadratic memory behavior when the nesting gets deep.
@@ -310,13 +312,13 @@ as possible.
 * If a function type signature is very long then place some of the types on its own line.
 
 Example :
+
 ```haskell
 putValueInState
   :: MonadIO m
   => UserState -> Maybe Int -> AppConfig
   -> Integer -> (Int -> m ()) -> m ()
 ```
-
 
 ### List Declarations
 
@@ -332,7 +334,7 @@ exceptions =
 
 ### If-then-else clauses
 
-Generally, guards and pattern matches should be preferred over _if-then-else_
+Generally, guards and pattern matches should be preferred over *if-then-else*
 clauses, where possible.  Short cases should usually be put on a single line
 (when line length allows it).
 
@@ -363,6 +365,7 @@ foobar = case something of
     Just j  -> foo
     Nothing -> bar
 ```
+
 Subexpressions should always be indented to the right of their parent expression.
 
 Dealing with laziness
@@ -446,12 +449,14 @@ For example, this is hard to read:
 -- Bad:
 f = (g .) . h
 ```
+
 Whereas this is fine:
 
 ```haskell
 unFooBar :: Foo -> Baz
 unFooBar = Baz . unBar . unFoo
 ```
+
 The point-free version needs to have a clarity benefit but we realize
 that this is vague so use your discretion.
 
@@ -467,7 +472,6 @@ sections. You can put blank lines between groups in each section.
 
 Code should be compilable with `-Wall` without warnings.
 
-
 ### Default extensions
 
 The only allowed default extension is: `NoImplicitPrelude`
@@ -475,8 +479,7 @@ All other extensions need to be put in the relevant module.
 
 ## Language Extensions to avoid
 
-1. Avoid `RecordWildCards` - use `NamedFieldPuns` instead. `RecordWildCards` makes it difficult to discern where record accessor functions come from, _especially_ when used with external libraries. This results in time wasted searching for the accessors. `NamedFieldPuns` forces you to be more explicit and is a better alternative.
-
+1. Avoid `RecordWildCards` - use `NamedFieldPuns` instead. `RecordWildCards` makes it difficult to discern where record accessor functions come from, *especially* when used with external libraries. This results in time wasted searching for the accessors. `NamedFieldPuns` forces you to be more explicit and is a better alternative.
 
 2. Avoid `ViewPatterns` - `ViewPatterns` obfuscates what could have been readable code and incurs more cognitive overhead.
 

@@ -52,13 +52,14 @@ However, since 2021, `optparse-applicative`'s main repository [continued to evol
 
 We want to get rid of our fork of `optparse-applicative`. Luckily, ideas from our initial PR were integrated into `optparse-applicative`'s main repo in 2023 (as mentioned [here](https://github.com/pcapriotti/optparse-applicative/pull/428#issuecomment-1559041183)), so we can now get better looking formatting of `--help` files nearly out of the box.
 
-We want to do a PR to `optparse-applicative` with the tweak we need. This time it is going to be a way smaller change than our PR from 2021 and so we are hopeful it will be accepted.
+We did [a PR](https://github.com/pcapriotti/optparse-applicative/pull/494) to `optparse-applicative` with the tweak we need. This PR is way smaller than our PR from 2021 and so we are hopeful it will be accepted.
 
 # Consequences
 
-We have `cardano-cli` depend on [pcapriotti/optparse-applicative](https://github.com/pcapriotti/optparse-applicative) instead of [input-output-hk/optparse-applicative](https://github.com/input-output-hk/optparse-applicative), when our PR to `optparse-applicative` is merged and released.
+We have `cardano-cli` depend on [pcapriotti/optparse-applicative](https://github.com/pcapriotti/optparse-applicative) instead of [input-output-hk/optparse-applicative](https://github.com/input-output-hk/optparse-applicative), when [our PR](https://github.com/pcapriotti/optparse-applicative/pull/494) to `optparse-applicative` is merged and released.
 
 # References
 
 * [Our 2021 PR](https://github.com/pcapriotti/optparse-applicative/pull/428) to `optparse-applicative`'s main repo.
 * [Our fork](https://github.com/input-output-hk/optparse-applicative) of optparse-applicative.
+* [Our 2024 PR](https://github.com/pcapriotti/optparse-applicative/pull/494) to `optparse-applicative`'s main repo.

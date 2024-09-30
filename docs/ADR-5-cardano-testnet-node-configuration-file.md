@@ -15,21 +15,18 @@ Programmatic users proceed as follows instead:
 
 ## Add a new command in the CLI
 
-Introduce a new `conway genesis check-node-config file` command in `cardano-cli`. It will have the following options:
+Introduce a new `debug check-node-configuration FILEPATH` command in `cardano-cli`. It will have the following options:
 
 ```
-[--byron-genesis FILEPATH]
-[--shelley-genesis FILEPATH]
-[--alonzo-genesis FILEPATH]
-[--conway-genesis FILEPATH]
-[--node-config FILEPATH]
+--node-configuration-file FILEPATH
+[--fix-configuration-file]
 ```
-For every `--era-genesis` file, the command will read the file specified at the given `FILEPATH`, hash its content and check that the file specified at `--node-config` contains the correct path and the correct hash for this genesis file.
+
+Option `-node-configuration-file` specifies the path of the file to check. The optional flag `--fix-configuration-file` lets `cardano-cli` fix the wrong genesis hashes (or fill them in) in the file specified by `--node-configuration-file`. By default (i.e. when `--fix-configuration-file` is not specified), `check-node-configuration` only checks that the genesis hashes are correct: it doesn't correct them.
 
 ## Have `create-testnet-data` create the node configuration file
 
-1. Have `create-testnet-data` create a default node configuration file (populating it with the paths and hashes of the genesis files).
-2. Add a `--node-config-template` optional option to `create-testnet-data which will be used to generate the node configuration file, instead of using a default one.
+Have `create-testnet-data` create a default node configuration file (populating it with the paths and hashes of the genesis files).
 
 # Consequences
 

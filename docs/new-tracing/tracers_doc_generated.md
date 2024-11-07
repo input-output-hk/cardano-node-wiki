@@ -140,6 +140,7 @@
         1. __UnknownRangeRequested__
             1. [ForkTooOld](#chaindbiteratoreventunknownrangerequestedforktooold)
             1. [MissingBlock](#chaindbiteratoreventunknownrangerequestedmissingblock)
+    1. [LastShutdownUnclean](#chaindblastshutdownunclean)
     1. __LedgerEvent__
         1. [DeletedSnapshot](#chaindbledgereventdeletedsnapshot)
         1. [InvalidSnapshot](#chaindbledgereventinvalidsnapshot)
@@ -671,7 +672,6 @@
     1. [Info](#startupinfo)
     1. [Network](#startupnetwork)
     1. [NetworkConfig](#startupnetworkconfig)
-    1. [NetworkConfigLegacy](#startupnetworkconfiglegacy)
     1. [NetworkConfigUpdate](#startupnetworkconfigupdate)
     1. [NetworkConfigUpdateError](#startupnetworkconfigupdateerror)
     1. [NetworkConfigUpdateUnsupported](#startupnetworkconfigupdateunsupported)
@@ -774,6 +774,17 @@
 1. __Forge__
     1. [DelegMapSize](#forgedelegmapsize)
     1. [UtxoSize](#forgeutxosize)
+    1. [about-to-lead](#forgeabout-to-lead)
+    1. [adopted](#forgeadopted)
+    1. [adoption-thread-died](#forgeadoption-thread-died)
+    1. [block-from-future](#forgeblock-from-future)
+    1. [could-not-forge](#forgecould-not-forge)
+    1. [didnt-adopt](#forgedidnt-adopt)
+    1. [forged](#forgeforged)
+    1. [forged-invalid](#forgeforged-invalid)
+    1. [node-is-leader](#forgenode-is-leader)
+    1. [node-not-leader](#forgenode-not-leader)
+    1. [slot-is-immutable](#forgeslot-is-immutable)
 1. __Mem__
     1. [resident](#memresident)
 1. __RTS__
@@ -795,11 +806,6 @@
     1. ____
         1. ____
             1. [](#suppressedmessages)
-1. [aboutToLeadSlotLast](#abouttoleadslotlast)
-1. [adoptedOwnBlockSlotLast](#adoptedownblockslotlast)
-1. [adoptionThreadDied](#adoptionthreaddied)
-1. [blockContext](#blockcontext)
-1. [blockFromFuture](#blockfromfuture)
 1. [blockNum](#blocknum)
 1. [blockReplayProgress](#blockreplayprogress)
 1. __blockfetchclient__
@@ -827,21 +833,13 @@
     1. [outboundConns](#connectionmanageroutboundconns)
     1. [unidirectionalConns](#connectionmanagerunidirectionalconns)
     1. [unidirectionalConns](#connectionmanagerunidirectionalconns)
-1. [couldNotForgeSlotLast](#couldnotforgeslotlast)
 1. [currentKESPeriod](#currentkesperiod)
 1. [currentKESPeriod](#currentkesperiod)
 1. [density](#density)
 1. [epoch](#epoch)
-1. [forgedInvalidSlotLast](#forgedinvalidslotlast)
-1. [forgedSlotLast](#forgedslotlast)
 1. [forging_enabled](#forging_enabled)
 1. [haskell_compiler_major](#haskell_compiler_major)
 1. [haskell_compiler_minor](#haskell_compiler_minor)
-1. [headersServed](#headersserved)
-1. [headersServed](#headersserved)
-1. __headersServed__
-    1. [falling](#headersservedfalling)
-    1. [falling](#headersservedfalling)
 1. __inboundGovernor__
     1. [Cold](#inboundgovernorcold)
     1. [Cold](#inboundgovernorcold)
@@ -851,8 +849,6 @@
     1. [Idle](#inboundgovernoridle)
     1. [Warm](#inboundgovernorwarm)
     1. [Warm](#inboundgovernorwarm)
-1. [ledgerState](#ledgerstate)
-1. [ledgerView](#ledgerview)
 1. __localInboundGovernor__
     1. [cold](#localinboundgovernorcold)
     1. [cold](#localinboundgovernorcold)
@@ -863,12 +859,11 @@
     1. [warm](#localinboundgovernorwarm)
     1. [warm](#localinboundgovernorwarm)
 1. [mempoolBytes](#mempoolbytes)
-1. [nodeCannotForge](#nodecannotforge)
+1. __node__
+    1. __start__
+        1. [time](#nodestarttime)
 1. [nodeCannotForge](#nodecannotforge)
 1. [nodeIsLeader](#nodeisleader)
-1. [nodeIsLeader](#nodeisleader)
-1. [nodeNotLeader](#nodenotleader)
-1. [notAdoptedSlotLast](#notadoptedslotlast)
 1. [operationalCertificateExpiryKESPeriod](#operationalcertificateexpirykesperiod)
 1. [operationalCertificateExpiryKESPeriod](#operationalcertificateexpirykesperiod)
 1. [operationalCertificateStartKESPeriod](#operationalcertificatestartkesperiod)
@@ -933,8 +928,11 @@
 1. [remainingKESPeriods](#remainingkesperiods)
 1. __served__
     1. [block](#servedblock)
+    1. __block__
+        1. [latest](#servedblocklatest)
+    1. [header](#servedheader)
+    1. [header](#servedheader)
 1. [slotInEpoch](#slotinepoch)
-1. [slotIsImmutable](#slotisimmutable)
 1. [slotNum](#slotnum)
 1. [slotsMissed](#slotsmissed)
 1. __submissions__
@@ -999,7 +997,7 @@ Filtered `Invisible` by config value: `Notice`
 
 
 
-Severity:  `Info`
+Severity:  `Debug`
 Privacy:   `Public`
 Details:   `DNormal`
 
@@ -3053,10 +3051,29 @@ Backends:
       `Forwarder`
 Filtered `Invisible` by config value: `Info`
 
+### ChainDB.LastShutdownUnclean
+
+
+> Last shutdown of the node didn't leave the ChainDB directory in a clean state. Therefore, revalidating all the immutable chunks is necessary to ensure the correctness of the chain.
+
+
+Severity:  `Info`
+Privacy:   `Public`
+Details:   `DNormal`
+
+
+From current configuration:
+
+Backends:
+      `EKGBackend`,
+      `Stdout MachineFormat`,
+      `Forwarder`
+Filtered `Visible` by config value: `Info`
+
 ### ChainDB.LedgerEvent.DeletedSnapshot
 
 
-> A snapshot was written to disk.
+> A snapshot was deleted from the disk.
 
 
 Severity:  `Debug`
@@ -3075,7 +3092,7 @@ Filtered `Invisible` by config value: `Info`
 ### ChainDB.LedgerEvent.InvalidSnapshot
 
 
-> An on disk snapshot was skipped because it was invalid.
+> An on disk snapshot was invalid. Unless it was suffixed, it will be deleted
 
 
 Severity:  `Error`
@@ -3094,7 +3111,7 @@ Filtered `Visible` by config value: `Info`
 ### ChainDB.LedgerEvent.TookSnapshot
 
 
-> A snapshot was written to disk.
+> A snapshot is being written to disk. Two events will be traced, one for when the node starts taking the snapshot and another one for when the snapshot has been written to the disk.
 
 
 Severity:  `Info`
@@ -11744,24 +11761,6 @@ Backends:
       `Forwarder`
 Filtered `Invisible` by config value: `Notice`
 
-### Startup.NetworkConfigLegacy
-
-
-
-
-Severity:  `Info`
-Privacy:   `Public`
-Details:   `DNormal`
-
-
-From current configuration:
-
-Backends:
-      `EKGBackend`,
-      `Stdout MachineFormat`,
-      `Forwarder`
-Filtered `Invisible` by config value: `Notice`
-
 ### Startup.NetworkConfigUpdate
 
 
@@ -13287,6 +13286,85 @@ Forge.Loop.StartLeadershipCheckPlus
 Dispatched by: 
 Forge.Loop.StartLeadershipCheckPlus
 
+### Forge.about-to-lead
+
+
+
+Dispatched by: 
+Forge.Loop.StartLeadershipCheck
+
+### Forge.adopted
+
+
+
+Dispatched by: 
+Forge.Loop.AdoptedBlock
+
+### Forge.adoption-thread-died
+
+
+
+Dispatched by: 
+Forge.Loop.AdoptionThreadDied
+
+### Forge.block-from-future
+
+
+
+Dispatched by: 
+Forge.Loop.BlockFromFuture
+
+### Forge.could-not-forge
+
+
+
+Dispatched by: 
+Forge.Loop.NoLedgerState
+Forge.Loop.NoLedgerView
+Forge.Loop.NodeCannotForge
+
+### Forge.didnt-adopt
+
+
+
+Dispatched by: 
+Forge.Loop.DidntAdoptBlock
+
+### Forge.forged
+
+
+
+Dispatched by: 
+Forge.Loop.ForgedBlock
+
+### Forge.forged-invalid
+
+
+
+Dispatched by: 
+Forge.Loop.ForgedInvalidBlock
+
+### Forge.node-is-leader
+
+
+
+Dispatched by: 
+Forge.Loop.NodeIsLeader
+
+### Forge.node-not-leader
+
+
+
+Dispatched by: 
+Forge.Loop.NodeNotLeader
+
+### Forge.slot-is-immutable
+
+
+
+Dispatched by: 
+Forge.Loop.SlotIsImmutable
+
 ### Mem.resident
 
 > Kernel-reported RSS (resident set size)
@@ -13406,41 +13484,6 @@ Resources
 
 Dispatched by: 
 Reflection.StartLimiting
-
-### aboutToLeadSlotLast
-
-
-
-Dispatched by: 
-Forge.Loop.StartLeadershipCheck
-
-### adoptedOwnBlockSlotLast
-
-
-
-Dispatched by: 
-Forge.Loop.AdoptedBlock
-
-### adoptionThreadDied
-
-
-
-Dispatched by: 
-Forge.Loop.AdoptionThreadDied
-
-### blockContext
-
-
-
-Dispatched by: 
-Forge.Loop.BlockContext
-
-### blockFromFuture
-
-
-
-Dispatched by: 
-Forge.Loop.BlockFromFuture
 
 ### blockNum
 
@@ -13620,14 +13663,6 @@ Net.ConnectionManager.Remote.ConnectionManagerCounters
 Dispatched by: 
 Net.ConnectionManager.Local.ConnectionManagerCounters
 
-### couldNotForgeSlotLast
-
-
-
-Dispatched by: 
-Forge.Loop.NoLedgerState
-Forge.Loop.NoLedgerView
-
 ### currentKESPeriod
 
 
@@ -13660,20 +13695,6 @@ Dispatched by:
 ChainDB.AddBlockEvent.AddedToCurrentChain
 ChainDB.AddBlockEvent.SwitchedToAFork
 
-### forgedInvalidSlotLast
-
-
-
-Dispatched by: 
-Forge.Loop.ForgedInvalidBlock
-
-### forgedSlotLast
-
-
-
-Dispatched by: 
-Forge.Loop.ForgedBlock
-
 ### forging_enabled
 
 > Can this node forge blocks? (Is it provided with block forging credentials) 0 = no, 1 = yes
@@ -13698,38 +13719,6 @@ Version.NodeVersion
 Dispatched by: 
 Version.NodeVersion
 
-### headersServed
-
-> A counter triggered on any header event
-
-
-Dispatched by: 
-ChainSync.ServerHeader.Update
-
-### headersServed
-
-> A counter triggered on any header event
-
-
-Dispatched by: 
-ChainSync.ServerBlock.Update
-
-### headersServed.falling
-
-> A counter triggered only on header event with falling edge
-
-
-Dispatched by: 
-ChainSync.ServerHeader.Update
-
-### headersServed.falling
-
-> A counter triggered only on header event with falling edge
-
-
-Dispatched by: 
-ChainSync.ServerBlock.Update
-
 ### inboundGovernor.Cold
 
 
@@ -13785,20 +13774,6 @@ Net.InboundGovernor.Remote.InboundGovernorCounters
 
 Dispatched by: 
 Net.InboundGovernor.Local.InboundGovernorCounters
-
-### ledgerState
-
-
-
-Dispatched by: 
-Forge.Loop.LedgerState
-
-### ledgerView
-
-
-
-Dispatched by: 
-Forge.Loop.LedgerView
 
 ### localInboundGovernor.cold
 
@@ -13867,12 +13842,13 @@ Mempool.ManuallyRemovedTxs
 Mempool.RejectedTx
 Mempool.RemoveTxs
 
-### nodeCannotForge
+### node.start.time
 
+> The UTC time this node was started represented in POSIX seconds.
 
 
 Dispatched by: 
-Forge.Loop.NodeCannotForge
+Startup.Common
 
 ### nodeCannotForge
 
@@ -13884,32 +13860,11 @@ Forge.ThreadStats.ForgeThreadStats
 
 ### nodeIsLeader
 
-
-
-Dispatched by: 
-Forge.Loop.NodeIsLeader
-
-### nodeIsLeader
-
 > How many times was this node slot leader?
 
 
 Dispatched by: 
 Forge.ThreadStats.ForgeThreadStats
-
-### nodeNotLeader
-
-
-
-Dispatched by: 
-Forge.Loop.NodeNotLeader
-
-### notAdoptedSlotLast
-
-
-
-Dispatched by: 
-Forge.Loop.DidntAdoptBlock
 
 ### operationalCertificateExpiryKESPeriod
 
@@ -14386,10 +14341,35 @@ Forge.Loop.ForgeStateUpdateError
 
 ### served.block
 
+> This counter metric indicates how many blocks this node has served.
 
 
 Dispatched by: 
 BlockFetch.Server.SendBlock
+
+### served.block.latest
+
+> This counter metric indicates how many chain tip blocks this node has served.
+
+
+Dispatched by: 
+BlockFetch.Server.SendBlock
+
+### served.header
+
+> A counter triggered only on header event with falling edge
+
+
+Dispatched by: 
+ChainSync.ServerHeader.Update
+
+### served.header
+
+> A counter triggered only on header event with falling edge
+
+
+Dispatched by: 
+ChainSync.ServerBlock.Update
 
 ### slotInEpoch
 
@@ -14399,13 +14379,6 @@ BlockFetch.Server.SendBlock
 Dispatched by: 
 ChainDB.AddBlockEvent.AddedToCurrentChain
 ChainDB.AddBlockEvent.SwitchedToAFork
-
-### slotIsImmutable
-
-
-
-Dispatched by: 
-Forge.Loop.SlotIsImmutable
 
 ### slotNum
 
@@ -14582,7 +14555,7 @@ Mempool.ManuallyRemovedTxs
 }
 ```
 653 log messages, 
-156 metrics,
+152 metrics,
 2 datapoints.
 
 ⓣ- This is the root of a tracer
@@ -14591,4 +14564,4 @@ Mempool.ManuallyRemovedTxs
 
 ⓜ- This is the root of a tracer, that provides metrics
 
-Generated at 2024-09-04 11:24:43.975290647 CEST.
+Generated at 2024-11-07 13:06:56.102371958 CET.

@@ -4,6 +4,7 @@
 * ✅ [[ADR-2 Module structure for generators]]
 * 📜 [[ADR-3 Dependencies version constraints in cabal file]]
 * 📜 [[ADR-6 Using optparse-applicative main repository]]
+* 📜 [[ADR-7 CLI Output Presentation]]
 
 ## Legend
 

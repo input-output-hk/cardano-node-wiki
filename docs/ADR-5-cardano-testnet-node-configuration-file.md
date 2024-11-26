@@ -4,12 +4,7 @@
 
 # Context
 
-There is no canonical way to create a node configuration file. `cardano-cli` offers this possibility as part of the bigger [create-cardano](https://github.com/IntersectMBO/cardano-cli/blob/551d9b9f2f244e0d681bf03eaa6d985565ac3a5b/cardano-cli/test/cardano-cli-golden/files/golden/help/latest_genesis_create-cardano.cli#L49) command, but this is ad-hoc.
-
-Programmatic users proceed as follows instead:
-
-* Scripts like [mkfiles.sh](https://github.com/IntersectMBO/cardano-node/blob/51a034a51c5cefdd6ab4b9ff1e71710cf0c96643/scripts/babbage/mkfiles.sh#L85) and [jobs.nix](https://github.com/input-output-hk/cardano-parts/blob/0abf510e0ed70fda4e6ad3ae71632c20d09f135a/flakeModules/jobs.nix#L253) copy an existing template.
-* [cardano-testnet](https://github.com/IntersectMBO/cardano-node/blob/51a034a51c5cefdd6ab4b9ff1e71710cf0c96643/cardano-testnet/src/Testnet/Defaults.hs#L340) uses a hardcoded Haskell value.
+There is no way to check a node configuration file for basic sanity issues. This is a problem for people running testnets, because they will only discover _after having started their testnet_ that something is wrong (because the node will refuse to start). And starting a testnet is a costly operation, meaning the failures will only happen after tenth of seconds; causing the feedback loop to be slow.
 
 # Decision
 
@@ -19,18 +14,29 @@ Introduce a new `debug check-node-configuration FILEPATH` command in `cardano-cl
 
 ```
 --node-configuration-file FILEPATH
-[--fix-configuration-file]
 ```
 
-Option `-node-configuration-file` specifies the path of the file to check. The optional flag `--fix-configuration-file` lets `cardano-cli` fix the wrong genesis hashes (or fill them in) in the file specified by `--node-configuration-file`. By default (i.e. when `--fix-configuration-file` is not specified), `check-node-configuration` only checks that the genesis hashes are correct: it doesn't correct them.
+Option `-node-configuration-file` specifies the path of the file to check. This command checks that:
 
-## Have `create-testnet-data` create the node configuration file
+1. The configuration file can be loaded (according to [this encoding](https://github.com/IntersectMBO/cardano-api/blob/4dde2e65c496f989f079354f407e7617563f4bc7/cardano-api/internal/Cardano/Api/LedgerState.hs#L1063)).
+2. Paths of genesis files are specified.
+3. Hashes of genesis files are specified and are correct.
 
-Have `create-testnet-data` create a default node configuration file (populating it with the paths and hashes of the genesis files).
+## Alternatives considered
+
+### Have a `--fix` flag
+
+We considered having a `--fix` flag that would make `check-node-configuration`:
+
+1. Fill the hashes of genesis files if missing
+2. Fix the hashes of genesis files if present but wrong
+
+However, in the end, we favored having a pure command (i.e. a command that doesn't modify things) so we ruled `--fix` out.
+
+### Have `create-testnet-data` create the node configuration file
+
+We considered having `create-testnet-data` create a default node configuration file, and populating it with the paths and hashes of genesis files. This could have been nice to users, but it is complicated to implement, because most of the types for the node configuration file live in `cardano-node` (see [here](https://github.com/IntersectMBO/cardano-node/blob/ef5f0a9ed52d969b3753c96955add25b9e08f02d/cardano-node/src/Cardano/Node/Configuration/POM.hs#L87)). What we have in `cardano-api` (see [here](https://github.com/IntersectMBO/cardano-api/blob/4dde2e65c496f989f079354f407e7617563f4bc7/cardano-api/internal/Cardano/Api/LedgerState.hs#L1048)) for the node configuration file is not general enough to create a full-fledged node configuration file.
 
 # Consequences
 
-* This will allow users that spin testnets to generate their node configuration file using `create-testnet-data`
-* As a consequence, this will avoid having to keep track of external templates
-* This will allow to remove some code in [cardano-testnet](https://github.com/IntersectMBO/cardano-node/blob/51a034a51c5cefdd6ab4b9ff1e71710cf0c96643/cardano-testnet/src/Testnet/Defaults.hs#L340)
-* It will make possible to generalize `cardano-testnet` so that it allows to pass custom node configuration files (this is [cardano-node/issues/3719](https://github.com/IntersectMBO/cardano-node/issues/3719), and to have a handy way to generate those files.
+This will allow users that spin testnets to check their node configuration file using `check-node-configuration` and catch errors earlier (before starting their testnet).

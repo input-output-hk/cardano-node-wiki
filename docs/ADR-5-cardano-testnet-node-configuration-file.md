@@ -10,28 +10,22 @@ There is no way to check a node configuration file for basic sanity issues. This
 
 ## Add a new command in the CLI
 
-Introduce a new `debug check-node-configuration FILEPATH` command in `cardano-cli`. It will have the following options:
+Introduce a new command in `cardano-cli` that takes a node configuration file as parameter and performs sanity checks:
 
-```
---node-configuration-file FILEPATH
-```
-
-Option `-node-configuration-file` specifies the path of the file to check. This command checks that:
-
-1. The configuration file can be loaded (according to [this encoding](https://github.com/IntersectMBO/cardano-api/blob/4dde2e65c496f989f079354f407e7617563f4bc7/cardano-api/internal/Cardano/Api/LedgerState.hs#L1063)).
+1. The configuration file can be loaded.
 2. Paths of genesis files are specified.
 3. Hashes of genesis files are specified and are correct.
 
 ## Alternatives considered
 
-### Have a `--fix` flag
+### Provide a fixup option
 
-We considered having a `--fix` flag that would make `check-node-configuration`:
+We considered having a flag that would make `check-node-configuration`:
 
 1. Fill the hashes of genesis files if missing
 2. Fix the hashes of genesis files if present but wrong
 
-However, in the end, we favored having a pure command (i.e. a command that doesn't modify things) so we ruled `--fix` out.
+However, in the end, we favored having a pure command (i.e. a command that doesn't modify things) so we ruled such a fixup flag.
 
 ### Have `create-testnet-data` create the node configuration file
 
@@ -39,4 +33,4 @@ We considered having `create-testnet-data` create a default node configuration f
 
 # Consequences
 
-This will allow users that spin testnets to check their node configuration file using `check-node-configuration` and catch errors earlier (before starting their testnet).
+This will allow users of testnets to check their node configuration file before starting their testnet, and so they will catch errors earlier and faster.

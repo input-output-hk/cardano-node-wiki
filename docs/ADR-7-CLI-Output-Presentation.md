@@ -1,6 +1,6 @@
 # Status
 
-📜 Proposed 2024-11-13
+✅ Adopted 2024-11-29 
 
 # Context
 

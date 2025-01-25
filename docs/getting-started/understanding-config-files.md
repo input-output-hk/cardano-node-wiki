@@ -53,7 +53,20 @@ A minimal version of this file looks like this:
         "advertise": false,
         "valency": 1,
         "warmValency": 2,
-        "trustable": true
+        "trustable": true,
+        "diffusionMode": "InitiatorOnly"
+      },
+      { "accessPoints": [
+            {
+              "address": "y.y.y.y",
+              "port": 3001
+            }
+          ],
+        "advertise": false,
+        "valency": 1,
+        "warmValency": 2,
+        "trustable": true,
+        "diffusionMode": "InitiatorAndResponder"
       }
   ],
   "publicRoots": [
@@ -90,12 +103,20 @@ A minimal version of this file looks like this:
   Note: one can also use the deprecated now `valency` field for `hotValency`.
 
 
-- `warmValency` is an optional field, similar to `hotValency`, that informs the node about the number of peers it should maintain as warm.
+* `warmValency` is an optional field, similar to `hotValency`, that informs the node about the number of peers it should maintain as warm.
   This field is optional and defaults to the value set in the `valency` or `hotValency` field.
   If a value is specified for `warmValency`, it should be greater than or equal to the one defined in `hotValency`; otherwise, or `hotValency` will be adjusted to match this value.
   We recommend users set the `warmValency` value to `hotValency + 1` to ensure at least one backup peer is available to be promoted to a hot connection in case of unexpected events.
   Check [this issue](https://github.com/intersectmbo/ouroboros-network/issues/4565) for more context on this `WarmValency` option.
 
+* `diffusionMode` is an optional field. It can either be `"InitiatorAndResponder"` (the default value) or `"InitiatorOnly"` (similar to `DiffusionMode` in the configuration file).
+  If `"InitiatorOnly"` is set, then all local roots in this group will negotiate initiator-only diffusion mode, e.g. the TCP connection will be used as a unidirectional connection.
+
+  The topology setting overwrites `DiffusionMode` from the configuration file for given local root peers.
+  It is meant to overwrite the diffusion mode when a node is running in `InitiatorAndResponder` mode (the default).
+  The other way is also possible, but note that when the option in the configuration file is set to `InitiatorOnly`, the node will not run the accept loop.
+
+  `diffusionMode` was introduced in `cardano-node-10.2`.
 
 * Local root groups shall be non-overlapping.
 

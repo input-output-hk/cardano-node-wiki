@@ -64,8 +64,10 @@ runClientCommand = \case
 
 
 # Decision
-- As such we are choosing to adopt the [ReaderT design pattern](https://tech.fpcomplete.com/blog/2017/06/readert-design-pattern/), treating all errors as `Exception`s and installing a single error handler at the top level to catch and report these exceptions (with a callstack included). 
+- Error handling: All errors will be converted to exceptions that will be caught by a single exception handler at the top level.
+- Top level monad: [RIO](https://hackage.haskell.org/package/rio-0.1.22.0/docs/RIO.html#t:RIO). See the [ReaderT design pattern](https://tech.fpcomplete.com/blog/2017/06/readert-design-pattern/).
+
 # Consequences
 - This should dramatically improve our code's composability and remove many unnecessary error types. 
-- Readability concerning what errors can be thrown will be negatively impacted. We believe the trade off is worth it.
+- Readability concerning what errors can be thrown will be negatively impacted. However `ExceptT` already lies about what exceptions can be thrown because it is not limited to the error type stated in `ExceptT`'s type signature. In other words `IO` can implicitly throw other `Exception`s. 
 - Initially this will be adopted under the "compatible" group of commands so `cardano-cli` will have a design split temporarily. Once we are happy with the result we will propagate to the rest of `cardano-cli`

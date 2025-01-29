@@ -86,6 +86,7 @@ A minimal version of this file looks like this:
       "port": 3003
     }
   ]
+  "peerSnapshotFile": "path/to/big-ledger-peer-snapshot.json"
 }
 ```
 
@@ -173,6 +174,20 @@ With bootstrap peers enabled the node will trace:
 
 - `TraceOnlyBootstrap`: Once the node transitions to `TooOld` the node will disconnect from all non-trusted peers and reconnect to only trusted ones in order to sync from trusted sources only.
   This tracing message means that the node has successfully purged all non-trusted connections and is only going to connect to trusted peers.
+
+### [Ouroboros Genesis](https://iohk.io/en/blog/posts/2024/05/08/ouroboros-genesis-design-update/)
+
+Ouroboros Genesis is the upcoming mechanism of trustless syncing in P2P environment which is expected to supercede bootstrap peers described in the previous section.
+This feature is included starting with node 10.2, and at the time of this writing it is disabled by default - refer to config.json file
+section below on instructions how to enable this by toggling a feature flag. Once enabled, this mode is incompatibile with bootstrap peers, and will disable the latter by overriding
+the configuration if they are defined in the topology file, and emit a trace of such occurence to inform the operator.
+From the perspective of the topology file a new entry must be added:
+
+`"peerSnapshotFile": "path/to/snapshot.json"`
+
+The file contains a snapshot of so-called big ledger peers which are the largest peers registered on the ledger which cumulatively hold 90% of stake at some arbitrary slot number. By virtue of the size of their stake
+in the system, they are postulated to be a proxy for honest ledger state. When syncing in this mode, these peers are sampled and connected with to bootstrap the process.
+Such a snapshot file can be created manually apriori with cardano-cli from a synced node, and may be distributed with a node release in the future.
 
 ## The genesis.json file
 
@@ -429,6 +444,12 @@ It is also possible to have more fine grained control over filtering of trace ou
 
 To run a node in P2P mode, configure the `EnableP2P` setting to `true`, which is the default value since `cardano-node-8.10`, in the configuration file. Additionally, ensure you specify the topology in the new format as described above.
 
+Starting with node 10.2, a new means of trustless syncing is available to users. To enable this experimental (at the time of this writing) [Ouroboros Genesis](https://iohk.io/en/blog/posts/2024/05/08/ouroboros-genesis-design-update/) mechanism, you should add the flag:
+
+`"ConsensusMode": "GenesisMode"`
+
+and follow the instructions in the topology configuration section of this guide. Also, refer to the outbound governor section below for some additional configuration options.
+
 There are a few new tracers and configuration options that you can set (listed below by
 component):
 
@@ -447,6 +468,27 @@ options:
   peers (including local roots, ledger peers)
 * `TargetNumberOfActivePeers` (_default value: `20`_) - a target for _hot_ peers, which
   engage in the consensus protocol.
+* `TargetNumberOfKnownBigLedgerPeers`, `TargetNumberOfEstablishedBigLedgerPeers`,
+  `TargetNumberOfActiveBigLedgerPeers` which are analogous to the preceding items
+  but concern the largest peers registered on the ledger which cumulatively hold
+  90% of the total stake.
+
+In Ouroboros Genesis, the preceding targets are leveraged by the governor when a node is
+decided to be caught up, and are also referred to as the deadline targets. When the
+consensus mechanism within the node, based on the information obtained from connected peers,
+decides that the node is behind, a separate set of targets are used to sync up by
+downloading blocks from big ledger peers. If the node's ledger state is significantly out-of-date,
+or blank, a snapshot file of big ledger peers will be required to complete the syncing process.
+Refer to the topology section of this guide for more information. In this mode, there
+are alternative targets for big ledger peers, and these are the refered to as the sync targets:
+
+* `SyncTargetNumberOfKnownBigLedgerPeers`, `SyncTargetNumberOfEstablishedBigLedgerPeers`, and
+  `SyncTargetNumberOfActiveBigLedgerPeers`. It is recommended to use at least 30 for the last
+   option as larger diversity provides stronger assurance of finishing on the honest chain
+   if there are adverserial nodes on the network.
+* `MinBigLedgerPeersForTrustedState` is the minimum number of big ledger peers in active state
+  that must be maintained by the node in order to continue the syncing process, or otherwise
+  the syncing is paused while awaiting for new connections.
 
 Let's take note of two additional targets. In the topology file, you have the option to include local root peers. This comprises a list of peer groups, with each group having its own valency. The outbound governor ensures a connection with every local root peer and ensures that at least the specified number of them (the valency) are actively connected (hot). Consequently, the values for `TargetNumberOfKnownPeers`, `TargetNumberOfEstablishedPeers`, and `TargetNumberOfActivePeers` should be set sufficiently high to accommodate these local root peers.
 

@@ -41,17 +41,20 @@ class Error e where
   getErrorCallStack :: e -> CallStack
 ```
 
-We could leave it there but, ideally, we would like every error to include the stack-trace when pretty printing it.
-So we can do it once, by separating the actual error from our extended `Error` type.
+We could leave it there but, we don't want each error to manually print their own stack-trace as part of their implementation of `prettyError`, we would rather implement that functionality once and for all.
+We want different errors to customize their own error message, but we expect the overall template of `error message + stack-trace` to be presented in the same consistent way.
+Also, we want to be able to print the error descriptions without stack-trace if necessary.
+
+We can achieve both things by separating the actual error from our extended `Error` type.
 So we can rename the old `Error` as `ErrorContent`.
-Which could be a class just like this:
+Which would leave us with a class just like this:
 
 ```haskell
 class ErrorContent e where
   prettyErrorContent :: e -> Doc ann
 ```
 
-And then we could define our extended `Error` as:
+And then, we could define our extended `Error` as:
 
 ```haskell
 data Content where

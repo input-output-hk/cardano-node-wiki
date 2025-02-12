@@ -57,16 +57,14 @@ class ErrorContent e where
 And then, we could define our extended `Error` as:
 
 ```haskell
-data Content where
-  Content :: ErrorContent e => e -> Content
+data Content = forall e. ErrorContent e => Content e
 
 class Error e where
   getErrorContent :: e -> Content
   getErrorCallStack :: e -> CallStack
 ```
 
-We need a `Content` wrapper as a `GADT`, to prevent the type of the `ErrorContent` from propagating to the type of `Error`, while ensuring that it is indeed an `ErrorContent`.
-
+We need `e` in `Content` wrapper to be an existential type, to prevent the type of the `ErrorContent` from propagating to the type of `Error`, while ensuring that it is indeed an `ErrorContent`.
 If we do this, we could define two generic functions for every `Error e`.
 
 One to print the original error, without a stack-trace:
@@ -137,8 +135,7 @@ class Error e where
 Where `Cause` is another wrapper like `Content`:
 
 ```haskell
-data Cause where
-  Cause :: Error c => c -> Cause
+data Cause = forall c. Error c => Cause c
 ```
 
 And that would allow us to define `prettyError` as follows:
@@ -172,15 +169,15 @@ But, other than that, it comes down to adding a space for the stack-trace in the
 
 At least, we can have a reusable wrapper for errors (that must now implement the `ErrorContent` class).
 
-So we can define an `ErrorWithStack` data type using a `GADT` as follows:
+So we can define an `ErrorWithStack` data type:
 
 ```haskell
-data ErrorWithStack e where
-  RootErrorWithStack :: ErrorContent e => e -> CallStack -> ErrorWithStack e
-  CausedErrorWithStack :: (ErrorContent e, Error c) => e -> CallStack -> c -> ErrorWithStack e
+data ErrorWithStack e =
+    ErrorContent e => RootErrorWithStack e CallStack
+  | forall c. (ErrorContent e, Error c) => CausedErrorWithStack e CallStack c
 ```
 
-The difference between the constructors is that one has a causing error, and the otherone doesn't.
+The difference between the constructors is that one has a causing error, and the other one doesn't.
 
 We can then create convenience functions for creating them from existing `ErrorContent`s:
 

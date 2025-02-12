@@ -234,7 +234,7 @@ instance Error ProtocolParametersConversionError where
 
 By first renaming it as `ProtocolParametersConversionErrorContent`, changing the instance to `ErrorContent` and the function implemented to `prettyErrorContent`, and by creating a type synonym for `ErrorWithStack ProtocolParametersConversionErrorContent` for convenience:
 
-```
+```haskell
 data ProtocolParametersConversionErrorContent
   = PpceOutOfBounds !ProtocolParameterName !Rational
   | PpceVersionInvalid !ProtocolParameterVersion

@@ -13,7 +13,7 @@ In Unix CLI tools, output conventions typically dictate that:
 
 These conventions help users and scripts to easily differentiate between normal output and error messages, enabling more effective error handling and output redirection.
 
-This also aligns with [UNIX philisophy][bell-journal] (from *The Bell System Technical Journal*):
+This also aligns with [UNIX philosophy][bell-journal] (from *The Bell System Technical Journal*):
 >Expect the output of every program to become the input to another, as yet unknown, program.
 >Don't clutter output with extraneous information.
 >Avoid stringently columnar or binary input formats.

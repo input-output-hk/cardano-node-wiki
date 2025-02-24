@@ -113,8 +113,9 @@ runClientCommandTransactions
 runClientCommandTransactions DummyClientCommandToRun =
   ...
   throwIO $
-    CustomCliException $
-      FileError "dummy.file" ()
+    CustomCliException 
+      ((FileError "dummy.file") ())
+      callStack
 ```
 
 We have eliminated `data ExampleClientCommandErrors` and `data CmdError` and improved the composability of our code.
@@ -134,20 +135,32 @@ We have eliminated `data ExampleClientCommandErrors` and `data CmdError` and imp
 ```haskell
 data CustomCliException where
   CustomCliException
-    :: (Show error, Typeable error, Error error, HasCallStack)
-    => error -> CustomCliException
+    :: (Show error, Typeable error, Error error)
+    => error -> CallStack -> CustomCliException
 
 deriving instance Show CustomCliException
 
 instance Exception CustomCliException where
-  displayException (CustomCliException e) =
+  displayException (CustomCliException e cstack) =
     unlines
       [ show (prettyError e)
-      , prettyCallStack callStack
+      , prettyCallStack cstack
       ]
 
 throwCliError :: MonadIO m => CustomCliException -> m a
 throwCliError = throwIO
+
+fromEitherCli :: (HasCallStack, MonadIO m, Show e, Typeable e, Error e) => Either e a -> m a
+fromEitherCli = \case
+  Left e -> throwCliError $ CustomCliException e callStack
+  Right a -> return a
+
+fromEitherIOCli :: (HasCallStack, MonadIO m, Show e, Typeable e, Error e) => IO (Either e a) -> m a
+fromEitherIOCli action = do
+  result <- liftIO action
+  case result of
+    Left e -> throwCliError $ CustomCliException e callStack
+    Right a -> return a
 ```
 
 The purpose of `CustomCliException` is to represent explicitly thrown, structured errors that are meaningful to our application. 

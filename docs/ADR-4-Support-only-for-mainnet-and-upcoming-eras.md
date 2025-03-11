@@ -154,10 +154,6 @@ This may turn out to be a disruptive process, but necessary to make the code usi
 The new api should be created adjacant to the existing one.
 We then slowly replace the use of the existing api in cardano-api, eventually deprecating the "old" api. 
 
-With respect to cardano-cli, we should introduce top level `current-era` and `upcoming-era` commands.
-We would have to release a cli version specific for post-hardfork usage, as `current-era` and `upcoming-era` commands will have different semantics to the pre-hardfork commands.
-This will require a little coordination but shouldn't be too much additional overhead. 
-
 # Decision
 
 TBD

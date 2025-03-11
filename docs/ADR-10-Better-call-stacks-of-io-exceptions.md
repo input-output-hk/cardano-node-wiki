@@ -1,6 +1,6 @@
 # Status
 
-📜 Proposed 2025-03-04
+✅ Accepted 2025-03-11
 
 # Context
 
@@ -21,7 +21,7 @@ Network.Socket.recvBuf: resource vanished (Connection reset by peer)
 
 The currently used type alias adds call stacks to the functions:
 ```haskell
-type CIO e a = HasCallStack => CIO e a
+type CIO e a = HasCallStack => RIO e a
 ```
 We can make sure that `IO` exceptions thrown in `IO` actions are captured and rethrown with a helper `runIO` function, meant to be used instead of `liftIO`:
 
@@ -61,7 +61,7 @@ the exception thrown from `someExceptionThrowingFunction` and wrapped using `run
 
 # Decision
 
-TBD
+The ADR gets adopted.
 
 # Consequences
 

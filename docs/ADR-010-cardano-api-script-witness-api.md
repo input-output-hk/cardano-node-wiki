@@ -1,6 +1,6 @@
 # Status
 
--[] Accepted ??-??-???
+-[x] Accepted 13-03-2025
 
 # Context
 

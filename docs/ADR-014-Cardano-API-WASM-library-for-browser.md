@@ -11,7 +11,7 @@ Decentralized Applications (DApps) are primarily utilized through web browsers. 
 
 There already exist several JavaScript/TypeScript libraries and APIs that support DApps (e.g., Lucid Evolution, Helios, MeshJS, cardano-serialization-lib, cardano-sdk-js, Ogmios, TyphonJS), but porting `cardano-api` can offer advantages over other approaches:
 * **Comprehensiveness:** `cardano-api` is especially comprehensive in its functionalities, since it is developed in sync with `cardano-node`.
-* **Robustness:** Because `cardano-api` is developed in Haskell, it relies heavily in type correctness, and because it is heavily tested, it is especially trustworth. Because the JavaScript/TypeScript API would take advantage of the same code, the robustness would be inherited.
+* **Robustness:** Because `cardano-api` is developed in Haskell, it relies heavily in type correctness, and because it is heavily tested, it is especially trustworthy. Because the JavaScript/TypeScript API would take advantage of the same code, the robustness would be inherited.
 * **Pure browser support:** DApp libraries tend to be more focused on supporting execution in the backend (through Node.js and Bun). There are good reasons for doing this, but explicitly supporting JavaScript in the browser has some advantages:
   * **Incentivize adoption:** By making the library easier to try out, we would be reducing the friction to adoption.
   * **Improved trust through decentralisation:** Since code is run in the browser, and thus the user's computer, it may be easier for the user to trust, even though transaction signing happens on the client side anyway.
@@ -26,7 +26,7 @@ Other potential opportunities and considerations to keep in mind:
 
 ## Proposal
 
-We propose to create a new JavaScript and TypeScript library API for Cardano by compiling the `cardano-api` (Haskell) to WebAssembly (WASM) and adding a thing wrapper. This would allow developers to easy and cross-platform access to a subset of `cardano-api` functionalities from the browser and `Node.js` environments and similar.
+We propose to create a new JavaScript and TypeScript library API for Cardano by compiling the `cardano-api` (Haskell) to WebAssembly (WASM) and adding a thin wrapper. This would allow developers to easy and cross-platform access to a subset of `cardano-api` functionalities from the browser and `Node.js` environments and similar.
 
 **Key Features & Design Goals:**
 
@@ -59,7 +59,7 @@ We propose to create a new JavaScript and TypeScript library API for Cardano by 
         * WASM compilation. (Build)
         * Generation and consistency of JS/TS bindings. (Like with golden tests)
         * Functionality across supported environments. (Browsers via tools like Playwright, and also Node.js)
-        * Glue generation verificaiton. (Like with golden tests)
+        * Glue generation verification. (Like with golden tests)
 8.  **Stability:** Aim to maintain a stable API to avoid user frustration.
 
 **Haskell to JavaScript Bridging Example:**
@@ -75,7 +75,7 @@ signTransactionImpl unsignedTx signingKey = do
     return oldApiSignedTx
 ```
 
-Then we would write a conversion layer that is still in Haskell, but converts to and from JavaScript marshable types and usesw the pure Haskell function:
+Then we would write a conversion layer that is still in Haskell, but converts to and from JavaScript marshallable types and uses the pure Haskell function:
 
 ```haskell
 foreign export javascript "signTransaction"

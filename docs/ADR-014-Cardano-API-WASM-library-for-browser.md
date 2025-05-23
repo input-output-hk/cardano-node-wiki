@@ -9,19 +9,19 @@
 
 Decentralized Applications (DApps) are primarily utilized through web browsers. And Cardano DApps in Cardano would benefit from the extensive features provided by `cardano-api`.
 
-There already exist several JavaScript/TypeScript libraries and APIs that support DApps (e.g., Lucid Evolution, Helios, MeshJS, cardano-serialization-lib, cardano-sdk-js, Ogmios, TyphonJS), but porting `cardano-api` can offer advantages over other approaches:
+There already exist several JavaScript/TypeScript libraries and APIs that support DApps (e.g., [Lucid Evolution](https://github.com/Anastasia-Labs/lucid-evolution), [Helios](https://helios-lang.io/), [MeshJS](https://meshjs.dev/), [cardano-serialization-lib](https://github.com/Emurgo/cardano-serialization-lib), [cardano-sdk-js](https://github.com/input-output-hk/cardano-js-sdk), [Ogmios](https://ogmios.dev/), [TyphonJS](https://github.com/StricaHQ/typhonjs)), but porting `cardano-api` can offer advantages over other approaches:
 * **Comprehensiveness:** `cardano-api` is especially comprehensive in its functionalities, since it is developed in sync with `cardano-node`.
 * **Robustness:** Because `cardano-api` is developed in Haskell, it relies heavily in type correctness, and because it is heavily tested, it is especially trustworthy. Because the JavaScript/TypeScript API would take advantage of the same code, the robustness would be inherited.
-* **Pure browser support:** DApp libraries tend to be more focused on supporting execution in the backend (through Node.js and Bun). There are good reasons for doing this, but explicitly supporting JavaScript in the browser has some advantages:
+* **Pure browser support:** DApp libraries tend to be more focused on supporting execution in the backend (through [Node.js](https://nodejs.org/) and [Bun](https://bun.sh/)). There are good reasons for doing this, but explicitly supporting JavaScript in the browser has some advantages:
   * **Incentivize adoption:** By making the library easier to try out, we would be reducing the friction to adoption.
   * **Improved trust through decentralisation:** Since code is run in the browser, and thus the user's computer, it may be easier for the user to trust, even though transaction signing happens on the client side anyway.
 
 Other potential opportunities and considerations to keep in mind:
-* **Aditional conectivity:** We can potentially provide ways to connect to a `cardano-node` directly. And we can consider offering a provider that is not restricted by CORS, which would allow dApps run purely in the browser.
+* **Aditional conectivity:** We can potentially provide ways to connect to a `cardano-node` directly. And we can consider offering a provider that is not restricted by [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS), which would allow dApps run purely in the browser.
 * **Ease of Use & Documentation:** Most popular libraries provide introductory guides, that are comprehensive, simple, clear. Autocompletion in IDEs is crucial and often serves as de-facto documentation. In addition to all that, we should make comprehensive documentation for the whole API (reference) and make it easily accessible.
-* **CIP-30 Integration:** Existing libraries seem to provide wallet support through CIP-30. We may want to do that too, or at least make it easy for our API to interact with already existing libraries and APIs that already support CIP-30. The later may be hard because some of the most popular libraries integrate the wallets and transaction handling very closely and not necessarily in a functionaly pure way. It may also be used as a provider of information to some extent.
-* **Browser Compatibility & Testing:** For the reasons we mentioned before, we should use the CI to test compatibility with all potential workflows, including vanilla JavaScript and TypeScript from the browser, as well as integration with `Node.js`. Testing pure browser workflows can be tricky because we may need to use UI testing libraries like `Playwright`.
-* **Standard publication:** It is pretty standard for `Node.js` libraries to be distributed through channels like `npm`, so we should probably make sure to upload the library to those.
+* **CIP-30 Integration:** Existing libraries seem to provide wallet support through [CIP-30](https://cips.cardano.org/cip/CIP-30). We may want to do that too, or at least make it easy for our API to interact with already existing libraries and APIs that already support CIP-30. The later may be hard because some of the most popular libraries integrate the wallets and transaction handling very closely and not necessarily in a functionaly pure way. It may also be used as a provider of information to some extent.
+* **Browser Compatibility & Testing:** For the reasons we mentioned before, we should use the CI to test compatibility with all potential workflows, including vanilla JavaScript and [TypeScript](https://www.typescriptlang.org/) from the browser, as well as integration with `Node.js`. Testing pure browser workflows can be tricky because we may need to use UI testing libraries like [`Playwright`](https://playwright.dev/).
+* **Standard publication:** It is pretty standard for `Node.js` libraries to be distributed through channels like [`npm`](https://www.npmjs.com/), so we should probably make sure to upload the library to those.
 
 
 ## Proposal
@@ -41,19 +41,19 @@ We propose to create a new JavaScript and TypeScript library API for Cardano by 
         * A "virtual wallet" abstraction that handles UTXO management and coin selection automatically.
         * Simplified (possibly monadic) transaction building.
     * **CIP-30 support:** Potentially support CIP-30 compatibility to interact with browser wallet extensions, either as a separate module or as part of the "virtual wallet" abstraction.
-    * **Data providers:** Allow configuration of blockchain data providers (e.g., BlockFrost, Koios). Consider offering a CORS-friendly proxy service (with robust caching to mitigate DDoS risk) to provide support for frontend-only DApp development.
+    * **Data providers:** Allow configuration of blockchain data providers (e.g., [BlockFrost](https://blockfrost.io/), [Koios](https://koios.rest/)). Consider offering a CORS-friendly proxy service (with robust caching to mitigate DDoS risk) to provide support for frontend-only DApp development.
 4.  **Development Experience:**
     * **Minimal JS glue:** Maximize Haskell code and minimize the JavaScript FFI glue code and try to generate glue code automatically if possible. This allows leveraging Haskell for most of the development, improving our productivity and the type safety of our code.
     * **Haskell API mirroring:** Because WASM ghc compiler target doesn't seem to support `haskell-language-server`, we should keep a pure Haskell API that closely mirrors the desired JavaScript API structure to be able to work on it using the HLS as far as possible, and use FFI just for type conversion.
-    * **Type conversion:** Implement `ToJSVal` / `FromJSVal` type-classes in Haskell, analogously to `ToJSON` / `FromJSON`, for conversions between Haskell and JS types. JSON string serialization can be used as an efficient intermediate representation (Haskell -> AESON -> String -> JS), and it can be used directly for simple types like addresses (and Bech32 encoded data).
+    * **Type conversion:** Implement `ToJSVal` / `FromJSVal` type-classes in Haskell, analogously to `ToJSON` / `FromJSON` in [Aeson](https://hackage.haskell.org/package/aeson), for conversions between Haskell and JS types. JSON string serialization can be used as an efficient intermediate representation (Haskell -> AESON -> String -> JS), and it can be used directly for simple types like addresses (and [Bech32](https://github.com/bitcoin/bips/blob/master/bip-0173.mediawiki) encoded data).
     * **Error handling:** Ensure clear, descriptive, and catchable errors.
-    * **BigInt for large amounts:** Use JavaScript `BigInt` for Ada/Lovelace amounts to prevent precision loss (also serialised/deserialised as/from strings).
+    * **BigInt for large amounts:** Use JavaScript [`BigInt`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt	) for Ada/Lovelace amounts to prevent precision loss (also serialised/deserialised as/from strings).
 5.  **Documentation & Examples:**
     * Comprehensive API documentation that is easy to navigate.
     * Step-by-step guides for getting started, including handling `async` calls.
     * Clear examples for main use cases.
-    * Ensure good IDE autocompletion support (like in Visual Studio Code).
-6.  **Distribution:** Distribute the library via NPM and potentially in `github.io`.
+    * Ensure good IDE autocompletion support (like in [Visual Studio Code](https://code.visualstudio.com/)).
+6.  **Distribution:** Distribute the library via NPM and potentially in [`github.io`](https://pages.github.com/).
 7.  **Testing:**
     * CI pipelines to consider for:
         * WASM compilation. (Build)
@@ -160,7 +160,7 @@ Example usage of the JS API could be as simple as defining an `async` function a
 ```
 
 **Stateful API (Wallet-like features):**
-If we do a stateful API (e.g., for a "virtual wallet"), the state can be managed in Haskell. Each function in the stateful API would take the state as its first parameter and return a tuple with the new state and the resulting state (this can be modeled as a `State` monad). The JavaScript glue code would hold this state globally and pass it automatically for each function call, making it appear as an object-oriented API in JavaScript. This state could include loaded private keys (handled securely), UTXO sets, etc. This could be implemented as an abstraction layer that uses the core stateless functions under the hood.
+If we do a stateful API (e.g., for a "virtual wallet"), the state can be managed in Haskell. Each function in the stateful API would take the state as its first parameter and return a tuple with the new state and the resulting state (this can be modeled as a [`State` monad](https://hackage.haskell.org/package/mtl/docs/Control-Monad-State-Class.html)). The JavaScript glue code would hold this state globally and pass it automatically for each function call, making it appear as an object-oriented API in JavaScript. This state could include loaded private keys (handled securely), UTXO sets, etc. This could be implemented as an abstraction layer that uses the core stateless functions under the hood.
 
 ## Conclusion
 

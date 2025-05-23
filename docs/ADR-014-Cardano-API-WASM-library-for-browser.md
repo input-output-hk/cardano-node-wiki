@@ -7,9 +7,17 @@
 
 ## Context
 
-Decentralized Applications (DApps) are primarily utilized through web browsers. And Cardano DApps in Cardano would benefit from the extensive features provided by `cardano-api`.
+Decentralized Applications (DApps) mainly revolve around web browsers. The Cardano blockchain platform features `cardano-api`, a comprehensive Haskell library developed in conjunction with `cardano-node`, and offers extensive blockchain interaction capabilities implemented in a robust way thanks to strong typing, formal specifications, and extensive testing.
 
-There already exist several JavaScript/TypeScript libraries and APIs that support DApps (e.g., [Lucid Evolution](https://github.com/Anastasia-Labs/lucid-evolution), [Helios](https://helios-lang.io/), [MeshJS](https://meshjs.dev/), [cardano-serialization-lib](https://github.com/Emurgo/cardano-serialization-lib), [cardano-sdk-js](https://github.com/input-output-hk/cardano-js-sdk), [Ogmios](https://ogmios.dev/), [TyphonJS](https://github.com/StricaHQ/typhonjs)), but porting `cardano-api` can offer advantages over other approaches:
+For developers building on Cardano, a range of JavaScript and TypeScript libraries are available. These include tools such as [Lucid Evolution](https://github.com/Anastasia-Labs/lucid-evolution), [Helios](https://helios-lang.io/), [MeshJS](https://meshjs.dev/), [cardano-serialization-lib](https://github.com/Emurgo/cardano-serialization-lib), [cardano-sdk-js](https://github.com/input-output-hk/cardano-js-sdk), [Ogmios](https://ogmios.dev/), and [TyphonJS](https://github.com/StricaHQ/typhonjs).
+
+Concurrently, efforts that provide compilation from Haskell to WebAssembly (WASM) are reaching increasingly wider support for the functionalities provided by Haskell (recently expanding to include advanced features like Template Haskell). WebAssembly is a technology that can be run in the same environments that JavaScript and TypeScript can, and that it can be invoked from those languages. And, like those languages, WebAssembly can provide strong sandboxing and widespread portability, particularly in browsers.
+
+This Architectural Decision Record (ADR), explores the creation of a new JavaScript and TypeScript API for Cardano. The primary method proposed is to compile the existing `cardano-api` (written in Haskell) to WebAssembly (WASM) and to write a thin wrapper around it.
+
+## Rationale
+
+As described in the previous section, there already exist several JavaScript/TypeScript libraries and APIs that support DApps. Nevertheless, the extensive and robust features provided by `cardano-api` would benefit DApps, so compiling it to WebAssembly and providing a JavaScript and TypeScript API would provide several advantages:
 * **Comprehensiveness:** `cardano-api` is especially comprehensive in its functionalities, since it is developed in sync with `cardano-node`.
 * **Robustness:** Because `cardano-api` is developed in Haskell, it relies heavily in type correctness, and because it is heavily tested, it is especially trustworthy. Because the JavaScript/TypeScript API would take advantage of the same code, the robustness would be inherited.
 * **Pure browser support:** DApp libraries tend to be more focused on supporting execution in the backend (through [Node.js](https://nodejs.org/) and [Bun](https://bun.sh/)). There are good reasons for doing this, but explicitly supporting JavaScript in the browser has some advantages:
@@ -23,8 +31,7 @@ Other potential opportunities and considerations to keep in mind:
 * **Browser Compatibility & Testing:** For the reasons we mentioned before, we should use the CI to test compatibility with all potential workflows, including vanilla JavaScript and [TypeScript](https://www.typescriptlang.org/) from the browser, as well as integration with `Node.js`. Testing pure browser workflows can be tricky because we may need to use UI testing libraries like [`Playwright`](https://playwright.dev/).
 * **Standard publication:** It is pretty standard for `Node.js` libraries to be distributed through channels like [`npm`](https://www.npmjs.com/), so we should probably make sure to upload the library to those.
 
-
-## Proposal
+## Decision
 
 We propose to create a new JavaScript and TypeScript library API for Cardano by compiling the `cardano-api` (Haskell) to WebAssembly (WASM) and adding a thin wrapper. This would allow developers to easy and cross-platform access to a subset of `cardano-api` functionalities from the browser and `Node.js` environments and similar.
 
@@ -162,6 +169,26 @@ Example usage of the JS API could be as simple as defining an `async` function a
 **Stateful API (Wallet-like features):**
 If we do a stateful API (e.g., for a "virtual wallet"), the state can be managed in Haskell. Each function in the stateful API would take the state as its first parameter and return a tuple with the new state and the resulting state (this can be modeled as a [`State` monad](https://hackage.haskell.org/package/mtl/docs/Control-Monad-State-Class.html)). The JavaScript glue code would hold this state globally and pass it automatically for each function call, making it appear as an object-oriented API in JavaScript. This state could include loaded private keys (handled securely), UTXO sets, etc. This could be implemented as an abstraction layer that uses the core stateless functions under the hood.
 
+## Consequences
+
+### Positive:
+
+* A powerful, secure, and comprehensive Cardano library for browser and Node.js environments.
+* Enhanced DApp developer productivity and capability.
+* Greater potential for decentralization and user transparency in DApps.
+* Establishes a robust foundation for future tooling and higher-level libraries.
+* Ability to work primarily in Haskell with HLS for the core logic.
+
+### Negative/Challenges:
+
+* Complexity of setting up and maintaining the Haskell-to-WASM compilation toolchain and FFI.
+* Potential initial performance overhead or bundle size issues with WASM (mitigation through optimization).
+* Potential difficulties when debugging across the Haskell-WASM-JS boundary.
+* Effort required for manual creation and maintenance of TypeScript definitions if generation is not feasible or good enough.
+* Effort required for developing comprehensive tests, especially browser-based integration tests (e.g., using Playwright).
+* Effort required to design JS/TS API from a DApp user perspective.
+* Effort required to maintain compatibility with WASM of all dependencies of `cardano-api` through changes and upgrades.
+
 ## Conclusion
 
-Developing a JavaScript/TypeScript API for Cardano by compiling `cardano-api` to WASM is very feasible and we can make it easy a frictionless for the user. We must make sure to keep it simple, stable, and test all the user flows. We also should ensure we use pure Haskell as far as possible to take advantage of HLS as much as possible, and we can try to automate as much of the glue layer generation as possible. We should also provide TypeScript types for the API to both make it easier (through auto-complete documentation) and safer (through types) for users to develop using the API. And we should ensure compatibility with the different workflows and consistency through the use of CI whenever possible.
+Developing a JavaScript/TypeScript API for Cardano by compiling `cardano-api` to WASM is very feasible and we can make it easy and frictionless for the user. We must make sure to keep it simple, stable, and test all the user flows. We also should ensure we use pure Haskell as far as possible to take advantage of HLS as much as possible, and we can try to automate as much of the glue layer generation as possible. We should also provide TypeScript types for the API to both make it easier (through auto-complete documentation) and safer (through types) for users to develop using the API. And we should ensure compatibility with the different workflows and consistency through the use of CI whenever possible.

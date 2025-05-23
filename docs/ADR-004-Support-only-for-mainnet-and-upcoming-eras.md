@@ -1,6 +1,6 @@
 # Status
 
-📜 Proposed 2023-07-22
+✅ Adopted  2023-07-22
 
 # Context
 
@@ -156,7 +156,7 @@ We then slowly replace the use of the existing api in cardano-api, eventually de
 
 # Decision
 
-TBD
+The ADR gets adopted in `cardano-api` and `cardano-cli`. There may be minor tweaks as it is rolled out in `cardano-cli`.
 
 # Consequences
 

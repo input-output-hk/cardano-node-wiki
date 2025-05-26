@@ -174,7 +174,29 @@ Example usage of the JS API could be as simple as defining an `async` function a
 ```
 
 **Stateful API (Wallet-like features):**
+
 If we do a stateful API (e.g., for a "virtual wallet"), the state can be managed in Haskell. Each function in the stateful API would take the state as its first parameter and return a tuple with the new state and the resulting state (this can be modeled as a [`State` monad](https://hackage.haskell.org/package/mtl/docs/Control-Monad-State-Class.html)). The JavaScript glue code would hold this state globally and pass it automatically for each function call, making it appear as an object-oriented API in JavaScript. This state could include loaded private keys (handled securely), UTXO sets, etc. This could be implemented as an abstraction layer that uses the core stateless functions under the hood.
+
+For example, let's imagine we have a wallet with a derivation scheme, and we want a stateful function that takes an unsigned transaction and it derives a new key from the derivation scheme, records the number of derivated keys, it uses the newly derived key to sign the transaction and it returns it signed. In Haskell the function doing this we could have a signature like:
+
+```haskell
+signTx :: WalletState -> Api.TxBody Api.ConwayEra -> IO (WalletState, Api.Tx Api.ConwayEra)
+```
+
+Or the `State` monad equivalent. Then we would export it as JavaScript as an async function with two parameters (the wallet state, and the unsigned transaction), and it would return a list with two elements (the new wallet state, and the signed transaction), because JavaScript doesn't have tuples.
+
+Then, as part of the JavaScript wrapper where we re-export the Haskell functions, we can instead export a wrapper function. Let's assume the Haskell function is exported with the name `haskellExportedSignTxFunction` (for illustrative purpouses). Then we can create a wrapper function in JavaScript as follows:
+
+```javascript
+async function signTx(unsignedTx) {
+  var result = await haskellExportedSignTxFunction(state, unsignedTx);
+  var [ newState, signedTx ] = result;
+  state = newState;
+  return signedTx;
+}
+```
+
+Where `state` is a variable declared globally in JavaScript. This way, the user doesn't need to think about the `state` since it is passed automatically to the function `signTx` automatically.
 
 ## Consequences
 
@@ -209,4 +231,3 @@ SOP (or Same-Origin Policy) is a restriction that is enforced by browsers to pro
 Additionally, if SOP was not in place, a very popular but malicious website could easily include a JavaScript snippet that would cause every visitor of the malicious website to silently make potentially costly requests against a victim API, and that would potentially work out as DDOS (Distribute Denegation of Services) attack, by consuming lots of resources from the victim API.
 
 Unfortunately, this means that JavaScript cannot access public API's unless those API's use CORS to lift SOP restrictions. This ADR suggests that there could potentially exist a service like [Koios](https://koios.rest/) that does this, as long as it can be guaranteed that the queries offered by the API are made in a way that is efficient enough, and user supplantation is made impossible or not applicable.
-

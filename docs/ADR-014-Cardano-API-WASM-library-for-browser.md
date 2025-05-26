@@ -53,7 +53,13 @@ We propose to create a new JavaScript and TypeScript library API for Cardano by 
 4.  **Development Experience:**
     * **Minimal JS glue:** Maximize Haskell code and minimize the JavaScript FFI glue code and try to generate glue code automatically if possible. This allows leveraging Haskell for most of the development, improving our productivity and the type safety of our code.
     * **Haskell API mirroring:** Because WASM ghc compiler target doesn't seem to support `haskell-language-server`, we should keep a pure Haskell API that closely mirrors the desired JavaScript API structure to be able to work on it using the HLS as far as possible, and use FFI just for type conversion.
-    * **Type conversion:** Implement `ToJSVal` / `FromJSVal` type-classes in Haskell, analogously to `ToJSON` / `FromJSON` in [Aeson](https://hackage.haskell.org/package/aeson), for conversions between Haskell and JS types. JSON string serialization can be used as an efficient intermediate representation (Haskell -> AESON -> String -> JS), and it can be used directly for simple types like addresses (and [Bech32](https://github.com/bitcoin/bips/blob/master/bip-0173.mediawiki) encoded data).
+    * **Type conversion:** Implement `ToJSVal` / `FromJSVal` type-classes in Haskell, analogously to `ToJSON` / `FromJSON` in [Aeson](https://hackage.haskell.org/package/aeson), for conversions between Haskell and JS types. JSON string serialization can be used as an efficient intermediate representation. The mechanism can follow these steps:
+       1. Check if the Haskell type has an `Aeson` instance, if it doesn't convert it into a `TextEnvelope`.
+       2. Take the Haskell type with `Aeson` instance or its `TextEnvelope` (which has an `Aeson` instance), and use the instance to serialise it as a `String` containing its JSON representation.
+       3. Convert the `String` to `JSString` (using the `toJSString` function from `GHC.Wasm.Prim` in the `ghc-experimental` package)
+       4. Deserialise the JSON in the `JSString` using the `JSON.parse` JavaScript function. This can be from Haskell by using a `foreign import`, and that will give us a `JSVal`, which we can pass directly to JavaScript through the API.
+
+         The same process can be followed in the reverse direction by using `JSON.stringify` function in JavaScript, and the `fromJSString` function from `GHC.Wasm.Prim`.
     * **Error handling:** Ensure clear, descriptive, and catchable errors.
     * **BigInt for large amounts:** Use JavaScript [`BigInt`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt	) for Ada/Lovelace amounts to prevent precision loss (also serialised/deserialised as/from strings).
 5.  **Documentation & Examples:**
@@ -203,3 +209,4 @@ SOP (or Same-Origin Policy) is a restriction that is enforced by browsers to pro
 Additionally, if SOP was not in place, a very popular but malicious website could easily include a JavaScript snippet that would cause every visitor of the malicious website to silently make potentially costly requests against a victim API, and that would potentially work out as DDOS (Distribute Denegation of Services) attack, by consuming lots of resources from the victim API.
 
 Unfortunately, this means that JavaScript cannot access public API's unless those API's use CORS to lift SOP restrictions. This ADR suggests that there could potentially exist a service like [Koios](https://koios.rest/) that does this, as long as it can be guaranteed that the queries offered by the API are made in a way that is efficient enough, and user supplantation is made impossible or not applicable.
+

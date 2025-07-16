@@ -1,7 +1,7 @@
 
-# ADR-014: JavaScript API for Cardano via WASM-compiled cardano-api
+# ADR-015: JavaScript API for Cardano via WASM-compiled cardano-api
 
-**Status:** Proposed
+**Status:** Adopted
 
 **Date:** 2025-05-22
 
@@ -220,8 +220,13 @@ Where `state` is a variable declared globally in JavaScript. This way, the user 
 
 ## Conclusion
 
-Developing a JavaScript/TypeScript API for Cardano by compiling `cardano-api` to WASM is very feasible and we can make it easy and frictionless for the user. We must make sure to keep it simple, stable, and test all the user flows. We also should ensure we use pure Haskell as far as possible to take advantage of HLS as much as possible, and we can try to automate as much of the glue layer generation as possible. We should also provide TypeScript types for the API to both make it easier (through auto-complete documentation) and safer (through types) for users to develop using the API. And we should ensure compatibility with the different workflows and consistency through the use of CI whenever possible.
+Developing a JavaScript/TypeScript API for Cardano by compiling `cardano-api` to WASM is very feasible and we can make it easy and frictionless for the user. We must make sure to keep it simple, stable, and test all the user flows. We also should ensure we use pure Haskell as far as possible to take advantage of HLS as much as possible, and we can automate as much of the glue layer generation as possible in two ways:
 
+* Generalising the boilerplate so that it is reusable and structured.
+* Making the API inspectable by JavaScript and deriving part of it using JavaScript reflection capabilities.
+* Using meta programming to generate boilerplate (Template Haskell).
+
+We must also provide a TypeScript declaration file for the API to both make it easier (through auto-complete documentation) and safer (through types) for users to develop using the API. And we will aim to derive the type declaration file automatically from the Haskell code to ensure consistency. We should also ensure compatibility with the different workflows and consistency through the use of CI whenever possible.
 
 ## Appendix: **CORS and SOP explained**
 

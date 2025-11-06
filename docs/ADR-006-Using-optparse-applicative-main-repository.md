@@ -1,6 +1,6 @@
 # Status
 
-📜 Proposed 2024-09-19
+ ❌ Rejected 2025-11-06
 
 # Context
 
@@ -8,7 +8,7 @@ In 2021, we (the API and CLI team) wanted to improve the pretty printing of `opt
 so that it aligns most flags vertically. E.g. we wanted this behavior:
 
 ```
-Usage: cardano-cli transaction build-raw  
+Usage: cardano-cli transaction build-raw
             [ --byron-era
             | --shelley-era
             | --allegra-era
@@ -54,9 +54,14 @@ We want to get rid of our fork of `optparse-applicative`. Luckily, ideas from ou
 
 We did [a PR](https://github.com/pcapriotti/optparse-applicative/pull/494) to `optparse-applicative` with the tweak we need. This PR is way smaller than our PR from 2021 and so we are hopeful it will be accepted.
 
+## Update 2025-11-05
+
+After [our PR to `optparse-applicative`](https://github.com/pcapriotti/optparse-applicative/pull/494) got merged, [`cardano-cli`'s PR](https://github.com/IntersectMBO/cardano-cli/pull/899) got revisited.
+The changes in the rendered help are still detrimental to the help text readability, therefore the PR was closed, and the attempt to abandon the fork postponed.
+
 # Consequences
 
-We have `cardano-cli` depend on [pcapriotti/optparse-applicative](https://github.com/pcapriotti/optparse-applicative) instead of [input-output-hk/optparse-applicative](https://github.com/input-output-hk/optparse-applicative), when [our PR](https://github.com/pcapriotti/optparse-applicative/pull/494) to `optparse-applicative` is merged and released.
+~~We have `cardano-cli` depend on [pcapriotti/optparse-applicative](https://github.com/pcapriotti/optparse-applicative) instead of [input-output-hk/optparse-applicative](https://github.com/input-output-hk/optparse-applicative), when [our PR](https://github.com/pcapriotti/optparse-applicative/pull/494) to `optparse-applicative` is merged and released.~~
 
 # References
 

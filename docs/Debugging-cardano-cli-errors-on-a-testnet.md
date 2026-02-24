@@ -2,7 +2,7 @@
 
 This document is intended for Cardano node and `cardano-cli` (CLI) users, as well as Cardano developers that wish to investigate CLI problems.
 
-We recommend making sure the `cardano-node` tests pass before starting to debug a problem. Additionally, take a look at the [Consensus sanity checklist](https://ouroboros-consensus.cardano.intersectmbo.org/docs/for-developers/SanityChecks).
+We recommend making sure the `cardano-node` tests pass before starting to debug a problem. Additionally, take a look at the [Consensus sanity checklist](https://ouroboros-consensus.cardano.intersectmbo.org/docs/howtos/contributing/sanity_checks).
 
 Once the node tests successfully pass, and you've read through the Consensus checklist, collect node logs to speed up the process of finding the cause of a problem. Below, we describe the steps to run a node that connects to a given testnet and get access to a `cardano-cli` that can be used to communicate with the node. These instructions work on a Unix environment with `nix` installed.
 

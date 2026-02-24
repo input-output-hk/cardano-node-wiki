@@ -20,7 +20,7 @@ Some conversion functions with lengthy names, are not very convenient to use.
 
 ## Type classes
 
-For total functions, which are simply converting a value from one type to another, we can use type classes [`Inject` (from `cardano-ledger`)](https://cardano-ledger.cardano.intersectmbo.org/cardano-ledger-core/Cardano-Ledger-BaseTypes.html#t:Inject) & [`Convert`](https://cardano-api.cardano.intersectmbo.org/cardano-api/Cardano-Api-Internal-Eras.html#t:Convert):
+For total functions, which are simply converting a value from one type to another, we can use type classes [`Inject` (from `cardano-ledger`)](https://cardano-ledger.cardano.intersectmbo.org/cardano-ledger-core/Cardano-Ledger-BaseTypes.html#t:Inject) & [`Convert`](https://cardano-api.cardano.intersectmbo.org/cardano-api/Cardano-Api-Era.html#t:Convert):
 ```haskell
 class Inject t s where
   inject :: t -> s

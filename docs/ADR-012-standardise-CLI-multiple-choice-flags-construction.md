@@ -232,3 +232,8 @@ pQueryUTxOCmd era envCli =
 * *Migration effort*: Existing commands must be updated to the new `Vary` + `Flag` approach.
 * *Learning curve*: Contributors will need to understand how `Flag`, `Vary`, and `setDefault` work.
 * *Breaking changes*: Some commands may behave differently after adopting this change.
+
+# Related ADRs
+
+- [ADR-006](ADR-006-Using-optparse-applicative-main-repository.md) (rejected) — the `optparse-applicative` fork used by `cardano-cli`.
+- [ADR-013](ADR-013-Metavars-must-follow-screaming-snake-case.md) defines metavar naming conventions that apply to flags defined here.

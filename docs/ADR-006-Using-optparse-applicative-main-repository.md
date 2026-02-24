@@ -68,3 +68,8 @@ The changes in the rendered help are still detrimental to the help text readabil
 * [Our 2021 PR](https://github.com/pcapriotti/optparse-applicative/pull/428) to `optparse-applicative`'s main repo.
 * [Our fork](https://github.com/input-output-hk/optparse-applicative) of optparse-applicative.
 * [Our 2024 PR](https://github.com/pcapriotti/optparse-applicative/pull/494) to `optparse-applicative`'s main repo.
+
+# Related ADRs
+
+- [ADR-012](ADR-012-standardise-CLI-multiple-choice-flags-construction.md) standardises CLI flag construction, which relies on the fork this ADR attempted to replace.
+- [ADR-013](ADR-013-Metavars-must-follow-screaming-snake-case.md) defines metavar naming conventions for the help text produced by the fork.

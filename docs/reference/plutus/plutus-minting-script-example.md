@@ -34,7 +34,7 @@ This will output `anyone-can-mint.plutus` in the `generated-plutus-scripts` dir.
 
 #### Setting up a local Alonzo node cluster
 
-First follow the [install doc](https://github.com/input-output-hk/cardano-node-wiki/blob/main/docs/getting-started/install.md) if you haven't. This convenient script will set up an Alonzo cluster immediately on your local machine:
+First follow the [install doc](https://developers.cardano.org/docs/get-started/infrastructure/node/installing-cardano-node/) if you haven't. This convenient script will set up an Alonzo cluster immediately on your local machine:
 
 ```bash
 ./scripts/byron-to-alonzo/mkfiles.sh alonzo

@@ -19,7 +19,7 @@ and various run-modes:
 You must already be able to build everything in the `cardano-node` repository
 using `cabal` (not `nix`).
 
-See [Installing a node from source](install.md).
+See [Installing a node from source](https://developers.cardano.org/docs/get-started/infrastructure/node/installing-cardano-node/).
 
 ## Running the chairman test
 The chairman test will run some testnets and perform some basic tests to ensure they

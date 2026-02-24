@@ -170,7 +170,7 @@ Starting the cluster requires topology files for each of the nodes. For example:
    ]
  }
 ```
-Note: For details about topology files please refer to [Understanding configuration files](../getting-started/understanding-config-files.md).
+Note: For details about topology files please refer to [Understanding configuration files](configuring-a-node-using-yaml.md).
 
 
 Then, run the nodes with block production keys, for example:

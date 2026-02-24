@@ -36,3 +36,7 @@ However, moving the `NodeConfiguration` type and its accompanying types to `card
 # Consequences
 
 This will allow users of testnets to check their node configuration file before starting their testnet, and so they will catch errors earlier and faster.
+
+# Related ADRs
+
+- [ADR-007](ADR-007-CLI-Output-Presentation.md) — CLI output conventions (stdout vs stderr) apply to this command.

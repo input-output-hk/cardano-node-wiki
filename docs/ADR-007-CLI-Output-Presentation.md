@@ -36,3 +36,8 @@ This will require updating them to make things consistent across all the command
 [unix-philosophy]: https://en.wikipedia.org/wiki/Unix_philosophy
 [bell-journal]: https://archive.org/details/bstj57-6-1899/mode/2up
 
+# Related ADRs
+
+- [ADR-005](ADR-005-cardano-testnet-node-configuration-file.md) introduces a new CLI command that should follow these output conventions.
+- [ADR-008](ADR-008-Use-RIO-in-cardano‐cli.md) addresses error handling and rendering in `cardano-cli`.
+

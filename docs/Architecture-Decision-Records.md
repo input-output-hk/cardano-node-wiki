@@ -8,6 +8,7 @@
 * 📜 [[ADR-6 Using optparse-applicative main repository]]
 * 📜 [[ADR-7 CLI Output Presentation]]
 * 📜 [[ADR-16 cardano-api new TxBodyContent]]
+* ✅ [[ADR-17 Cardano.Api.Compatible]]
 
 ## Legend
 

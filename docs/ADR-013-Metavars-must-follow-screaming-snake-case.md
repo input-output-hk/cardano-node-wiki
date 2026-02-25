@@ -63,4 +63,4 @@ In this Architecture Decision Record (ADR), we establish the policy of adopting 
 # Related ADRs
 
 - [ADR-006](ADR-006-Using-optparse-applicative-main-repository.md) (rejected) — help text formatting, which displays metavars, is produced using our `optparse-applicative` fork.
-- [ADR-012](ADR-012-standardise-CLI-multiple-choice-flags-construction.md) defines flag construction conventions; flags defined there should use metavar names following this ADR.
+- [ADR-012](ADR-012-standardise-CLI-multiple-choice-flags-construction.md) — defines flag construction conventions; flags defined there should use metavar names following this ADR.

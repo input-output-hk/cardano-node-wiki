@@ -239,5 +239,5 @@ Unfortunately, this means that JavaScript cannot access public API's unless thos
 
 ## Related ADRs
 
-- [ADR-004](ADR-004-Support-only-for-mainnet-and-upcoming-eras.md) defines the eras available to the WASM API.
+- [ADR-004](ADR-004-Support-only-for-mainnet-and-upcoming-eras.md) — defines the eras available to the WASM API.
 - [ADR-014](ADR-014-Total-conversion-functions-conventions.md) — the `Inject`/`Convert` pattern is analogous to the `ToJSVal`/`FromJSVal` type classes proposed here.

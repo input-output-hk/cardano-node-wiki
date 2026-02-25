@@ -265,4 +265,4 @@ Acceptance of this ADR will:
 # Related ADRs
 
 - [ADR-004](ADR-004-Support-only-for-mainnet-and-upcoming-eras.md) defines the available eras that parameterize the witness API.
-- [ADR-014](ADR-014-Total-conversion-functions-conventions.md) — conversions between `cardano-api` and `cardano-ledger` types should use `Inject`/`Convert`.
+- [ADR-014](ADR-014-Total-conversion-functions-conventions.md) conversions between `cardano-api` and `cardano-ledger` types should use `Inject`/`Convert`.

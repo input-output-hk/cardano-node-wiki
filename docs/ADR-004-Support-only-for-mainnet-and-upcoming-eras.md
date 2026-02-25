@@ -171,7 +171,7 @@ The ADR gets adopted in `cardano-api` and `cardano-cli`. There may be minor twea
 
 # Related ADRs
 
-- [ADR-001](ADR-001-Default-eras-for-CLI-commands.md) defines how CLI commands default to an era.
-- [ADR-009](ADR-009-cardano-api-exports-convention.md) defines the `Cardano.Api.Experimental` and `Cardano.Api.Compatible` module structure.
+- [ADR-001](ADR-001-Default-eras-for-CLI-commands.md) — defines how CLI commands default to an era.
+- [ADR-009](ADR-009-cardano-api-exports-convention.md) — defines the `Cardano.Api.Experimental` and `Cardano.Api.Compatible` module structure.
 - [ADR-010](ADR-010-cardano-api-script-witness-api.md) — the script witness API is parameterized by these eras.
 - [ADR-015](ADR-015-Cardano-API-WASM-library-for-browser.md) — the WASM API exposes only the eras defined here.

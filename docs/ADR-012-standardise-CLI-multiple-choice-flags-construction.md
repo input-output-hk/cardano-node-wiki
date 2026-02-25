@@ -236,4 +236,4 @@ pQueryUTxOCmd era envCli =
 # Related ADRs
 
 - [ADR-006](ADR-006-Using-optparse-applicative-main-repository.md) (rejected) — the `optparse-applicative` fork used by `cardano-cli`.
-- [ADR-013](ADR-013-Metavars-must-follow-screaming-snake-case.md) defines metavar naming conventions that apply to flags defined here.
+- [ADR-013](ADR-013-Metavars-must-follow-screaming-snake-case.md) — defines metavar naming conventions that apply to flags defined here.

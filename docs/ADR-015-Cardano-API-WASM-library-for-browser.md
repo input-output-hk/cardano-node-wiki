@@ -236,3 +236,8 @@ SOP (or Same-Origin Policy) is a restriction that is enforced by browsers to pro
 Additionally, if SOP was not in place, a very popular but malicious website could easily include a JavaScript snippet that would cause every visitor of the malicious website to silently make potentially costly requests against a victim API, and that would potentially work out as DDOS (Distribute Denegation of Services) attack, by consuming lots of resources from the victim API.
 
 Unfortunately, this means that JavaScript cannot access public API's unless those API's use CORS to lift SOP restrictions. This ADR suggests that there could potentially exist a service like [Koios](https://koios.rest/) that does this, as long as it can be guaranteed that the queries offered by the API are made in a way that is efficient enough, and user supplantation is made impossible or not applicable.
+
+## Related ADRs
+
+- [ADR-004](ADR-004-Support-only-for-mainnet-and-upcoming-eras.md) — defines the eras available to the WASM API.
+- [ADR-014](ADR-014-Total-conversion-functions-conventions.md) — the `Inject`/`Convert` pattern is analogous to the `ToJSVal`/`FromJSVal` type classes proposed here.

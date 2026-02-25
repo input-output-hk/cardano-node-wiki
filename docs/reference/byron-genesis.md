@@ -146,7 +146,7 @@ The key `protocolMagic` defines the protocol magic number. When the protocol mag
 The `protocolMagic` value can either be an object with the two fields described above, or just a plain integer. In the latter case, `requiresNetworkMagic` will take the default value of `RequiresMagic`.
 
 Relevant:
-- [cardano-ledger - Genesis test](https://github.com/intersectmbo/cardano-ledger/blob/master/eras/byron/ledger/impl/test/Test/Cardano/Chain/Genesis/Json.hs#L69)
+- [cardano-ledger - Genesis test](https://github.com/intersectmbo/cardano-ledger/blob/master/eras/byron/ledger/impl/testlib/Test/Cardano/Chain/Genesis/Json.hs)
 - [cardano-ledger - ProtocolMagic](https://github.com/intersectmbo/cardano-ledger/blob/master/eras/byron/crypto/src/Cardano/Crypto/ProtocolMagic.hs)
 
 ## heavyDelegation

@@ -20,7 +20,7 @@ Some conversion functions with lengthy names, are not very convenient to use.
 
 ## Type classes
 
-For total functions, which are simply converting a value from one type to another, we can use type classes [`Inject` (from `cardano-ledger`)](https://cardano-ledger.cardano.intersectmbo.org/cardano-ledger-core/Cardano-Ledger-BaseTypes.html#t:Inject) & [`Convert`](https://cardano-api.cardano.intersectmbo.org/cardano-api/Cardano-Api-Internal-Eras.html#t:Convert):
+For total functions, which are simply converting a value from one type to another, we can use type classes [`Inject` (from `cardano-ledger`)](https://cardano-ledger.cardano.intersectmbo.org/cardano-ledger-core/Cardano-Ledger-BaseTypes.html#t:Inject) & [`Convert`](https://cardano-api.cardano.intersectmbo.org/cardano-api/Cardano-Api-Era.html#t:Convert):
 ```haskell
 class Inject t s where
   inject :: t -> s
@@ -114,5 +114,11 @@ toBaz :: Foo -> Baz
 ## Disadvantages
 - It may be a bit less obvious how to discover available conversions, because one would have to browse the type's `Inject` instances to find the conversion functions they are looking for - instead of looking for exported functions.
 
+
+# Related ADRs
+
+- [ADR-009](ADR-009-cardano-api-exports-convention.md) — defines module conventions; instance placement ("near the definition of one of the types") should follow those conventions.
+- [ADR-010](ADR-010-cardano-api-script-witness-api.md) — the script witness API converts extensively between `cardano-api` and `cardano-ledger` types; these conversions should use `Inject`/`Convert`.
+- [ADR-015](ADR-015-Cardano-API-WASM-library-for-browser.md) — the `ToJSVal`/`FromJSVal` type class pattern is analogous to the `Inject`/`Convert` pattern defined here.
 
 [modeline]: # ( vim: set spell spelllang=en: )

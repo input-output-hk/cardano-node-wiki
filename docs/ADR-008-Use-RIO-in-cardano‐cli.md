@@ -183,3 +183,8 @@ The purpose of `CustomCliException` is to represent explicitly thrown, structure
 - This should dramatically improve our code's composability and remove many unnecessary error types. 
 - Readability concerning what errors can be thrown will be negatively impacted. However, `ExceptT` already lies about what exceptions can be thrown because it is not limited to the error type stated in `ExceptT`'s type signature. In other words, `IO` can implicitly throw other `Exception`s. 
 - Initially, this will be adopted under the "compatible" group of commands so `cardano-cli` will have a design split temporarily. Once we are happy with the result we will propagate to the rest of `cardano-cli`
+
+# Related ADRs
+
+- [ADR-007](ADR-007-CLI-Output-Presentation.md) defines CLI output stream conventions (stdout vs stderr).
+- [ADR-011](ADR-011-Better-call-stacks-of-io-exceptions.md) extends this ADR with better call stacks for IO exceptions.

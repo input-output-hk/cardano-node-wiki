@@ -48,4 +48,4 @@ Make your __relay node__ `talk` to your __block-producing__ node and __other rel
 **Note**: If you want to connect to IPv4 and IPv6 relays, you must either not specify host addresses when starting `cardano-node` or make sure to specify
 both an IPv4 and IPv6 host address.
 
-Please see [Understanding configuration files](../getting-started/understanding-config-files.md) to learn about P2P topology.
+Please see [Understanding configuration files](../reference/configuring-a-node-using-yaml.md) to learn about P2P topology.

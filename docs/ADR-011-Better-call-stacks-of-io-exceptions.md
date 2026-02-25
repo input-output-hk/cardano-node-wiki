@@ -7,7 +7,7 @@
 This ADR enriches exceptions thrown from `IO` functions with call stacks up to the function usage site.
 
 ## The problem
-This ADR bases on [[ADR-8-Use-RIO-in-cardano‐cli]].
+This ADR extends [ADR-008](ADR-008-Use-RIO-in-cardano‐cli.md).
 
 The goal of this ADR is to provide better call stacks in `IO` exceptions.
 The problem with exceptions thrown from IO monad is that they do not carry call stack from where they were thrown.

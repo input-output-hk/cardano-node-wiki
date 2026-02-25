@@ -8,6 +8,24 @@
         },
         {
             "pattern": "https://iohk.zendesk.com"
+        },
+        {
+            "pattern": "^https://www.npmjs.com"
+        },
+        {
+            "pattern": "^https://stackoverflow.com"
+        },
+        {
+            "pattern": "^https://hub.docker.com"
+        },
+        {
+            "pattern": "^https://nixos.wiki"
+        },
+        {
+            "pattern": "^https://www.freedesktop.org"
+        },
+        {
+            "pattern": "scripts/byron-to-alonzo/mkfiles.sh"
         }
     ],
     "retryOn429": true,

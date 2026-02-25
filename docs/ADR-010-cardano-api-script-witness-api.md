@@ -261,3 +261,8 @@ Acceptance of this ADR will:
 - Improve the clarity of the witness and script apis
 - Make clearer the relationship between the redeemer pointers and the script witnesses
 - Allow us to use the new api "under the hood" of the old api reducing the maintenance burden of maintaining the old vs new api.
+
+# Related ADRs
+
+- [ADR-004](ADR-004-Support-only-for-mainnet-and-upcoming-eras.md) defines the available eras that parameterize the witness API.
+- [ADR-014](ADR-014-Total-conversion-functions-conventions.md) conversions between `cardano-api` and `cardano-ledger` types should use `Inject`/`Convert`.

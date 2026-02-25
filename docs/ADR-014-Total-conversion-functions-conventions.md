@@ -117,7 +117,7 @@ toBaz :: Foo -> Baz
 
 # Related ADRs
 
-- [ADR-009](ADR-009-cardano-api-exports-convention.md) defines module conventions; instance placement ("near the definition of one of the types") should follow those conventions.
+- [ADR-009](ADR-009-cardano-api-exports-convention.md) — defines module conventions; instance placement ("near the definition of one of the types") should follow those conventions.
 - [ADR-010](ADR-010-cardano-api-script-witness-api.md) — the script witness API converts extensively between `cardano-api` and `cardano-ledger` types; these conversions should use `Inject`/`Convert`.
 - [ADR-015](ADR-015-Cardano-API-WASM-library-for-browser.md) — the `ToJSVal`/`FromJSVal` type class pattern is analogous to the `Inject`/`Convert` pattern defined here.
 

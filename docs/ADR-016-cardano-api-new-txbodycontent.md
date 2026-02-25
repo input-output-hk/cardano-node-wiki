@@ -114,7 +114,7 @@ Wrapper types with "None" constructors that carried eon proofs are replaced with
 
 ### Removal of `txUpdateProposal`
 
-The `txUpdateProposal` field is removed entirely. This was a pre-Conway governance mechanism that is obsolete. The experimental API targets Conway and later eras only.
+The `txUpdateProposal` field is removed entirely. This was a pre-Conway governance mechanism that is obsolete. The experimental API targets Conway and later eras only (see [ADR-004](https://github.com/input-output-hk/cardano-node-wiki/blob/main/docs/ADR-004-Support-only-for-mainnet-and-upcoming-eras.md)). For era compatibility functionality, see the [`Cardano.Api.Compatible.Tx`](https://github.com/IntersectMBO/cardano-api/blob/main/cardano-api/src/Cardano/Api/Compatible/Tx.hs) module.
 
 ### Removal of `Featured` and eon wrappers for governance fields
 
@@ -149,9 +149,7 @@ defaultTxBodyContent
   & setTxWithdrawals withdrawals
 ```
 
-This avoids a lens dependency in the public API while enabling clean composition.
-
-## Integration with ADR-010 witness types
+## Integration with [ADR-010](https://github.com/input-output-hk/cardano-node-wiki/blob/main/docs/ADR-010-cardano-api-script-witness-api.md) witness types
 
 The new `TxBodyContent` directly uses the witness types from ADR-010:
 
@@ -165,7 +163,7 @@ The `Witnessable` GADT and `createIndexedPlutusScriptWitnesses` from ADR-010 are
 ## New `UnsignedTx` type
 
 ```haskell
-data UnsignedTx era
+data UnsignedTx era where
   = L.EraTx era => UnsignedTx (Ledger.Tx era)
 ```
 
@@ -184,4 +182,3 @@ Acceptance of this ADR will:
 - Align the experimental API more closely with the ledger, making it easier to adopt new ledger features.
 - Complete the integration with the witness API from ADR-010, providing a cohesive experimental transaction API.
 - Remove compile-time era gating for fields that are only relevant in certain eras. Since the experimental API only supports Conway and Dijkstra, this is acceptable. If the experimental API is ever back-ported to earlier eras, this would need to be revisited.
-- Supersede the compatibility shim layer (`Cardano.Api.Experimental.Tx.Internal.Compatible`) which is now unnecessary.

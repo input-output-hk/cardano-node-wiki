@@ -106,8 +106,14 @@ type family StakeRegistrationRequirements era where
 
 This design means callers provide the correct data for each era
 without needing to pattern-match on era witnesses themselves.
-The `IsShelleyBasedEra` constraint on the certificate functions
-dispatches to the correct ledger operations internally.
+Note that `IsShelleyBasedEra` and the type families are distinct concerns:
+the type families determine the *types* of arguments at the call site (compile time),
+while the certificate functions also carry an `IsShelleyBasedEra era` constraint
+that provides the era singleton (`ShelleyBasedEra era`) used at runtime
+to dispatch to the correct ledger operations for each era.
+Callers in a polymorphic-era context must therefore include
+`IsShelleyBasedEra era` (or a stronger constraint that implies it,
+such as `IsBabbageBasedEra era`) in their own type signatures.
 
 ### Handling Governance Differences with GADTs
 

@@ -72,6 +72,9 @@ The Compatible API is organised into two sub-modules:
 
 ### Module Structure
 
+The module naming follows the convention established in
+[ADR-009](ADR-009-cardano-api-exports-convention.md).
+
 - **`Cardano.Api.Compatible`** — Top-level re-export module.
 - **`Cardano.Api.Compatible.Tx`** — Transaction construction functions.
 - **`Cardano.Api.Compatible.Certificate`** —

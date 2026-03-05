@@ -26,7 +26,7 @@ for constructing transactions and certificates:
    `Cardano.Api.Experimental.Tx.Internal.Certificate`) —
    A newer API built around the `IsEra` type class/ `Era` data type,
    which is intentionally restricted to only
-   the **current mainnet era and the upcoming era**
+   the **[current mainnet era and the upcoming era](https://github.com/input-output-hk/cardano-node-wiki/blob/main/docs/ADR-004-Support-only-for-mainnet-and-upcoming-eras.md)**
    (currently Conway and Dijkstra).
    After a hardfork, the previous era is deprecated and eventually removed.
    This forward-looking design avoids the combinatorial complexity

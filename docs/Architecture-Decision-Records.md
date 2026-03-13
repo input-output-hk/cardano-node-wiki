@@ -1,4 +1,3 @@
-**[View ADR Relationship Graph](ADR-Graph.html)** — interactive visualization of how ADRs reference each other
 
 * ✅ [ADR-0 Documenting Architecture Decisions](ADR-000-Documenting-Architecture-Decisions)
 * ✅ [ADR-1 Default eras for CLI commands](ADR-001-Default-eras-for-CLI-commands)

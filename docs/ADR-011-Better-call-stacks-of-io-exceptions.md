@@ -1,6 +1,6 @@
 # Status
 
-✅ Accepted 2025-03-11
+✅ Adopted 2025-03-11
 
 # Context
 

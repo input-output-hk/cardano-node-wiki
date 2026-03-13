@@ -12,7 +12,7 @@
 ## Legend
 
 * 📜 Proposed
-* ✅ Accepted
+* ✅ Adopted
 * ❌ Rejected
 * 🗑️ Deprecated
 * ⬆️ Superseded

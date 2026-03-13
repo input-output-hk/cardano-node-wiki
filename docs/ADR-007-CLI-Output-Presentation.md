@@ -38,6 +38,6 @@ This will require updating them to make things consistent across all the command
 
 # Related ADRs
 
-- [ADR-005](ADR-005-cardano-testnet-node-configuration-file.md) introduces a new CLI command that should follow these output conventions.
-- [ADR-008](ADR-008-Use-RIO-in-cardano‐cli.md) addresses error handling and rendering in `cardano-cli`.
+- [ADR-005](ADR-005-cardano-testnet-node-configuration-file) introduces a new CLI command that should follow these output conventions.
+- [ADR-008](ADR-008-Use-RIO-in-cardano‐cli) addresses error handling and rendering in `cardano-cli`.
 

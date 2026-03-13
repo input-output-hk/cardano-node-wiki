@@ -71,6 +71,6 @@ The changes in the rendered help are still detrimental to the help text readabil
 
 # Related ADRs
 
-- [ADR-003](ADR-003-Dependencies-version-constraints-in-cabal-file.md) — the fork is a concrete example of fork dependency constraints discussed there.
-- [ADR-012](ADR-012-standardise-CLI-multiple-choice-flags-construction.md) standardises CLI flag construction, which relies on the fork this ADR attempted to replace.
-- [ADR-013](ADR-013-Metavars-must-follow-screaming-snake-case.md) defines metavar naming conventions for the help text produced by the fork.
+- [ADR-003](ADR-003-Dependencies-version-constraints-in-cabal-file) — the fork is a concrete example of fork dependency constraints discussed there.
+- [ADR-012](ADR-012-standardise-CLI-multiple-choice-flags-construction) standardises CLI flag construction, which relies on the fork this ADR attempted to replace.
+- [ADR-013](ADR-013-Metavars-must-follow-screaming-snake-case) defines metavar naming conventions for the help text produced by the fork.

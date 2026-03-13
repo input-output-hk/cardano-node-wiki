@@ -166,4 +166,4 @@ Use the following convention:
 
 # Related ADRs
 
-- [ADR-009](ADR-009-cardano-api-exports-convention.md) — defines top-level module conventions for `cardano-api`; generator modules complement those conventions.
+- [ADR-009](ADR-009-cardano-api-exports-convention) — defines top-level module conventions for `cardano-api`; generator modules complement those conventions.

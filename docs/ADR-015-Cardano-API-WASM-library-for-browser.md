@@ -239,6 +239,6 @@ Unfortunately, this means that JavaScript cannot access public API's unless thos
 
 ## Related ADRs
 
-- [ADR-004](ADR-004-Support-only-for-mainnet-and-upcoming-eras.md) — defines the eras available to the WASM API.
-- [ADR-014](ADR-014-Total-conversion-functions-conventions.md) — the `Inject`/`Convert` pattern is analogous to the `ToJSVal`/`FromJSVal` type classes proposed here.
-- [ADR-018](ADR-018-cardano-rpc-grpc-server.md) — the gRPC server provides a complementary access method; its Envoy/gRPC-Web support enables browser clients.
+- [ADR-004](ADR-004-Support-only-for-mainnet-and-upcoming-eras) — defines the eras available to the WASM API.
+- [ADR-014](ADR-014-Total-conversion-functions-conventions) — the `Inject`/`Convert` pattern is analogous to the `ToJSVal`/`FromJSVal` type classes proposed here.
+- [ADR-018](ADR-018-cardano-rpc-grpc-server) — the gRPC server provides a complementary access method; its Envoy/gRPC-Web support enables browser clients.

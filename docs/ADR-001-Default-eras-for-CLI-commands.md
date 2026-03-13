@@ -57,5 +57,5 @@ For example, given the hard fork from Alonzo to Babbage:
 
 # Related ADRs
 
-- [ADR-004](ADR-004-Support-only-for-mainnet-and-upcoming-eras.md) limits the eras exposed by `cardano-api` to mainnet and upcoming only.
-- [ADR-012](ADR-012-standardise-CLI-multiple-choice-flags-construction.md) standardises how CLI choice flags (including era flags) should be constructed.
+- [ADR-004](ADR-004-Support-only-for-mainnet-and-upcoming-eras) limits the eras exposed by `cardano-api` to mainnet and upcoming only.
+- [ADR-012](ADR-012-standardise-CLI-multiple-choice-flags-construction) standardises how CLI choice flags (including era flags) should be constructed.

@@ -235,6 +235,6 @@ pQueryUTxOCmd era envCli =
 
 # Related ADRs
 
-- [ADR-001](ADR-001-Default-eras-for-CLI-commands.md) — era flags are an example of the choice flags standardised here.
-- [ADR-006](ADR-006-Using-optparse-applicative-main-repository.md) (rejected) — the `optparse-applicative` fork used by `cardano-cli`.
-- [ADR-013](ADR-013-Metavars-must-follow-screaming-snake-case.md) — defines metavar naming conventions that apply to flags defined here.
+- [ADR-001](ADR-001-Default-eras-for-CLI-commands) — era flags are an example of the choice flags standardised here.
+- [ADR-006](ADR-006-Using-optparse-applicative-main-repository) (rejected) — the `optparse-applicative` fork used by `cardano-cli`.
+- [ADR-013](ADR-013-Metavars-must-follow-screaming-snake-case) — defines metavar naming conventions that apply to flags defined here.

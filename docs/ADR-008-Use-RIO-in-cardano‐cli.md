@@ -1,5 +1,5 @@
 # Status
-- [x] Adopted 2025-02-10
+✅ Adopted 2025-02-10
 
 # Required Reading
 

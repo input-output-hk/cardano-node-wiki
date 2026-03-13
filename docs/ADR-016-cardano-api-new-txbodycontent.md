@@ -1,6 +1,6 @@
 # Status
 
--[ ] Proposed 2026-02-23
+📜 Proposed 2026-02-23
 
 # Context
 

@@ -82,6 +82,10 @@ There is also no established blockchain-agnostic REST specification comparable t
 - [Node integration](https://github.com/IntersectMBO/cardano-node/blob/main/cardano-node/src/Cardano/Node/Run.hs)
 - [Envoy gRPC-Web example](https://github.com/IntersectMBO/cardano-api/tree/main/cardano-wasm/examples/grpc/)
 
+# Related ADRs
+
+- [ADR-015](ADR-015-Cardano-API-WASM-library-for-browser.md) — the WASM library provides browser-side access to `cardano-api`; the gRPC server with Envoy/gRPC-Web enables browser clients to query the node.
+
 # Authors
 
 - Mateusz Gałażyn (initial version)

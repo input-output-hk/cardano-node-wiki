@@ -182,3 +182,8 @@ Acceptance of this ADR will:
 - Align the experimental API more closely with the ledger, making it easier to adopt new ledger features.
 - Complete the integration with the witness API from ADR-010, providing a cohesive experimental transaction API.
 - Remove compile-time era gating for fields that are only relevant in certain eras. Since the experimental API only supports Conway and Dijkstra, this is acceptable. If the experimental API is ever back-ported to earlier eras, this would need to be revisited.
+
+# Related ADRs
+
+- [ADR-004](ADR-004-Support-only-for-mainnet-and-upcoming-eras.md) — the new `TxBodyContent` targets Conway+ only, following the era policy defined there.
+- [ADR-010](ADR-010-cardano-api-script-witness-api.md) — the witness types (`AnyWitness`, `Witnessable`, etc.) are used directly in the new `TxBodyContent`.

@@ -92,4 +92,8 @@ This will allow for less error-prone dependency management.
 1. [Per-cabal-file `constraints` - Issue in haskell/cabal](https://github.com/haskell/cabal/issues/8912)
 1. https://input-output-hk.github.io/cardano-engineering-handbook/policy/haskell/packaging/versioning.html
 
+# Related ADRs
+
+- [ADR-006](ADR-006-Using-optparse-applicative-main-repository.md) (rejected) — the `optparse-applicative` fork is a concrete example of fork dependency constraints.
+
 

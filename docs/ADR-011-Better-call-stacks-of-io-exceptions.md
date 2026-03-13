@@ -7,7 +7,7 @@
 This ADR enriches exceptions thrown from `IO` functions with call stacks up to the function usage site.
 
 ## The problem
-This ADR bases on [[ADR-8-Use-RIO-in-cardano‐cli]].
+This ADR extends [ADR-008](ADR-008-Use-RIO-in-cardano‐cli.md).
 
 The goal of this ADR is to provide better call stacks in `IO` exceptions.
 The problem with exceptions thrown from IO monad is that they do not carry call stack from where they were thrown.
@@ -86,5 +86,9 @@ This means that `HasCallStack` constraint should not be blindly put everywhere b
 
 
 [hascallstack-perf-penalty]: https://stackoverflow.com/questions/57471398/how-does-hascallstack-influence-the-performance-of-a-normal-branch-in-haskell
+
+# Related ADRs
+
+- [ADR-008](ADR-008-Use-RIO-in-cardano‐cli.md) — this ADR extends ADR-008's `RIO` adoption with better call stacks for IO exceptions.
 
 [modeline]: # ( vim: set spell spelllang=en: )

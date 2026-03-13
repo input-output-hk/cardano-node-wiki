@@ -53,4 +53,9 @@ For example, given the hard fork from Alonzo to Babbage:
 * Users will not be surprised by difference in behaviour between different commands.
 * Users will not necessarily be using the current era by default.
 * Users will be using a most practical current era by default on Mainnet and other networks that may not be on the same era as Mainnet.
-* Users will need to explicitly specify the current era after a hard fork and before the release immediately following the hard for if that's what they really want and at their own risk.
+* Users will need to explicitly specify the current era after a hard fork and before the release immediately following the hard fork if that's what they really want and at their own risk.
+
+# Related ADRs
+
+- [ADR-004](ADR-004-Support-only-for-mainnet-and-upcoming-eras.md) limits the eras exposed by `cardano-api` to mainnet and upcoming only.
+- [ADR-012](ADR-012-standardise-CLI-multiple-choice-flags-construction.md) standardises how CLI choice flags (including era flags) should be constructed.

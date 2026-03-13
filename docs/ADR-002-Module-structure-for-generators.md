@@ -163,3 +163,7 @@ Use the following convention:
 * Motivations for this convention are clear.
 * There remains no standardisation across the IOG organisation which can continue to lead to cross project confusions.
 * Whilst standardisation remains a worthwhile cause, we don't second guess what an organisation level standard might look like and avoiding having to refactor yet again.
+
+# Related ADRs
+
+- [ADR-009](ADR-009-cardano-api-exports-convention.md) — defines top-level module conventions for `cardano-api`; generator modules complement those conventions.

@@ -92,8 +92,8 @@ Acceptance of ADR will require rename of almost all cardano-api modules which wi
 
 # Related ADRs
 
-- [ADR-002](ADR-002-Module-structure-for-generators.md) defines generator module conventions (`Test.Gen.[Path]`, etc.).
-- [ADR-004](ADR-004-Support-only-for-mainnet-and-upcoming-eras.md) defines the eras exposed through `Cardano.Api.Experimental` and `Cardano.Api.Compatible`.
-- [ADR-010](ADR-010-cardano-api-script-witness-api.md) introduces new types that should be exported following these conventions.
-- [ADR-014](ADR-014-Total-conversion-functions-conventions.md) placement of `Inject`/`Convert` instances should follow the module conventions defined here.
+- [ADR-002](ADR-002-Module-structure-for-generators) defines generator module conventions (`Test.Gen.[Path]`, etc.).
+- [ADR-004](ADR-004-Support-only-for-mainnet-and-upcoming-eras) defines the eras exposed through `Cardano.Api.Experimental` and `Cardano.Api.Compatible`.
+- [ADR-010](ADR-010-cardano-api-script-witness-api) introduces new types that should be exported following these conventions.
+- [ADR-014](ADR-014-Total-conversion-functions-conventions) placement of `Inject`/`Convert` instances should follow the module conventions defined here.
 

@@ -264,7 +264,7 @@ Acceptance of this ADR will:
 
 # Related ADRs
 
-- [ADR-004](ADR-004-Support-only-for-mainnet-and-upcoming-eras.md) defines the available eras that parameterize the witness API.
-- [ADR-009](ADR-009-cardano-api-exports-convention.md) — new witness types should be exported following those module conventions.
-- [ADR-014](ADR-014-Total-conversion-functions-conventions.md) conversions between `cardano-api` and `cardano-ledger` types should use `Inject`/`Convert`.
-- [ADR-016](ADR-016-cardano-api-new-txbodycontent.md) — the new `TxBodyContent` integrates directly with the witness types defined here.
+- [ADR-004](ADR-004-Support-only-for-mainnet-and-upcoming-eras) defines the available eras that parameterize the witness API.
+- [ADR-009](ADR-009-cardano-api-exports-convention) — new witness types should be exported following those module conventions.
+- [ADR-014](ADR-014-Total-conversion-functions-conventions) conversions between `cardano-api` and `cardano-ledger` types should use `Inject`/`Convert`.
+- [ADR-016](ADR-016-cardano-api-new-txbodycontent) — the new `TxBodyContent` integrates directly with the witness types defined here.

@@ -185,5 +185,5 @@ Acceptance of this ADR will:
 
 # Related ADRs
 
-- [ADR-004](ADR-004-Support-only-for-mainnet-and-upcoming-eras.md) — the new `TxBodyContent` targets Conway+ only, following the era policy defined there.
-- [ADR-010](ADR-010-cardano-api-script-witness-api.md) — the witness types (`AnyWitness`, `Witnessable`, etc.) are used directly in the new `TxBodyContent`.
+- [ADR-004](ADR-004-Support-only-for-mainnet-and-upcoming-eras) — the new `TxBodyContent` targets Conway+ only, following the era policy defined there.
+- [ADR-010](ADR-010-cardano-api-script-witness-api) — the witness types (`AnyWitness`, `Witnessable`, etc.) are used directly in the new `TxBodyContent`.

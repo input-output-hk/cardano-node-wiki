@@ -39,4 +39,4 @@ This will allow users of testnets to check their node configuration file before 
 
 # Related ADRs
 
-- [ADR-007](ADR-007-CLI-Output-Presentation.md) — CLI output conventions (stdout vs stderr) apply to this command.
+- [ADR-007](ADR-007-CLI-Output-Presentation) — CLI output conventions (stdout vs stderr) apply to this command.

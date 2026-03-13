@@ -186,5 +186,5 @@ The purpose of `CustomCliException` is to represent explicitly thrown, structure
 
 # Related ADRs
 
-- [ADR-007](ADR-007-CLI-Output-Presentation.md) defines CLI output stream conventions (stdout vs stderr).
-- [ADR-011](ADR-011-Better-call-stacks-of-io-exceptions.md) extends this ADR with better call stacks for IO exceptions.
+- [ADR-007](ADR-007-CLI-Output-Presentation) defines CLI output stream conventions (stdout vs stderr).
+- [ADR-011](ADR-011-Better-call-stacks-of-io-exceptions) extends this ADR with better call stacks for IO exceptions.

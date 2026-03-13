@@ -24,7 +24,7 @@ The default socket path is `rpc.sock` in the same directory as the node socket; 
 
 Operators who need remote access can use [Envoy](https://www.envoyproxy.io/) as a reverse proxy in front of the Unix socket.
 Envoy terminates TLS, enforces access control (e.g., rate limiting, IP allowlists, mTLS client authentication), and translates between HTTP (including gRPC-Web for browser clients) and the upstream gRPC-over-Unix-socket connection.
-Working Envoy configurations are available in the [examples directory](https://github.com/IntersectMBO/cardano-api/tree/main/cardano-wasm/examples/grpc/).
+Working Envoy configurations are available in the [examples directory](https://github.com/IntersectMBO/cardano-api/tree/master/cardano-wasm/examples/grpc/).
 
 ## Integration with cardano-node
 
@@ -77,14 +77,14 @@ There is also no established blockchain-agnostic REST specification comparable t
 # References
 
 - [UTxO RPC specification](https://utxorpc.org/)
-- [Proto definitions](https://github.com/IntersectMBO/cardano-api/tree/main/cardano-rpc/proto/)
-- [Server implementation](https://github.com/IntersectMBO/cardano-api/blob/main/cardano-rpc/src/Cardano/Rpc/Server.hs)
-- [Node integration](https://github.com/IntersectMBO/cardano-node/blob/main/cardano-node/src/Cardano/Node/Run.hs)
-- [Envoy gRPC-Web example](https://github.com/IntersectMBO/cardano-api/tree/main/cardano-wasm/examples/grpc/)
+- [Proto definitions](https://github.com/IntersectMBO/cardano-api/tree/master/cardano-rpc/proto/)
+- [Server implementation](https://github.com/IntersectMBO/cardano-api/blob/master/cardano-rpc/src/Cardano/Rpc/Server.hs)
+- [Node integration](https://github.com/IntersectMBO/cardano-node/blob/master/cardano-node/src/Cardano/Node/Run.hs)
+- [Envoy gRPC-Web example](https://github.com/IntersectMBO/cardano-api/tree/master/cardano-wasm/examples/grpc/)
 
 # Related ADRs
 
-- [ADR-015](ADR-015-Cardano-API-WASM-library-for-browser.md) — the WASM library provides browser-side access to `cardano-api`; the gRPC server with Envoy/gRPC-Web enables browser clients to query the node.
+- [ADR-015](ADR-015-Cardano-API-WASM-library-for-browser) — the WASM library provides browser-side access to `cardano-api`; the gRPC server with Envoy/gRPC-Web enables browser clients to query the node.
 
 # Authors
 

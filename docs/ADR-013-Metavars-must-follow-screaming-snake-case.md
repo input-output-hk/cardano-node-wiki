@@ -1,6 +1,6 @@
 # Status
 
-- [ ] Adopted YYYY/MM/DD
+📜 Proposed YYYY/MM/DD
 
 # Context
 

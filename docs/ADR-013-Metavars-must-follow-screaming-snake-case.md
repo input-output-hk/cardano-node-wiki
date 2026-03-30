@@ -1,6 +1,6 @@
 # Status
 
-📜 Proposed YYYY/MM/DD
+📜 Proposed 2025-05-05
 
 # Context
 

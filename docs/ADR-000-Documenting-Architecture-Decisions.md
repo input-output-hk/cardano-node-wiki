@@ -25,14 +25,14 @@ If a decision is reversed, we will keep the old one around, but mark it as super
 
 Each ADR will use the following format:
 
-- **Title** — A short noun phrase. For example, "ADR-001: Deployment on Ruby on Rails 3.0.10".
-- **Status** — One of: "Proposed" 📜, "Adopted" ✅, "Rejected" ❌, "Deprecated" 🗑️, or "Superseded" ⬆️ (with a reference to its replacement).
-- **Context** — The forces at play (technological, political, social, project local), described in value-neutral language.
-- **Decision** — Our response to these forces, stated in full sentences with active voice. "We will ..."
-- **Alternatives Considered** — Other options that were evaluated and the reasons they were not chosen.
-- **Consequences** — The resulting context after applying the decision, including positive, negative, and neutral consequences.
-- **References** — Links to relevant research, documentation, RFCs, or prior ADRs that informed the decision.
-- **Authors** — Who proposed and approved the decision.
+- **Title** - A short noun phrase. For example, "ADR-001: Deployment on Ruby on Rails 3.0.10".
+- **Status** - One of: "Proposed" 📜, "Adopted" ✅, "Rejected" ❌, "Deprecated" 🗑️, or "Superseded" ⬆️ (with a reference to its replacement).
+- **Context** - The forces at play (technological, political, social, project local), described in value-neutral language.
+- **Decision** - Our response to these forces, stated in full sentences with active voice. "We will ..."
+- **Alternatives Considered** - Other options that were evaluated and the reasons they were not chosen.
+- **Consequences** - The resulting context after applying the decision, including positive, negative, and neutral consequences.
+- **References** - Links to relevant research, documentation, RFCs, or prior ADRs that informed the decision.
+- **Authors** - Who proposed and approved the decision.
 
 We should aim to keep each ADR concise.
 Each ADR should be written as a conversation with a future developer, using full sentences organized into paragraphs.

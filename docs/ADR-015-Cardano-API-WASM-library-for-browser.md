@@ -1,11 +1,10 @@
-
 # ADR-015: JavaScript API for Cardano via WASM-compiled cardano-api
 
-**Status:** Adopted
+# Status
 
-**Date:** 2025-05-22
+✅ Adopted 2025-05-22
 
-## Context
+# Context
 
 Decentralized Applications (DApps) mainly revolve around web browsers. The Cardano blockchain platform features `cardano-api`, a comprehensive Haskell library developed in conjunction with `cardano-node`, and offers extensive blockchain interaction capabilities implemented in a robust way thanks to strong typing, formal specifications, and extensive testing.
 

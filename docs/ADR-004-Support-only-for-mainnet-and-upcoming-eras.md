@@ -36,7 +36,10 @@ However, the only test QA performs across the eras are hardforks.
 Therefore we don't need to expose all the era specific functionality for each era, rather we need to maintain the ability to submit hardfork update proposals across the eras i.e Byron -> latest era. 
 
 Users consuming `cardano-api` are only interested in functionality relevant to mainnet and the upcoming era if they want to experiment with new features on a testnet.
-Therefore rather than maintaining a potentially never ending enumeration of eras, I propose to maintain only the era on mainnet and the upcoming era that will be hardforked to in the future.
+
+# Decision
+
+Rather than maintaining a potentially never ending enumeration of eras, we will maintain only the era on mainnet and the upcoming era that will be hardforked to in the future.
 
 ## Code 
 
@@ -76,7 +79,7 @@ instance UseEra ConwayEra where
   useEra = ConwayEra
 ```
 
-### Deprecation of an era
+## Deprecation of an era
 
 The following is an example of how a user would consume the api and how a user would see a deprecation of an era
 
@@ -143,27 +146,29 @@ If users for some reason want this, we can direct them to use the ledger's api d
 The next stage after deprecation period, should be **removal of the deprecated constructor**.
 The deprecation period should be long enough to give enough time for `cardano-api` consumers to update their codebase to the post-hardfork era.
 
-## Downsides
 
-`cardano-api` users will be limited up to only two eras exposed from `cardano-api`.
-This will force them to keep up-to-date their code after the hardfork. 
-This may turn out to be a disruptive process, but necessary to make the code using `cardano-api` healthy.
+## Method of transition
 
-# Approach
-
-The new api should be created adjacant to the existing one.
+The new API will be implemented in `cardano-api`, adjacant to the existing one.
 We then slowly replace the use of the existing api in cardano-api, eventually deprecating the "old" api. 
 
-# Decision
-
-The ADR gets adopted in `cardano-api` and `cardano-cli`. There may be minor tweaks as it is rolled out in `cardano-cli`.
+The new API will be used by `cardano-cli` as the first client by modifying the `cardano-cli` code to use the new API
+exclusively and lessons their will influence the evolution of the new API.
 
 # Consequences
+
+## Upsides
 
 - Less boiler plate in cardano-api and in users' codebases 
 - Clearer defined boundaries as to new functionality being introduced due to a new era
 - Lower maintenance overhead 
 - The need for an era agnostic api with respect to update proposals (these change on the Babbage/Conway boundary)
+
+## Downsides
+
+`cardano-api` users will be limited up to only two eras exposed from `cardano-api`.
+This will force them to keep up-to-date their code after the hardfork. 
+This may turn out to be a disruptive process, but necessary to make the code using `cardano-api` healthy.
 
 # References
 - 1: [ShelleyBasedEra](https://github.com/IntersectMBO/cardano-api/blob/873397bfe0436c224c593f456a3bc237ee0af0c8/cardano-api/internal/Cardano/Api/Eon/ShelleyBasedEra.hs#L123)

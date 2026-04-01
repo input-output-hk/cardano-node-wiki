@@ -119,6 +119,100 @@ Serving wrong data to clients due to encoder bugs is arguably a worse outcome th
 - [ADR-015](ADR-015-Cardano-API-WASM-library-for-browser) - the WASM library provides browser-side access to `cardano-api`.
   The gRPC server with Envoy/gRPC-Web enables browser clients to query the node.
 
+# Appendix: Build flag dependency analysis
+
+The `+rpc` cabal flag (off by default) gates `cardano-rpc` and its exclusive dependencies.
+`cardano-rpc`'s total transitive closure is 479 packages, but 460 of those are already pulled in by `cardano-api`.
+The flag eliminates **19 packages** that exist solely to support the gRPC stack.
+
+## Protocol Buffers (5 packages)
+
+| Package | Version | Maintainer |
+|---|---|---|
+| `proto-lens` | 0.7.1.6 | Google (proto-lens@googlegroups.com) |
+| `proto-lens-runtime` | 0.7.0.7 | Google (proto-lens@googlegroups.com) |
+| `proto-lens-protobuf-types` | 0.7.2.2 | Google (proto-lens@googlegroups.com) |
+| `lens-family` | 2.1.3 | Russell O'Connor |
+| `lens-family-core` | 2.1.3 | Russell O'Connor |
+
+## gRPC + HTTP/2 transport (10 packages)
+
+| Package | Version | Maintainer |
+|---|---|---|
+| `grapesy` | 1.1.1 | Edsko de Vries (Well-Typed) |
+| `grpc-spec` | 1.0.0 | Edsko de Vries (Well-Typed) |
+| `http2` | 5.3.9 | Kazu Yamamoto (IIJ) |
+| `http2-tls` | 0.4.9 | Kazu Yamamoto (IIJ) |
+| `http-semantics` | 0.3.0 | Kazu Yamamoto (IIJ) |
+| `network-control` | 0.1.7 | Kazu Yamamoto (IIJ) |
+| `network-run` | 0.4.4 | Kazu Yamamoto (IIJ) |
+| `recv` | 0.1.1 | Kazu Yamamoto (IIJ) |
+| `record-hasfield` | 1.0.1 | Neil Mitchell |
+| `snappy-c` | 0.1.3 | Finley McIlwaine (Well-Typed) |
+
+## Miscellaneous (4 packages)
+
+| Package | Version | Maintainer |
+|---|---|---|
+| `rio` | 0.1.24.0 | Michael Snoyman |
+| `generic-data` | 1.1.0.2 | Li-yao Xia |
+| `ap-normalize` | 0.1.0.1 | Li-yao Xia |
+| `show-combinators` | 0.2.0.0 | Li-yao Xia |
+
+Builds without the flag exclude all 19 packages and their compiled code entirely.
+
+## Risk profile
+
+Including these 19 packages in the default build introduces risks across several dimensions.
+
+### Supply chain breadth
+
+The 19 packages come from approximately 7 distinct maintainer groups (Google, Well-Typed, Kazu Yamamoto, Russell O'Connor, Neil Mitchell, Michael Snoyman, Li-yao Xia).
+Each maintainer account is an additional supply chain link: a compromised Hackage or CHaP credential, or a malicious commit to a source-repository-package, could inject code into the node binary.
+The build flag eliminates these additional supply chain links for operators who do not need RPC.
+
+### Network input parsing
+
+Four of the 19 packages -- `grapesy`, `grpc-spec`, `http2`, and `proto-lens` -- parse untrusted input from gRPC clients.
+Even behind a Unix domain socket, any local process (or an Envoy-exposed remote client) can send arbitrary bytes.
+These are Haskell packages, so GHC's runtime prevents memory corruption (buffer overruns, use-after-free).
+The realistic risks are unhandled exceptions that crash the RPC server and resource exhaustion from crafted inputs.
+Since the RPC server runs in the node process, either would affect the node.
+HTTP/2 implementations have a history of protocol-level denial-of-service vulnerabilities; the rapid-reset attack (CVE-2023-44487) affected most HTTP/2 implementations across languages in 2023.
+
+### C foreign function interface
+
+`snappy-c` binds Google's C++ snappy library via FFI, bypassing GHC's memory safety guarantees.
+The decompression path allocates a buffer sized by the attacker-controlled input, which could cause excessive memory allocation.
+`grpc-spec` enables snappy by default, so every gRPC-enabled build links the C library.
+
+### Version coupling
+
+`grapesy` pins `http2 == 5.3.9` (exact version).
+If a security fix lands in a newer `http2` release, `grapesy` must cut a new release before the node can adopt it.
+This creates a patching bottleneck: the node team cannot independently upgrade `http2` without coordinating with Well-Typed.
+
+### Maintenance continuity
+
+Several packages in the chain are maintained by a single individual.
+`http2` and five related packages depend on Kazu Yamamoto (IIJ).
+`lens-family` depends on Russell O'Connor.
+`record-hasfield` depends on Neil Mitchell.
+If any of these maintainers steps away, security patches and GHC compatibility updates stall.
+The `proto-lens` family is nominally maintained by Google but has seen limited activity; the project uses a fork pinned via `source-repository-package` rather than Hackage releases.
+
+### Risk-free packages
+
+Not all 19 packages carry equal risk.
+`generic-data`, `ap-normalize`, `show-combinators`, `lens-family`, `lens-family-core`, and `record-hasfield` are pure Haskell with no I/O, no FFI, and no network input parsing.
+Their risk is limited to supply chain compromise of their maintainer accounts.
+
+### Mitigation
+
+The build flag is the primary mitigation: operators who do not enable RPC compile and link none of these 19 packages.
+Block producers -- the highest-value targets on the network -- have no reason to enable the flag in production.
+For operators who do enable RPC, the Unix domain socket transport and the recommendation to front it with Envoy (TLS, rate limiting, authentication) provide defence in depth at the network layer.
+
 # Authors
 
 - Mateusz Gałażyn (initial version)

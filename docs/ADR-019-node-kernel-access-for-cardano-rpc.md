@@ -2,7 +2,7 @@
 
 # Status
 
-Proposed
+📜 Proposed 2026-06-03
 
 # Context
 
@@ -20,11 +20,20 @@ graph LR
     subgraph node["cardano-node process"]
         rpc["cardano-rpc"]
         n2c{{"N2C socket"}}
-        consensus[("Consensus")]
+        subgraph kernel["NodeKernel"]
+            chaindb[("ChainDB")]
+            mempool[("Mempool")]
+            config[("Config")]
+        end
         rpc -- "N2C IPC" --> n2c
-        n2c --> consensus
+        n2c --> chaindb
+        n2c --> mempool
+        n2c --> config
     end
 ```
+
+Both diagrams share the same source of truth - the `NodeKernel` subsystems.
+Only the access path changes: today cardano-rpc reaches them through the N2C socket, after this ADR it calls them in-process.
 
 cardano-rpc acts as an IPC client to its own host process.
 Each request pays for connection setup, protocol negotiation, and CBOR round-trips.
@@ -48,9 +57,34 @@ graph LR
     end
 ```
 
-cardano-rpc reads node state directly through a record of callbacks called `NodeKernelAccess`.
-The node populates this record once the consensus layer has initialised.
+cardano-rpc reads node state directly through a record of functions called `NodeKernelAccess`.
+The interface is using [The Service Pattern](https://www.schoolofhaskell.com/user/meiersi/the-service-pattern).
+Its example implementation is shown below (which will evolve together with new features):
+
+```haskell
+-- | Record of callbacks for in-process access to the node kernel.
+-- Constructed by cardano-node once consensus initialisation completes.
+data NodeKernelAccessF m = NodeKernelAccessF
+  { nkaWithSnapshot :: forall a. (LedgerSnapshot m -> m a) -> m a
+  -- ^ Acquire a consistent ledger snapshot and run queries against it.
+  -- All queries within one callback see the same chain tip.
+  , nkaSubmitTx :: TxInMode -> m (SubmitResult TxValidationErrorInCardanoMode)
+  -- ^ Submit a transaction to the mempool.
+  , nkaFetchBlock :: SlotNo -> Hash BlockHeader -> m (Maybe (ByteString, BlockNo))
+  -- ^ Fetch raw block CBOR and block number by slot and header hash.
+  -- Returns 'Nothing' if the block is not found.
+  }
+
+-- | A consistent, read-only view of ledger state at a single chain tip.
+newtype LedgerSnapshot m = LedgerSnapshot
+  { runQuery :: forall result. QueryInMode result -> m result
+  }
+```
+
+The functions are polymorphic in `m`, so the record producer is free to provide a suitable monad here.
 There is no socket, no protocol negotiation, and no serialisation between cardano-rpc and the node internals.
+
+For reference, the reader can assume that `type NodeKernelAccess = NodeKernelAccessF (RIO RpcEnv)`, though this detail is not important for understanding the architecture of the solution.
 
 # Decision
 
@@ -61,22 +95,19 @@ Provide cardano-rpc with a `NodeKernelAccess` record that exposes three capabili
 2. **Transaction submission** - submit a transaction to the mempool for validation and inclusion.
 3. **Block retrieval** - fetch raw block bytes from on-chain storage by slot and hash.
 
-These three capabilities correspond to the three subsystems inside `NodeKernel`: ChainDB (ledger state and block storage), Mempool (pending transactions), and TopLevelConfig (genesis and era configuration).
-
-## Dependency inversion
-
-cardano-rpc defines the `NodeKernelAccess` interface using only cardano-api types.
-It has no dependency on consensus internals.
-cardano-node implements the interface using `NodeKernel`, which is the natural provider of all three capabilities.
-
-This means cardano-rpc can be tested with a mock `NodeKernelAccess` that requires no running node.
+These three capabilities are backed by the subsystems inside `NodeKernel`: ChainDB (ledger state and block storage), Mempool (pending transactions), and TopLevelConfig (genesis and era configuration).
 
 ## Startup sequencing
 
 `NodeKernel` only becomes available after consensus initialisation completes.
-The gRPC server starts earlier, so the `NodeKernelAccess` value is held behind a mutable reference that starts empty.
+The gRPC server starts earlier, so the `NodeKernelAccess` value is held behind a mutable reference (e.g. `IORef (Maybe NodeKernelAccess)`) that starts empty.
 Requests arriving before the kernel is ready receive a gRPC `UNAVAILABLE` status.
-The node populates the reference in its kernel-ready callback, after which all requests are served.
+The node populates the reference in its [`rnNodeKernelHook`](https://github.com/IntersectMBO/cardano-node/blob/3a7d3d2c6787df6ec98ce368fc77f078feee2f8e/cardano-node/src/Cardano/Node/Run.hs#L581), after which all requests are served.
+
+### Dependency inversion
+
+cardano-rpc defines the `NodeKernelAccess` interface and provides a producer `mkNodeKernelAccess` function, which cardano-node uses for initialisation.
+This inversion of control means cardano-rpc can be tested with a mock `NodeKernelAccess` that requires no running node.
 
 ## Snapshot consistency
 
@@ -89,12 +120,13 @@ The snapshot-based design avoids this by letting the caller open a snapshot once
 ## UTxO RPC spec coverage
 
 `NodeKernel` covers 16 of the 18 RPCs defined in the UTxO RPC v1beta specification.
+The table below lists those 16 distinct methods, each under the subsystem that primarily backs it.
 
 | Subsystem | Capabilities | RPCs |
 |-----------|-------------|------|
-| ChainDB | Block retrieval, ledger queries, chain following | FetchBlock, DumpHistory, FollowTip, ReadTip, ReadParams, ReadUtxos, SearchUtxos, ReadGenesis, ReadEraSummary, ReadState, EvalTx |
-| Mempool | Transaction submission, snapshot inspection | SubmitTx, ReadMempool, WatchMempool |
-| TopLevelConfig | Genesis config, era history | ReadGenesis (also via ChainDB) |
+| ChainDB | Block retrieval, ledger queries, chain following | FetchBlock, DumpHistory, FollowTip, ReadTip, ReadParams, ReadUtxos, SearchUtxos, ReadEraSummary, ReadState, EvalTx, WatchTx |
+| Mempool | Transaction submission, snapshot and lifecycle inspection | SubmitTx, ReadMempool, WatchMempool, WaitForTx |
+| TopLevelConfig | Genesis config, era history | ReadGenesis |
 
 The two RPCs that `NodeKernel` cannot serve are **ReadTx** (transaction lookup by hash) and **ReadData** (datum lookup by hash).
 Both require indexes that the node does not maintain.
@@ -127,4 +159,3 @@ The `NodeKernelAccess` record-of-callbacks approach gives us the performance of 
 # Authors
 
 - Mateusz Galazyn
-

@@ -98,12 +98,13 @@ The table below lists those 16 distinct methods, each under the subsystem that p
 | TopLevelConfig | Genesis config, era history | ReadGenesis |
 
 The two RPCs that `NodeKernel` cannot serve are **ReadTx** (transaction lookup by hash) and **ReadData** (datum lookup by hash).
-Both require indexes that the node does not maintain.
+Both require indexes that the node does not maintain, typically provided by a block indexer such as db-sync or Kupo.
 
 # Alternatives Considered
 
 We considered keeping the N2C IPC path and optimising it - for example, by reusing connections or caching protocol negotiation.
-This would reduce per-request overhead but not eliminate the fundamental cost of serialising to CBOR and back, or the inability to access ChainDB capabilities (block-by-point lookup, chain following) that the N2C protocol does not expose.
+This would reduce per-request overhead but not eliminate the fundamental cost of serialising to CBOR and back, or the inability to access ChainDB capabilities (random block-by-point lookup) that the N2C protocol does not expose.
+N2C provides chain following via LocalChainSync, but it requires a persistent connection with sequential traversal, not random access.
 
 # Consequences
 
@@ -119,6 +120,7 @@ This would reduce per-request overhead but not eliminate the fundamental cost of
 - [ADR-018: cardano-rpc gRPC server](./ADR-018-cardano-rpc-grpc-server.md) - established cardano-rpc's architecture, acknowledged the N2C serialisation overhead and listed direct ledger state access as a planned improvement.
   This ADR delivers that improvement.
 - [UTxO RPC specification](https://utxorpc.org/) - the gRPC service specification that cardano-rpc implements.
+- [Inspecting the selection of a node](https://ouroboros-consensus.cardano.intersectmbo.org/docs/howtos/inspecting_the_selection_of_a_node/) - explains chain selection structure (volatile vs immutable portions) and the protocols available to inspect it.
 
 # Authors
 
